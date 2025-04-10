@@ -12,8 +12,9 @@ function get_d()
 
 function get_p()
 
-function calculate_forecast(){
-    const arima = new ARIMA('p,d,q')
+function calculate_forecast(parameters=[], data, steps){
+    const arima = new ARIMA(parameters).train(data)
+    const [prediction, errors] = arima.predict(steps)
 }
 
 
