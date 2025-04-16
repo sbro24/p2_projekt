@@ -1,5 +1,6 @@
 JavaScript:
 •	Avoid global variables.
+•	Import and export functions at the top of the file
 •	Use arrow functions for anonymous functions to keep code concise and maintainable.
 •	Do not define a function within another function
 •	Prefer async/await over .then() for asynchronous code 
