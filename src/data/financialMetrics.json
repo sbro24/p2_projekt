@@ -1,0 +1,14 @@
+[
+  [
+    {
+      "name": "Nyt navn",
+      "revenue": 1000,
+      "expenses": 1234
+    }
+  ],
+  {
+    "name": "virksomhed 2",
+    "revenue": 2000,
+    "expenses": 2234
+  }
+]
