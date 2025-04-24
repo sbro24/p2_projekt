@@ -3,6 +3,14 @@ const fs = require('fs')
 //necessary data
 let path = '../../data/financialMetrics.json'
 
+class Company {
+    constructor (name, revenue, expenses) {
+        this.name = name;
+        this.revenue = revenue;
+        this.expenses = expenses;    
+    }
+};
+
 const financialMetrics = {
     name: "virksomhed 1",
     revenue: 1000,
@@ -59,17 +67,15 @@ function jsonAdd(path, obj) {
         if (err){
             console.log(err);
         } else {
-            let arrayFinancialMetrics;
-            arrayFinancialMetrics = [data];
-            arrayFinancialMetrics.push(obj);
-            jsonWrite(path, arrayFinancialMetrics);
+            data.push(obj);
+            jsonWrite(path, data);
         }
     });
 }
 
 
 //call functions
-jsonWrite(path, financialMetricsArray);
+//jsonWrite(path, financialMetricsArray);
 
 jsonRead(path, (err, data) => {
     if (err) {
@@ -79,7 +85,9 @@ jsonRead(path, (err, data) => {
     }
 });
 
-jsonChangeName(path, "Nyt navn");
+//jsonChangeName(path, "Nyt navn");
 
-jsonAdd(path, secondFinancialMetrics);
+let nytFirma = new Company("NYT FIRMA", 123234, 345098);
+
+jsonAdd(path, nytFirma);
 
