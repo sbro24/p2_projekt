@@ -1,0 +1,63 @@
+[
+    {
+        "companies": [
+            {
+            "id": 123456,
+            "name": "Firma A",
+            "additional": "If we need more information on form"
+            },
+            {
+            "id": 456789,
+            "name": "Firma B",
+            "additional": "If we need more information on form"
+            }
+        ],
+        "dataById": {
+            "123456": {
+            "result": {
+                "revenue": {
+                    "RevenueType": {
+                        "characteristics": ["?"],
+                        "year": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                    }
+                },
+                "expense": {
+                    "ExpenseType": {
+                        "characteristics": ["?"],
+                        "year": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                    }
+                }
+            },
+                "budget": {
+                    "revenue": {
+                        "RevenueType": {
+                            "characteristics": ["?"],
+                            "year": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                        }
+                    },
+                    "expense": {
+                        "ExpenseType": {
+                            "characteristics": ["?"],
+                            "year": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                        }
+                    }
+                },
+                "forecast": {
+                    "revenue": {
+                        "RevenueType": {
+                            "characteristics": ["?"],
+                            "year": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                        }
+                    },
+                    "expense": {
+                        "ExpenseType": {
+                            "characteristics": ["?"],
+                            "year": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                        }
+                    }
+                }      
+            }
+        }
+    }
+]
+  
