@@ -1,0 +1,33 @@
+{
+  "name": "p2_projekt",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/app/server.js",
+  "type": "module",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "app": "node src/app/server.js",
+    "nodemon": "nodemon src/app/server.js",
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sbro24/p2_projekt.git"
+  },
+  "author": "cs-25-dat-2-02",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sbro24/p2_projekt/issues"
+  },
+  "homepage": "https://github.com/sbro24/p2_projekt#readme",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jsdom": "^26.1.0",
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "arima": "^0.2.5"
+  }
+}
