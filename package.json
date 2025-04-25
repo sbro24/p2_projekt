@@ -8,8 +8,8 @@
     "test": "test"
   },
   "scripts": {
-    "app": "node src/app/server.js",
-    "nodemon": "nodemon src/app/server.js",
+    "app": "node src/app/server.js > logs/latest.log",
+    "nodemon": "nodemon src/app/server.js > logs/latest.log",
     "test": "jest --coverage"
   },
   "repository": {
