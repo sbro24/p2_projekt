@@ -27,7 +27,7 @@ let financialMetricsArray = [financialMetrics];
 
 //defining functions
 function jsonWrite(filePath, data) {
-    fs.writeFile(path, JSON.stringify(data, null, 2), err => {
+    fs.writeFile(path, JSON.stringify(data, null, 4), err => {
         if (err){
             console.log (err);
         } else {
