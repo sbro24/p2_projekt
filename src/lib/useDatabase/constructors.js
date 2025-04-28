@@ -55,6 +55,7 @@ class FinancialYear {
     };
 }
 
+
 /* let company = new Company("123456", "Test");
 console.log(`Company:`, company);
 
@@ -66,6 +67,12 @@ console.log(`Financial Metric:`, financialMetric);
 
 let financialYear = new FinancialYear ("2025");
 console.log(`Financial year:`, financialYear); */
+
+
+
+
+
+
 
 
 //helper-functions to work with JSON data
