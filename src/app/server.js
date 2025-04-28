@@ -5,11 +5,11 @@ import process from 'process';
 import { CreateLogFile, Log } from '../lib/logging/log.js';
 import { StartTimestamp } from '../lib/time/time.js';
 
-StartTimestamp();
 const hostname = '127.0.0.1';
 const port = 4220;
 
 const logDcirectory = process.cwd() + '/logs';
+StartTimestamp();
 
 
 const server = http.createServer(RequestHandler);
