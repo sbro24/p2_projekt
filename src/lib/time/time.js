@@ -5,7 +5,7 @@ export function StartTimestamp() {
     return startTimestamp;
 };
 
-//format: $YYYY-$MM-$DD $HH:$mm:$ss
+//format: YYYY-MM-DD HH:mm:ss
 export function TimestampFormatter(timestamp, format) {
     //return undefined if arguments are the wrong type.
     if (!(timestamp instanceof Date) || typeof format !== 'string') return undefined;
