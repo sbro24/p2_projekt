@@ -5,6 +5,10 @@ import { StartTimestamp, TimestampFormatter } from "../time/time.js";
 const logDirectory = process.cwd() + '/logs';
 const startupTime = StartTimestamp();
 
+/**
+ * Logs messages to the console and a log file.
+ * @param {string} message 
+ */
 export function Log(message) {
     const currentTime = new Date();
 
@@ -19,6 +23,9 @@ export function Log(message) {
     });  
 }
 
+/**
+ * Creates a log file and logs directory if they don't already exist.
+ */
 export function CreateLogFile() {
     //create log directory it dosen't exist
     if (!fs.existsSync(logDirectory)) {
