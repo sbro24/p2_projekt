@@ -2,22 +2,17 @@
     "companies": [
         {
             "id": 123456,
-            "name": "Firma A"
+            "name": "name"
         },
         {
-            "id": 111111,
-            "name": "Test af constructor igen"
+            "id": "111111",
+            "name": "Test af add company"
         }
     ],
     "dataById": {
         "111111": {
             "result": {
-                "revenue": {
-                    "Sales": {
-                        "characteristics": []
-                        }
-                    }
-                },
+                "revenue": {},
                 "expense": {}
             },
             "budget": {
@@ -31,7 +26,30 @@
         },
         "123456": {
             "result": {
-                "revenue": {},
+                "revenue": {
+                    "sales": {
+                        "characteristics": [],
+                        "data": [
+                            {
+                                "year": 2025,
+                                "months": {
+                                    "January": 0,
+                                    "February": 0,
+                                    "March": 0,
+                                    "April": 0,
+                                    "May": 0,
+                                    "June": 0,
+                                    "July": 0,
+                                    "August": 0,
+                                    "September": 0,
+                                    "October": 0,
+                                    "November": 0,
+                                    "December": 0
+                                }
+                            }
+                        ]
+                    }
+                },
                 "expense": {}
             },
             "budget": {
