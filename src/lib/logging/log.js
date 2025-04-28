@@ -66,7 +66,7 @@ export function CreateLogFile() {
 
     //generate log directory if not exists
     try {
-        fs.writeFileSync(filePath, '' + '\n', { flag: 'a' });
+        fs.writeFileSync(filePath, '', { flag: 'a' });
         Log('Creating log file...')
     } catch (err) {
         console.error(err);
