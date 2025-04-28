@@ -32,7 +32,6 @@ function RequestHandler(req,res) {
 };
 
 function StartServer() {
-    CreateLogFile();
     server.listen(port, hostname, () => {
         Log(`Server running at http://${hostname}:${port}/`);
     });
