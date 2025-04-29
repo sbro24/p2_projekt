@@ -1,16 +1,52 @@
 {
     "companies": [
         {
-            "id": 123456,
+            "id": "123456",
             "name": "name"
         },
         {
             "id": "111111",
             "name": "Test af add company"
+        },
+        {
+            "id": "123123",
+            "name": "Nyt firma"
+        },
+        {
+            "id": "123234",
+            "name": "Ny test"
         }
     ],
     "dataById": {
         "111111": {
+            "result": {
+                "revenue": {},
+                "expense": {}
+            },
+            "budget": {
+                "revenue": {},
+                "expense": {}
+            },
+            "forecast": {
+                "revenue": {},
+                "expense": {}
+            }
+        },
+        "123123": {
+            "result": {
+                "revenue": {},
+                "expense": {}
+            },
+            "budget": {
+                "revenue": {},
+                "expense": {}
+            },
+            "forecast": {
+                "revenue": {},
+                "expense": {}
+            }
+        },
+        "123234": {
             "result": {
                 "revenue": {},
                 "expense": {}

@@ -3,9 +3,45 @@
         {
             "id": 123456,
             "name": "name"
+        },
+        {
+            "id": "111111",
+            "name": "Test af add company"
+        },
+        {
+            "id": "123123",
+            "name": "Nyt firma"
         }
     ],
     "dataById": {
+        "111111": {
+            "result": {
+                "revenue": {},
+                "expense": {}
+            },
+            "budget": {
+                "revenue": {},
+                "expense": {}
+            },
+            "forecast": {
+                "revenue": {},
+                "expense": {}
+            }
+        },
+        "123123": {
+            "result": {
+                "revenue": {},
+                "expense": {}
+            },
+            "budget": {
+                "revenue": {},
+                "expense": {}
+            },
+            "forecast": {
+                "revenue": {},
+                "expense": {}
+            }
+        },
         "123456": {
             "result": {
                 "revenue": {
@@ -13,24 +49,23 @@
                         "characteristics": [],
                         "data": [
                             {
-                            "year": 2025,
-                            "months": {
-                                "January": 0,
-                                "February": 0,
-                                "March": 0,
-                                "April": 0,
-                                "May": 0,
-                                "June": 0,
-                                "July": 0,
-                                "August": 0,
-                                "September": 0,
-                                "October": 0,
-                                "November": 0,
-                                "December": 0
-                                }                            
+                                "year": 2025,
+                                "months": {
+                                    "January": 0,
+                                    "February": 0,
+                                    "March": 0,
+                                    "April": 0,
+                                    "May": 0,
+                                    "June": 0,
+                                    "July": 0,
+                                    "August": 0,
+                                    "September": 0,
+                                    "October": 0,
+                                    "November": 0,
+                                    "December": 0
+                                }
                             }
                         ]
-                                                    
                     }
                 },
                 "expense": {}
