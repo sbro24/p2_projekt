@@ -15,6 +15,10 @@
         {
             "id": "123234",
             "name": "Ny test"
+        },
+        {
+            "id": "123789",
+            "name": "Test med Julius"
         }
     ],
     "dataById": {
@@ -86,6 +90,20 @@
                         ]
                     }
                 },
+                "expense": {}
+            },
+            "budget": {
+                "revenue": {},
+                "expense": {}
+            },
+            "forecast": {
+                "revenue": {},
+                "expense": {}
+            }
+        },
+        "123789": {
+            "result": {
+                "revenue": {},
                 "expense": {}
             },
             "budget": {

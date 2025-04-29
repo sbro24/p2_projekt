@@ -6,7 +6,9 @@ const path = '../../data/data.json'
 // helper-functions for adding data to the JSON database in a structured manner according to the use cases
 
 /**
- * 
+ * Adds a new profile to the JSON file. 
+ * It creates and pushed the company object to the companies array.
+ * It creates the dataById object with the company id. 
  * @param {string: 6 digits id on company} id 
  * @param {string: name of the company in the new profil} name 
  */
@@ -81,3 +83,8 @@ function AddNewFinancialYear (companyId, financialType, financialCategory, finan
         console.log(data);
     });
 }
+
+function filterData (name) {
+
+
+};
