@@ -1,16 +1,42 @@
 const ARIMA = require('arima')
 
-class forecast {
-    constructor(model) {
-    class model {
-        constructor(data, order, AIC) {
-            this.data = data // The financial data given
-            this.order = order // The order of the ARIMA model
-            this.AIC = AIC // The AIC of the ARIMA model
-        }
-    } 
+class Model { // Class to construct an ARIMA model
+    constructor(data, order, AIC, prediction) {
+        this.data = data // The time series data given
+        this.order = order // The order of the ARIMA model: {p, d, q, c}
+        this.AIC = AIC // The AIC of the ARIMA model
+        this.prediction = prediction // The predicted values from the model
     }
 }
+
+class Forecast { // Class to store the ARIMA models
+    constructor() {
+        this.models = [] // Array to store the models
+        this.bestModel = null // The best ARIMA model found
+        this.bestOrder = null // The best order of the ARIMA model found
+    }
+    addModel(model) {
+        this.models.push(model) // Add a model to the array
+    }
+    setBestModel(model) {
+        this.bestOrder = model // Set the best ARIMA model
+    }
+    setBestOrder(order) {
+        this.bestOrder = order // Set the best order of the ARIMA model
+    }
+    getAllModels() {
+        return this.models // Return all models, so they are accessible for later use
+    }
+    getBestModel() {
+        return this.bestModel // Return the best ARIMA model, so it is accessible for later use
+    }
+    getBestOrder() {
+        return this.bestOrder // Return the best order of the ARIMA model, so it is accessible for later use
+    }
+    
+}
+
+const forecastHandler = new Forecast() // Create a forecast handler
 
 // Test data
 const data = [
@@ -20,11 +46,13 @@ const data = [
     135.1, 136.6, 137.3, 136.8, 138.2, 139.9, 141.0, 140.4, 142.1, 143.5, 144.3, 145.6
   ];   
 
-function ReadFromDatabase()
 
-function FormatData()
 
-function WriteToDatabase()
+//function ReadFromDatabase()
+
+//function FormatData()
+
+//function WriteToDatabase()
 
 function Get_d()
 
@@ -66,35 +94,42 @@ function CalcAIC(data, config, forecast) { // Calculate the AIC for the given AR
 
 function SelectOrder(data) {
     const d = Get_d(data) // Call the function to get the differencing order
+    let bestOrder = Order
+    let bestAIC = Infinity // Initialize the best AIC to infinity
+
     for (let c = 0; c <= 1; c++) { // Loop through, to check if the constant should be included
         for (let p = 0; p <= 5; p++) { // Loop through the AR orders
             for (let q = 0; q <= 5; q++) { // Loop through the MA orders
-                const bestAIC = Infinity // Initialize the best AIC to infinity
-                let bestOrder = [] // Initialize the best model
                 let config; // Initialize config variable
                     if (c === 0) {
-                        config = { p, d, q, c: false} // Sets the order of the ARIMA model to the current parameters
+                        config = { p, d, q, c: c === 0} // Sets the order of the ARIMA model to the current parameters
                     } else {
-                        config = { p, d, q, c: true} // Sets the order of the ARIMA model to the current parameters and a constant
+                        config = { p, d, q, c: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant
                     }    
 
                 const arima = new ARIMA(config).train(data) // Create a new ARIMA model using the config
-                const testForecast = arima.predict(12) // Predict the next 12 months using the ARIMA model
+                const [testForecast] = arima.predict(12) // Predict the next 12 months using the ARIMA model
                 const aic = CalcAIC(data, config, testForecast) // calculate the AIC of the current ARIMA model
-                        
+                const model = new Model(data, config, aic, testForecast) // Create a new model object
+                forecastHandler.addModel(model) // Add the model to the forecast class
+
                     if (aic < bestAIC) { // If the AIC is lower than the best AIC found so far
                         bestAIC = aic // Update the best AIC
-                        bestOrder = [p, d, q] // Update the best model parameters
+                        bestModel = model // Update the best model parameters
                     }
             }
         }
     }
-    return bestOrder;  
+    forecastHandler.setBestModel(bestModel) // Set the best model in the forecast handler;
+    forecastHandler.setBestOrder([bestModel.order.p, bestModel.order.d, bestModel.order.d, bestModel.order.q, bestModel.order.c]) // Set the best order in the forecast handler
+    return bestModel.order;  
 }
 
-function CalculateForecast(order, data) {
-    const arima = new ARIMA(order).train(data)
-    const [prediction, errors] = arima.predict(12)
-}
+SelectOrder(data)
 
-CalculateForecast(config,)
+for (let i = 0; i < forecastHandler.getAllModels().length; i++) { // Loop through all models in the forecast handler
+    console.log("Current model", forecastHandler.getAllModels()[i]) // Print the model parameters
+    console.log("Current order", forecastHandler.getAllModels()[i].order) // Print the AIC of the model
+    console.log("Current AIC", forecastHandler.getAllModels()[i].AIC) // Print the AIC of the model
+    console.log("Current prediction", forecastHandler.getAllModels()[i].prediction) // Print the predicted values of the model
+}
