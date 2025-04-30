@@ -19,15 +19,15 @@ function SendErrorResponse(res, code, message) {
  * @param {Error} error 
  * @param {number} code 
  */
-export function ErrorResponse(res, error, code = 500) {
+export function ErrorResponse(res, error, code) {
     Log (error, 'error');
     let message = '';
     switch (code) {
         case 400: message = 'Validation Error'; break;
         case 404: message = 'Page Not Found'; break;
-        default: message = 'Internal Server Error'; break;
+        default: message = 'Internal Server Error';
     }
-    SendErrorResponse(res, code, 'Internal Server Error');
+    SendErrorResponse(res, code, message);
 }
 
 /**Converts an error to a string.

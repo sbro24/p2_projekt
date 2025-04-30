@@ -4,8 +4,8 @@ import { Log } from '../lib/logging/log.js';
 import { ErrorResponse } from '../lib/errorHandling/error.js';
 import { Wait } from '../lib/time/time.js';
 
-const pathHandlerDirctory = process.cwd() + '/src/app/pathHandlers/';
-const relativePathHandlerDirctory = './pathHandlers/';
+const featureDirctoryPath = process.cwd() + '/src/features/';
+const featureDirctoryRelativePath = '../features/';
 
 /**
  * Looks at the request method and calls the appropriate function.
@@ -35,10 +35,12 @@ export function processRequest(req, res) {
  * @param {string} data 
  */
 async function GetResponse(req, res, data) {
-    const pathHandlerFiles = fs.readdirSync(pathHandlerDirctory).filter(file => file.endsWith('.js'));
-    for (const file of pathHandlerFiles) {
-        import(relativePathHandlerDirctory + file)
-        .then(router => router.execute(req, res, data))
+    const pathFeatureFiles = fs.readdirSync(featureDirctoryPath);
+    for (const feature of pathFeatureFiles) {
+        if (!fs.existsSync(featureDirctoryPath + feature + '/router.js')) continue;
+        const routerPath = featureDirctoryRelativePath + feature + '/router.js';
+        import(routerPath)
+        .then(execute => execute.router(req, res, data))
         .catch(err => Log(err));
     }
     await Wait(100);
