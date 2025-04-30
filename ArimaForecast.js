@@ -54,7 +54,7 @@ const data = [
 
 //function WriteToDatabase()
 
-function Get_d()
+//function Get_d()
 
 /** Calculates the residual sum of squares (RSS), to be used by the AIC
     @param {data = the financial data given}
@@ -72,10 +72,10 @@ function CalcRSS(data, forecast) { // Calculate the residual sum of squares (RSS
 }
 
 /**  Calculates the (AIC) for parameter selection 
-    @param {data = the financial data given}
+    @param {data = the time series data given}
     @param {config = the order of the ARIMA model}
     @param {forecast = the predicted values from the model}
-    Output: AIC of the given ARIMA model
+    @returns {AIC of the given ARIMA model}
 */
 function CalcAIC(data, config, forecast) { // Calculate the AIC for the given ARIMA model
     const n = data.slice(data.length - forecast.length) // Number of observations used for RSS
@@ -90,11 +90,13 @@ function CalcAIC(data, config, forecast) { // Calculate the AIC for the given AR
     return AIC;
 }
 
-
-
+/** Selectes the best ARIMA model based on the AIC, and stores all the tested models in 
+    @param {data = the time series data given} }
+    @returns {bestModel.order = The best ARIMA model order}
+ */
 function SelectOrder(data) {
-    const d = Get_d(data) // Call the function to get the differencing order
-    let bestOrder = Order
+    const d = 1 // Get_d(data) // Call the function to get the differencing order
+    let bestModel = null // Initialize the best model to null
     let bestAIC = Infinity // Initialize the best AIC to infinity
 
     for (let c = 0; c <= 1; c++) { // Loop through, to check if the constant should be included
@@ -102,9 +104,9 @@ function SelectOrder(data) {
             for (let q = 0; q <= 5; q++) { // Loop through the MA orders
                 let config; // Initialize config variable
                     if (c === 0) {
-                        config = { p, d, q, c: c === 0} // Sets the order of the ARIMA model to the current parameters
+                        config = {p, d, q, c: c === 0} // Sets the order of the ARIMA model to the current parameters
                     } else {
-                        config = { p, d, q, c: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant
+                        config = {p, d, q, c: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant
                     }    
 
                 const arima = new ARIMA(config).train(data) // Create a new ARIMA model using the config
