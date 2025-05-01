@@ -110,4 +110,4 @@ function filterData (name) {
     return companyLoggedIn;
 };
 
-let company = filterData("Test af add company");
+module.exports = {AddNewProfile, AddNewFinancialMetric, AddNewFinancialYear, filterData}
