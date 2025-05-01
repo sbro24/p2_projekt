@@ -86,5 +86,28 @@ function AddNewFinancialYear (companyId, financialType, financialCategory, finan
 
 function filterData (name) {
 
+    let companyLoggedIn = {};
 
+    JsonReadFile(path, (err, data) => {
+        if (err) {
+            console.log(err);
+        }
+
+        console.log("data read successfully");
+
+        const result = data.companies.find(company => company.name === name);
+        
+        if (result) {
+            companyLoggedIn = result;
+            console.log("Company found:", companyLoggedIn);
+            let companyData = data.dataById[companyLoggedIn.id];
+            console.log(companyData); 
+        } else {
+            console.log("Company not found");
+        }
+    });
+
+    return companyLoggedIn;
 };
+
+let company = filterData("Test af add company");
