@@ -2,6 +2,7 @@
 
 import fs from 'fs'
 import process from 'process';
+import { getSystemErrorMessage } from 'util';
 
 const dbPath = process.cwd() + '/src/data/data.json';
 
@@ -57,14 +58,17 @@ function generateId() {
     return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
-function runLogin(data) {
+export function runLogin(data) {
     console.log(data)
     return 
 }
 
-function runRegister(data) {
+export function runRegister(data) {
     console.log(data)
-    return 
+    return {
+        response: '',
+        data: {  },
+    }
 }
 
 runLogin(testData)
