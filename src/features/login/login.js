@@ -1,7 +1,14 @@
 //Functions for reading and writing with the JSON file to use for login and register system
 
-const fs = require('fs');
-const dbPath = './data/data.json';
+import fs from 'fs'
+import process from 'process';
+
+const dbPath = process.cwd() + '/src/data/data.json';
+
+const testData = {
+    companyName: "someCompanyName",
+    password: "password123"
+}
 
 // (Helper function) Load user data
 function loadUsers() {
@@ -50,4 +57,15 @@ function generateId() {
     return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
+function runLogin(data) {
+    console.log(data)
+    return 
+}
 
+function runRegister(data) {
+    console.log(data)
+    return 
+}
+
+runLogin(testData)
+runRegister(data)
