@@ -1,5 +1,5 @@
-const { Company, CompanyData, FinancialMetric, FinancialYear } = require('./constructors');
-const {JsonWriteFile, JsonReadFile, JsonReadFileCb, JsonWriteFileCb} = require ('./handle-json');
+import { Company, CompanyData, FinancialMetric, FinancialYear } from './constructors.js';
+import {JsonWriteFile, JsonReadFile, JsonReadFileCb, JsonWriteFileCb} from './handle-json';
 
 const path = '../../data/data.json' 
 
@@ -110,4 +110,4 @@ function filterData (name) {
     return companyLoggedIn;
 };
 
-module.exports = {AddNewProfile, AddNewFinancialMetric, AddNewFinancialYear, filterData}
+export {AddNewProfile, AddNewFinancialMetric, AddNewFinancialYear, filterData}

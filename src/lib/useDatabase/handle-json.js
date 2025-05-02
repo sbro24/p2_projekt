@@ -41,4 +41,4 @@ function JsonWriteFileCb (err) {
     }
 };
 
-module.exports = {JsonReadFile, JsonWriteFile, JsonReadFileCb, JsonWriteFileCb};
+export {JsonReadFile, JsonWriteFile, JsonReadFileCb, JsonWriteFileCb};
