@@ -6,6 +6,11 @@ class Model { // Class to construct an ARIMA model
         this.order = order // The order of the ARIMA model: {p, d, q, c}
         this.AIC = AIC // The AIC of the ARIMA model
         this.prediction = prediction // The predicted values from the model
+
+        // Model Averaging Values:
+        this.deltaAIC = 0 // Difference in AIC between this model and the best model
+        this.P = 0 // Relative Likelihood to the best model, i.e this model is P as likely to be true as the best model
+        this.w = 0 // Aikaike Weight; Normalized probability that a model is the best
     }
 }
 
@@ -88,6 +93,87 @@ function CalcAIC(data, config, forecast) { // Calculate the AIC for the given AR
     const AIC = -2 * logLikelihood + 2 * k // Calculates the AIC
     return AIC;
 }
+
+
+// ############### NEW STUFF NOT TESTED ##########################
+
+function CalcDeltaAIC(bestAIC, AIC){
+    return bestAIC - AIC
+}
+
+function CalcRelativeLikelihood(deltaAIC){
+    return Math.exp(-deltaAIC/2)
+}
+
+function CalcAikaikeWeight(models, model){
+    let sum = 0
+    for (let i=0; i<=models.length; i++){
+        sum = sum + models[i].P
+    }
+    return model.P/sum
+}
+
+// Thresholds:  (Needs more explanation)
+// DeltaAIC < 4
+// Aikaike Weight w > 0.1 (10%)
+
+// Screens all created models, excluding models that fail the abovementioned tresholds
+
+function GetBestModels(models, bestAIC){
+    let bestModels = []
+    let screenedModels = []
+
+    for (let i=0; i<=models.length; i++){
+        let model = models[i]
+        model.deltaAIC = CalcDeltaAIC(bestAIC, model.AIC)
+        if (model.deltaAIC < 4){  // deltaAIC filter
+            model.P = CalcRelativeLikelihood(deltaAIC)
+            screenedModels.push(model)
+        }
+    }
+    for (let j=0; j<=screenedModels.length; j++){
+        let model = screenedModels[j]
+        model.w = CalcAikaikeWeight(models, model)
+        if (model.w > 0.1){  // aikaike weight filter
+            bestModels.push(model)
+        }
+    }
+}
+
+
+// Treats forecast.models like a matrix, calculating the average of each column
+// to create an averaged result of the best models
+// Should maybe be refactored into forecast class????
+
+// Builds column
+function BuildColumn(models, i){
+    let column = []
+    for (let j=0; j<=models.length; j++){ 
+        column.push(models[j].prediction[i])
+    }
+    return column
+}
+
+// Calculates Column Average
+function CalcAverage(column){
+    let sum = 0
+    for (let k=0; k<=column.length; k++){
+        sum = sum + column[k]
+    }
+    return sum/column.length
+}
+
+function ModelAverage(models){
+    bestModels = GetBestModels(models, bestAIC)
+    let averagedForecast = []
+    for (let i=0; i<=bestModels.length; i++){ // Handles Row index
+        column = BuildColumn(bestModels, i)
+        averagedForecast.push(CalcAverage(column)) 
+    }
+    return averagedForecast
+}   
+
+
 
 
 // function creatConfig() // Create a config object for the ARIMA model
