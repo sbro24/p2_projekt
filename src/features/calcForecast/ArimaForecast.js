@@ -128,4 +128,48 @@ function SelectOrder(data) {
         throw new Error("No ARIMA model found") // If no model was found, throw an error
     }  
 }
-SelectOrder(data)
+//SelectOrder(data)
+
+function GetPermutations(arr) {
+    let result = []; // Array to store the all permutations
+    if (arguments.length === 0) return result;
+    if (arguments.length === 1) return Range(arr[0], arr[1]);
+
+    let range = Range(arguments[0][0], arguments[0][1])
+    for (let i = 0; i < range.length; i++) {
+        result.push([range[i]]);
+    }
+
+    for (let i = 1; i < arguments.length; i++) {
+        range = Range(arguments[i][0], arguments[i][1])
+        console.log(result)
+        for (let j = 0; j < result.length; j++) {
+            range.forEach(element => {
+                resultresult.push(element)
+            });
+        }
+    }
+
+    console.log(result)
+    
+}
+
+GetPermutations([0, 1], [0, 2], [0, 5], [0, 5])
+
+function Range(start, end) {
+    let result = [];
+    if (arguments.length === 1) {
+        end = start
+        start = 0
+    } 
+    if (start < end) {
+        for (let i = start; i <= end; i++) {
+            result.push(i)
+        }
+    } else {
+        for (let i = start; i >= end; i--) {
+            result.push(i)
+        }
+    }
+    return result;
+}
