@@ -50,4 +50,4 @@ class FinancialYear {
     };
 }
 
-module.exports = {Company, CompanyData, FinancialMetric, FinancialYear};
+export {Company, CompanyData, FinancialMetric, FinancialYear};

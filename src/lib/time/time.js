@@ -117,3 +117,9 @@ export function TimestampFormatter(timestamp, format) {
     }
     return formattedDate;
 };
+
+export function Wait(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+}
