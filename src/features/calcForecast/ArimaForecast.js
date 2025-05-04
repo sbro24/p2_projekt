@@ -143,32 +143,19 @@ function GetBestModels(models, bestAIC){
 
 // Treats forecast.models like a matrix, calculating the average of each column
 // to create an averaged result of the best models
-// Should maybe be refactored into forecast class????
-
-// Builds column
-function BuildColumn(models, i){
-    let column = []
-    for (let j=0; j<=models.length; j++){ 
-        column.push(models[j].prediction[i])
-    }
-    return column
-}
-
-// Calculates Column Average
-function CalcAverage(column){
-    let sum = 0
-    for (let k=0; k<=column.length; k++){
-        sum = sum + column[k]
-    }
-    return sum/column.length
-}
 
 function ModelAverage(models){
     bestModels = GetBestModels(models, bestAIC)
     let averagedForecast = []
-    for (let i=0; i<=bestModels.length; i++){ // Handles Row index
-        column = BuildColumn(bestModels, i)
-        averagedForecast.push(CalcAverage(column)) 
+    for (let i=0; i<=bestModels[0].data.length; i++){ // handles Column index
+        for (let j=0; j<=bestModels.length; j++){ // Handles Row index
+            if (averagedForecast[i] === undefined){ // handles first iteration, where the array is empty
+                averagedForecast[i].push(bestModels[j].data[i])
+            } else {
+                averagedForecast[i] = averagedForecast[i] + bestModels[j].data[i] // calculates sum of current column
+            }
+        }
+        averagedForecast[i] = averagedForecast[i] / bestModels[j].data.length // calculates average of current column
     }
     return averagedForecast
 }   
