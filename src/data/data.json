@@ -1,196 +1,220 @@
 {
-    "companies": [
-        {
-            "id": "123456",
-            "name": "name"
-        },
-        {
-            "id": "111111",
-            "name": "Test af add company"
-        },
-        {
-            "id": "123123",
-            "name": "Nyt firma"
-        },
-        {
-            "id": "123234",
-            "name": "Ny test"
-        },
-        {
-            "id": "482053",
-            "name": "Testname",
-            "sessionToken": ""
-        },
-        {
-            "id": "665520",
-            "name": "Testname2",
-            "sessionToken": ""
-        },
-        {
-            "id": "529149",
-            "name": "Testname3",
-            "sessionToken": ""
-        },
-        {
-            "id": "169239",
-            "name": "Testname4",
-            "sessionToken": ""
-        },
-        {
-            "id": "746526",
-            "name": "Testname5",
-            "sessionToken": ""
-        }
-    ],
-    "dataById": {
-        "111111": {
-            "result": {
-                "revenue": {},
-                "expense": {}
-            },
-            "budget": {
-                "revenue": {},
-                "expense": {}
-            },
-            "forecast": {
-                "revenue": {},
-                "expense": {}
-            }
-        },
-        "123123": {
-            "result": {
-                "revenue": {},
-                "expense": {}
-            },
-            "budget": {
-                "revenue": {},
-                "expense": {}
-            },
-            "forecast": {
-                "revenue": {},
-                "expense": {}
-            }
-        },
-        "123234": {
-            "result": {
-                "revenue": {},
-                "expense": {}
-            },
-            "budget": {
-                "revenue": {},
-                "expense": {}
-            },
-            "forecast": {
-                "revenue": {},
-                "expense": {}
-            }
-        },
-        "123456": {
-            "result": {
-                "revenue": {
-                    "sales": {
-                        "characteristics": [],
-                        "data": [
-                            {
-                                "year": 2025,
-                                "months": {
-                                    "January": 0,
-                                    "February": 0,
-                                    "March": 0,
-                                    "April": 0,
-                                    "May": 0,
-                                    "June": 0,
-                                    "July": 0,
-                                    "August": 0,
-                                    "September": 0,
-                                    "October": 0,
-                                    "November": 0,
-                                    "December": 0
-                                }
-                            }
-                        ]
-                    }
-                },
-                "expense": {}
-            },
-            "budget": {
-                "revenue": {},
-                "expense": {}
-            },
-            "forecast": {
-                "revenue": {},
-                "expense": {}
-            }
-        },
-        "169239": {
-            "result": {
-                "revenue": {},
-                "expense": {}
-            },
-            "budget": {
-                "revenue": {},
-                "expense": {}
-            },
-            "forecast": {
-                "revenue": {},
-                "expense": {}
-            }
-        },
-        "482053": {
-            "result": {
-                "revenue": {},
-                "expense": {}
-            },
-            "budget": {
-                "revenue": {},
-                "expense": {}
-            },
-            "forecast": {
-                "revenue": {},
-                "expense": {}
-            }
-        },
-        "529149": {
-            "result": {
-                "revenue": {},
-                "expense": {}
-            },
-            "budget": {
-                "revenue": {},
-                "expense": {}
-            },
-            "forecast": {
-                "revenue": {},
-                "expense": {}
-            }
-        },
-        "665520": {
-            "result": {
-                "revenue": {},
-                "expense": {}
-            },
-            "budget": {
-                "revenue": {},
-                "expense": {}
-            },
-            "forecast": {
-                "revenue": {},
-                "expense": {}
-            }
-        },
-        "746526": {
-            "result": {
-                "revenue": {},
-                "expense": {}
-            },
-            "budget": {
-                "revenue": {},
-                "expense": {}
-            },
-            "forecast": {
-                "revenue": {},
-                "expense": {}
-            }
-        }
+  "companies": [
+    {
+      "id": "123456",
+      "name": "name"
+    },
+    {
+      "id": "111111",
+      "name": "Test af add company"
+    },
+    {
+      "id": "123123",
+      "name": "Nyt firma"
+    },
+    {
+      "id": "123234",
+      "name": "Ny test"
+    },
+    {
+      "id": "482053",
+      "name": "Testname",
+      "sessionToken": ""
+    },
+    {
+      "id": "665520",
+      "name": "Testname2",
+      "sessionToken": ""
+    },
+    {
+      "id": "529149",
+      "name": "Testname3",
+      "sessionToken": ""
+    },
+    {
+      "id": "169239",
+      "name": "Testname4",
+      "sessionToken": ""
+    },
+    {
+      "id": "746526",
+      "name": "Testname5",
+      "sessionToken": ""
+    },
+    {
+      "id": "999999",
+      "name": "Mikkels test",
+      "sessionToken": ""
+    },
+    {
+      "id": "999999",
+      "name": "Mikkels test",
+      "sessionToken": ""
     }
+  ],
+  "dataById": {
+    "111111": {
+      "result": {
+        "revenue": {},
+        "expense": {}
+      },
+      "budget": {
+        "revenue": {},
+        "expense": {}
+      },
+      "forecast": {
+        "revenue": {},
+        "expense": {}
+      }
+    },
+    "123123": {
+      "result": {
+        "revenue": {},
+        "expense": {}
+      },
+      "budget": {
+        "revenue": {},
+        "expense": {}
+      },
+      "forecast": {
+        "revenue": {},
+        "expense": {}
+      }
+    },
+    "123234": {
+      "result": {
+        "revenue": {},
+        "expense": {}
+      },
+      "budget": {
+        "revenue": {},
+        "expense": {}
+      },
+      "forecast": {
+        "revenue": {},
+        "expense": {}
+      }
+    },
+    "123456": {
+      "result": {
+        "revenue": {
+          "sales": {
+            "characteristics": [],
+            "data": [
+              {
+                "year": 2025,
+                "months": {
+                  "January": 0,
+                  "February": 0,
+                  "March": 0,
+                  "April": 0,
+                  "May": 0,
+                  "June": 0,
+                  "July": 0,
+                  "August": 0,
+                  "September": 0,
+                  "October": 0,
+                  "November": 0,
+                  "December": 0
+                }
+              }
+            ]
+          }
+        },
+        "expense": {}
+      },
+      "budget": {
+        "revenue": {},
+        "expense": {}
+      },
+      "forecast": {
+        "revenue": {},
+        "expense": {}
+      }
+    },
+    "169239": {
+      "result": {
+        "revenue": {},
+        "expense": {}
+      },
+      "budget": {
+        "revenue": {},
+        "expense": {}
+      },
+      "forecast": {
+        "revenue": {},
+        "expense": {}
+      }
+    },
+    "482053": {
+      "result": {
+        "revenue": {},
+        "expense": {}
+      },
+      "budget": {
+        "revenue": {},
+        "expense": {}
+      },
+      "forecast": {
+        "revenue": {},
+        "expense": {}
+      }
+    },
+    "529149": {
+      "result": {
+        "revenue": {},
+        "expense": {}
+      },
+      "budget": {
+        "revenue": {},
+        "expense": {}
+      },
+      "forecast": {
+        "revenue": {},
+        "expense": {}
+      }
+    },
+    "665520": {
+      "result": {
+        "revenue": {},
+        "expense": {}
+      },
+      "budget": {
+        "revenue": {},
+        "expense": {}
+      },
+      "forecast": {
+        "revenue": {},
+        "expense": {}
+      }
+    },
+    "746526": {
+      "result": {
+        "revenue": {},
+        "expense": {}
+      },
+      "budget": {
+        "revenue": {},
+        "expense": {}
+      },
+      "forecast": {
+        "revenue": {},
+        "expense": {}
+      }
+    },
+    "999999": {
+      "result": {
+        "revenue": {},
+        "expense": {}
+      },
+      "budget": {
+        "revenue": {},
+        "expense": {}
+      },
+      "forecast": {
+        "revenue": {},
+        "expense": {}
+      }
+    }
+  }
 }
