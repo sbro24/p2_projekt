@@ -222,7 +222,7 @@ function SelectOrder(data) {
                     if (d > 0) { // Check if the differencing order is greater than 0
                         c = 1 // sets the constant to be included in the model
                     }
-                    const config = {p: p, d: d, q: q, verbose: false, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
+                    const config = {p: p, d: d, q: q, auto: false, verbose: false, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
                         
                     const arima = new ARIMA(config).train(data) // Create a new ARIMA model using the config
                     const [testForecast, errors] = arima.predict(12) // Predict the next 12 months using the ARIMA model
