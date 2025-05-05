@@ -46,7 +46,7 @@ async function AddNewCompany (name, id, sessionToken) {
 
         //async writing to database
         await JsonWriteFile(filePathDatabase, data);
-        console.log("Company added to database successfully")
+        console.log("Company added to database successfully");
 
     } catch (err) {
         console.error("Not able to add new company to database:", err);
@@ -54,12 +54,56 @@ async function AddNewCompany (name, id, sessionToken) {
     }
 }
 
-async function UpdateCompany () {
+async function UpdateCompanyName (fromName, toName) {
+    try {
+        //async reading of database
+        const data = await JsonReadFile(filePathDatabase);
+        console.log("data read successfully");
 
+        //Find a rename the company    
+        const companyToRename = data.companies.find(company => company.name === fromName);
+
+        if (companyToRename) {
+            companyToRename.name = toName;
+            console.log(`Renamed company from '${fromName}' to '${toName}'`);
+        } else {
+            console.log("Company name is not in the database");
+        }
+
+        //async writing to database
+        await JsonWriteFile(filePathDatabase, data);
+        console.log("Company name updated successfully");
+    
+    } catch (err) {
+        console.error("Not able to update company name:", err);
+        return null;
+    }
 }
 
-async function UpdateSessionToken () {
+async function UpdateSessionToken (companyName, newSessionToken) {
+    try {
+        //async reading of database
+        const data = await JsonReadFile(filePathDatabase);
+        console.log("data read successfully");
 
+        //Find a rename the company    
+        const companySessionTokenToUpdate = data.companies.find(company => company.name === companyName);
+
+        if (companySessionTokenToUpdate) {
+            companySessionTokenToUpdate.sessionToken = newSessionToken;
+            console.log(`The token for company ${companyName} has been updated to ${newSessionToken}`);
+        } else {
+            console.log("Company name is not in the database");
+        }
+
+        //async writing to database
+        await JsonWriteFile(filePathDatabase, data);
+        console.log("Session token updated successfully");
+    
+    } catch (err) {
+        console.error("Not able to update session token:", err);
+        return null;
+    }
 }
 
 async function GetCompanyObject () {
@@ -70,8 +114,30 @@ async function UpdateCompanyObject () {
 
 }
 
-async function GetFinancialMetricArray () {
+async function GetFinancialMetricArray (id, financialType, financialCategory, financialMetric) {
+    let financialMetricArray = [];
+    
+    try {
+        //async reading of database
+        const data = await JsonReadFile(filePathDatabase);
+        console.log("data read successfully");
+        
+        //get company object
+        const companyObject = data.dataById[id];
+        const financialMetricForecast = companyObject[financialType][financialCategory][financialMetric].data;
 
+        //loops through all years in the data array on the relevant metric
+        financialMetricForecast.forEach(yearData => {
+            // Append the months of each year to the financialMetricArray
+            financialMetricArray.push(...Object.values(yearData.months)); //uses the spread operator to push them into the array as indiviual elements
+        });
+
+        return financialMetricArray
+
+    } catch (error) {
+        console.error("Error in GetFinancialMetricArray:", error);
+        return [];
+    }
 }
 
 async function JsonReadFile(filePath) {
@@ -94,13 +160,17 @@ async function JsonWriteFile(filePath, data) {
     }
 }
 
-AddNewCompany("Mikkels test3", "999999", "");
+//AddNewCompany("Mikkels test3", "999999", "");
 
-/* async function LogResult (inputFunction) {
+async function LogResult (inputFunction) {
     const result = await inputFunction;
-    console.log(result);
+    console.log("result:", result);
 }
 
-LogResult(GetCompaniesArray()); */
+//LogResult(GetCompaniesArray());
+//LogResult(UpdateCompanyName("name", "newName"))
+//LogResult(UpdateSessionToken("newName", "123401470983274"));
+LogResult(GetFinancialMetricArray("123456", "result", "revenue", "sales"));
+
 
 export {GetCompaniesArray};
