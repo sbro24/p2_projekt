@@ -15,6 +15,31 @@
         {
             "id": "123234",
             "name": "Ny test"
+        },
+        {
+            "id": "482053",
+            "name": "Testname",
+            "sessionToken": ""
+        },
+        {
+            "id": "665520",
+            "name": "Testname2",
+            "sessionToken": ""
+        },
+        {
+            "id": "529149",
+            "name": "Testname3",
+            "sessionToken": ""
+        },
+        {
+            "id": "169239",
+            "name": "Testname4",
+            "sessionToken": ""
+        },
+        {
+            "id": "746526",
+            "name": "Testname5",
+            "sessionToken": ""
         }
     ],
     "dataById": {
@@ -86,6 +111,76 @@
                         ]
                     }
                 },
+                "expense": {}
+            },
+            "budget": {
+                "revenue": {},
+                "expense": {}
+            },
+            "forecast": {
+                "revenue": {},
+                "expense": {}
+            }
+        },
+        "169239": {
+            "result": {
+                "revenue": {},
+                "expense": {}
+            },
+            "budget": {
+                "revenue": {},
+                "expense": {}
+            },
+            "forecast": {
+                "revenue": {},
+                "expense": {}
+            }
+        },
+        "482053": {
+            "result": {
+                "revenue": {},
+                "expense": {}
+            },
+            "budget": {
+                "revenue": {},
+                "expense": {}
+            },
+            "forecast": {
+                "revenue": {},
+                "expense": {}
+            }
+        },
+        "529149": {
+            "result": {
+                "revenue": {},
+                "expense": {}
+            },
+            "budget": {
+                "revenue": {},
+                "expense": {}
+            },
+            "forecast": {
+                "revenue": {},
+                "expense": {}
+            }
+        },
+        "665520": {
+            "result": {
+                "revenue": {},
+                "expense": {}
+            },
+            "budget": {
+                "revenue": {},
+                "expense": {}
+            },
+            "forecast": {
+                "revenue": {},
+                "expense": {}
+            }
+        },
+        "746526": {
+            "result": {
+                "revenue": {},
                 "expense": {}
             },
             "budget": {
