@@ -106,12 +106,42 @@ async function UpdateSessionToken (companyName, newSessionToken) {
     }
 }
 
-async function GetCompanyObject () {
+async function GetCompanyObject (companyName) {
+    try {
+        //async reading of database
+        const data = await JsonReadFile(filePathDatabase);
+        console.log("data read successfully");
 
+        const company = data.companies.find (company => company.name === companyName)
+        const id = company.id;
+
+        return data.dataById[id];
+
+    } catch (err) {
+        console.error("Not able to get company object:", err);
+        return null;
+    }
 }
 
-async function UpdateCompanyObject () {
+async function UpdateCompanyObject (companyObject) {
+    try {
+        //async reading of database
+        const data = await JsonReadFile(filePathDatabase);
+        console.log("data read successfully");
 
+        const id = Object.keys(companyObject)[0];
+
+        //Find a rename the company    
+        data.dataById[id] = companyObject[id];
+
+        //async writing to database
+        await JsonWriteFile(filePathDatabase, data);
+        console.log("Company name updated successfully");
+    
+    } catch (err) {
+        console.error("Not able to update company name:", err);
+        return null;
+    }
 }
 
 async function GetFinancialMetricArray (id, financialType, financialCategory, financialMetric) {
@@ -160,17 +190,78 @@ async function JsonWriteFile(filePath, data) {
     }
 }
 
-//AddNewCompany("Mikkels test3", "999999", "");
-
 async function LogResult (inputFunction) {
     const result = await inputFunction;
     console.log("result:", result);
 }
 
+
+
 //LogResult(GetCompaniesArray());
+//LogResult(AddNewCompany("Mikkels test3", "999999", ""));
 //LogResult(UpdateCompanyName("name", "newName"))
 //LogResult(UpdateSessionToken("newName", "123401470983274"));
-LogResult(GetFinancialMetricArray("123456", "result", "revenue", "sales"));
+//LogResult(GetFinancialMetricArray("123456", "result", "revenue", "sales"));
+//LogResult(UpdateCompanyObject(companyObject));
+//LogResult(GetCompanyObject("newName"));
 
 
-export {GetCompaniesArray};
+export {GetCompaniesArray, AddNewCompany, UpdateCompanyName, UpdateSessionToken, GetFinancialMetricArray, UpdateCompanyObject, GetCompanyObject};
+
+
+/* const companyObject = {
+    "123234": {
+      result: {
+        revenue: {
+          sales: {
+            characteristics: [],
+            data: [
+              {
+                year: 2025,
+                months: {
+                  January: 0,
+                  February: 100,
+                  March: 0,
+                  April: 0,
+                  May: 0,
+                  June: 0,
+                  July: 0,
+                  August: 0,
+                  September: 0,
+                  October: 0,
+                  November: 0,
+                  December: 0
+                }
+              },
+              {
+                year: 2025,
+                months: {
+                  January: 1,
+                  February: 1,
+                  March: 1,
+                  April: 0,
+                  May: 0,
+                  June: 0,
+                  July: 0,
+                  August: 0,
+                  September: 0,
+                  October: 0,
+                  November: 0,
+                  December: 0
+                }
+              }
+            ]
+          }
+        },
+        expense: {}
+      },
+      budget: {
+        revenue: {},
+        expense: {}
+      },
+      forecast: {
+        revenue: {},
+        expense: {}
+      }
+    }
+  }; */
