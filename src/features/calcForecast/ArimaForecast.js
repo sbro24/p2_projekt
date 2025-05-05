@@ -19,6 +19,7 @@ class Forecast { // Class to store the ARIMA models
         this.models = [] // Array to store the models
         this.bestModel = null // The best ARIMA model found
         this.bestOrder = null // The best order of the ARIMA model found
+        this.bestAIC = Infinity // The best AIC of the ARIMA model found
     }
     addModel(model) {
         this.models.push(model) // Add a model to the array
@@ -29,6 +30,9 @@ class Forecast { // Class to store the ARIMA models
     setBestOrder(order) {
         this.bestOrder = order // Set the best order of the ARIMA model
     }
+    setBestAIC(AIC) {
+        this.bestAIC = AIC // Set the best AIC of the ARIMA model
+    }
     getAllModels() {
         return this.models // Return all models, so they are accessible for later use
     }
@@ -38,20 +42,21 @@ class Forecast { // Class to store the ARIMA models
     getBestOrder() {
         return this.bestOrder // Return the best order of the ARIMA model, so it is accessible for later use
     }
-    
+    getBestAIC() {
+        return this.bestAIC // Return the best AIC of the ARIMA model, so it is accessible for later use
+    }
 }
 
 const forecastHandler = new Forecast() // Create a forecast handler
 
 // Test data
 const data = [
-    248, 393, 777, 909, 320, 973, 191, 643, 41, 213, 629, 357,
-    604, 164, 327, 26, 432, 393, 122, 308, 411, 198, 846, 278,
-    225, 80, 397, 873, 968, 905, 433, 457, 154, 938, 370, 695,
-    62, 598, 379, 986, 281, 412, 300, 305, 27, 520, 929, 384
-  ];   
-
-
+    82.4, 85.7, 89.2, 91.5, 94.8, 92.1, 88.6, 86.3, 89.7, 93.2, 97.5, 99.8,
+    101.4, 98.7, 94.2, 91.9, 95.3, 99.6, 103.8, 107.1, 109.5, 106.2, 102.7, 99.4,
+    103.1, 107.4, 111.9, 115.2, 117.8, 114.3, 110.6, 107.2, 110.9, 115.3, 119.7, 123.4,
+    125.9, 122.4, 118.7, 115.3, 119.2, 123.6, 128.1, 131.8, 134.3, 130.6, 126.9, 123.4,
+    127.5, 132.1, 136.7, 140.5, 143.2, 139.3, 135.4, 131.7
+] // Example time series data
 
 //function ReadFromDatabase()
 
@@ -68,12 +73,24 @@ const data = [
     Output: rss = the residual sum of squares (RSS)
 */
 function CalcRSS(data, forecast) { // Calculate the residual sum of squares (RSS)
-    const recentData = data.slice(-forecast[0].length) // Get the most recent data points to compare with the forecast
+    const recentData = data.slice(-forecast.length) // Get the most recent data points to compare with the forecast
     const rss = recentData.reduce((sum, dataValue, i) => {
-        const residual = dataValue - forecast[0][i]; // Calculate the residual for each observation
+        const residual = dataValue - forecast[i]; // Calculate the residual for each observation
         return sum + (residual)**2; // Calculates the residual sum of squares (RSS)
     }, 0) // 0 is the start value of the sum 
     return rss;
+}
+
+function CalcVariance(rss, n) { // Calculate the variance of the data
+    const variance = rss / (n) // Calculate the variance of the data
+    return variance; // Return the variance
+}
+/** Checks if the forecast is flat, i.e. all values are the same
+    @param {forecast = the predicted values from the model}
+*/
+function flatForecast(forecast, variance) {
+    const tolerance = 1e-2 // Set a tolerance for variation in forecast values
+    return variance < tolerance // If variance is lower than the tolerance, return true
 }
 
 /**  Calculates the (AIC) for parameter selection 
@@ -83,14 +100,17 @@ function CalcRSS(data, forecast) { // Calculate the residual sum of squares (RSS
     @returns {AIC of the given ARIMA model}
 */
 function CalcAIC(data, config, forecast) { // Calculate the AIC for the given ARIMA model
-    const n = forecast[0].length // Number of observations used for RSS
+    const n = data.length // Number of observations used for RSS
     const rss = CalcRSS(data, forecast) // Call the function to calculate RSS
+    const sigmaSquared = CalcVariance(rss, n) // Sigma squared is the residual variance
+    if (flatForecast(forecast, rss)) { // Check if the forecast is flat
+        return Infinity; // If the forecast is flat, return infinity (the worst AIC possible)
+    }
     let k = config.p + config.q  // the amount of parameters in the model
         if (config.constant) { // If a constant is included in the model, add 1 to k
             k += 1
         }
-    const sigmaSquared = rss / n // Sigma squared is the residual variance
-    const logLikelihood = -(n / 2) * (Math.log(2 * Math.PI)) -(n / 2) * (Math.log(sigmaSquared)) -(1 / (2 * sigmaSquared)) * rss // Calculates the log-likelihood
+    const logLikelihood = -(n / 2) * (Math.log(2 * Math.PI)) -(n / 2) * (Math.log(sigmaSquared)) // Calculates the log-likelihood
     const AIC = -2 * logLikelihood + 2 * k // Calculates the AIC
     return AIC;
 }
@@ -174,25 +194,36 @@ function ModelAverage(models){
 function SelectOrder(data) {
     // const d = 0 // Get_d(data) // Call the function to get the differencing order
     let bestAIC = Infinity // Initialize the best AIC to infinity
+    const minComplexity = 1;
     for (let c = 0; c <= 1; c++) { // Loop through, to check if the constant should be included
         for (let d = 0; d <= 2; d++) { // Loop through the differencing orders
             for (let p = 0; p <= 5; p++) { // Loop through the AR orders
                 for (let q = 0; q <= 5; q++) { // Loop through the MA orders
                     
-                    const config = {p: p, d: d, q: q, verbose: true, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
+                    if (p + q <= minComplexity) { // Check if the model is too simple
+                        continue; // Skip this iteration if the model is too simple
+                    }
+                    if (d > 0) { // Check if the differencing order is greater than 0
+                        c = 1 // sets the constant to be included in the model
+                    }
+                    const config = {p: p, d: d, q: q, verbose: false, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
                         
                     const arima = new ARIMA(config).train(data) // Create a new ARIMA model using the config
-                    const testForecast = arima.predict(12) // Predict the next 12 months using the ARIMA model
-                    const sameData = forecast[0].every(val => val === forecast[0]) // Check if the predicted values are the same as the data
-                    if (sameData) return Infinity; // Check if the predicted values are the same as the data, if so, return infinity 
+                    const [testForecast, errors] = arima.predict(12) // Predict the next 12 months using the ARIMA model
+                        if (flatForecast(testForecast)) { // Check if the forecast is flat
+                            continue; // Skip this iteration if the forecast is flat
+                        }  
                     const aic = CalcAIC(data, config, testForecast) // calculate the AIC of the current ARIMA model
                     const model = new Model(data, config, aic, testForecast) // Create a new model object
                     forecastHandler.addModel(model) // Add the model to the forecast class
-
+                    console.log("Order", config) // Log the model to the console   
+                    console.log("AIC", aic) // Log the AIC to the console
+                    
                     if (aic < bestAIC) { // If the AIC is lower than the best AIC found so far
                         bestAIC = aic // Update the best AIC
                         forecastHandler.setBestOrder(config)// Update the best model parameters
                         forecastHandler.setBestModel(model) // Update the best model
+                        forecastHandler.setBestAIC(aic)
                     }
                 }  
             }
@@ -203,7 +234,10 @@ function SelectOrder(data) {
         throw new Error("No ARIMA model found") // If no model was found, throw an error
     }  
 }
+
 SelectOrder(data)
 
 console.log("Best ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model
 console.log("Best ARIMA model order: ", forecastHandler.getBestOrder()) // Log the best ARIMA model order
+console.log("Best ARIMA model AIC: ", forecastHandler.getBestAIC()) // Log the best ARIMA model AIC
+
