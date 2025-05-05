@@ -130,31 +130,34 @@ function SelectOrder(data) {
 }
 //SelectOrder(data)
 
-function GetPermutations(arr) {
-    let result = []; // Array to store the all permutations
+function GetPermutations() {
+    let result = [[]]; // Array to store the all permutations
+
     if (arguments.length === 0) return result;
     if (arguments.length === 1) return Range(arr[0], arr[1]);
 
-    let range = Range(arguments[0][0], arguments[0][1])
-    for (let i = 0; i < range.length; i++) {
-        result.push([range[i]]);
+    for (let i = 0; i < arguments.length; i++) {
+        result[0].push(arguments[i][0]);
     }
 
-    for (let i = 1; i < arguments.length; i++) {
-        range = Range(arguments[i][0], arguments[i][1])
-        console.log(result)
-        for (let j = 0; j < result.length; j++) {
-            range.forEach(element => {
-                resultresult.push(element)
-            });
-        }
-    }
+    
 
     console.log(result)
     
+    /*     for (let i = 1; i < arguments.length; i++) {
+            let range = Range(arguments[i][0], arguments[i][1])
+            let resultCopy = result
+            for (let j = 0; j < range.length - 1; j++) {
+                result = result.concat(resultCopy)
+            }
+            let pointer = 0
+            for (let j = 0; j < result.length; j++) {
+                if (j % range.length === 0 && j !== 0) pointer++
+                result[j] = result[j].concat(pointer)
+            }*/
 }
 
-GetPermutations([0, 1], [0, 2], [0, 5], [0, 5])
+GetPermutations([1, 2], [2, 10])
 
 function Range(start, end) {
     let result = [];
