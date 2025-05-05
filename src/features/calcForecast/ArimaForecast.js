@@ -55,6 +55,7 @@ const data = [
 
 //function ReadFromDatabase()
 
+
 //function FormatData()
 
 //function WriteToDatabase()
@@ -96,7 +97,7 @@ function CalcAIC(data, config, forecast) { // Calculate the AIC for the given AR
 
 
 // ############### NEW STUFF NOT TESTED ##########################
-
+/*
 function CalcDeltaAIC(bestAIC, AIC){
     return bestAIC - AIC
 }
@@ -161,9 +162,9 @@ function ModelAverage(models){
 }   
 
 
+*/
 
-
-// function creatConfig() // Create a config object for the ARIMA model
+// function createConfig() // Create a config object for the ARIMA model
 
 
 /** Selectes the best ARIMA model based on the AIC, and stores all the tested models in 
@@ -178,14 +179,15 @@ function SelectOrder(data) {
             for (let p = 0; p <= 5; p++) { // Loop through the AR orders
                 for (let q = 0; q <= 5; q++) { // Loop through the MA orders
                     
-                    const config = {p: p, d: d, q: q, verbose: false, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
+                    const config = {p: p, d: d, q: q, verbose: true, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
                         
                     const arima = new ARIMA(config).train(data) // Create a new ARIMA model using the config
                     const testForecast = arima.predict(12) // Predict the next 12 months using the ARIMA model
+                    const sameData = forecast[0].every(val => val === forecast[0]) // Check if the predicted values are the same as the data
+                    if (sameData) return Infinity; // Check if the predicted values are the same as the data, if so, return infinity 
                     const aic = CalcAIC(data, config, testForecast) // calculate the AIC of the current ARIMA model
                     const model = new Model(data, config, aic, testForecast) // Create a new model object
                     forecastHandler.addModel(model) // Add the model to the forecast class
-                    console.log(model.order)
 
                     if (aic < bestAIC) { // If the AIC is lower than the best AIC found so far
                         bestAIC = aic // Update the best AIC
@@ -202,3 +204,6 @@ function SelectOrder(data) {
     }  
 }
 SelectOrder(data)
+
+console.log("Best ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model
+console.log("Best ARIMA model order: ", forecastHandler.getBestOrder()) // Log the best ARIMA model order
