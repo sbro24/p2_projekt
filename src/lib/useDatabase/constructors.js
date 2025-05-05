@@ -1,8 +1,9 @@
 // classes and constructers for adding data to the JSON database
 class Company {
-    constructor(id, name) {
+    constructor(id, name, sessionToken) {
         this.id = id;
         this.name = name;
+        this.sessionToken = sessionToken;
     };
 }
 

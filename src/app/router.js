@@ -43,8 +43,8 @@ async function GetResponse(req, res, data) {
         .then(execute => execute.router(req, res, data))
         .catch(err => Log(err));
     }
-    await Wait(1000);
-    if (!res.writableFinished) ErrorResponse(res, Error('Page not found'), 404);
+    await Wait(100);
+    if (!res.writableFinished) ErrorResponse(res, Error(`${req.url} not found`), 404);
 }
 
 /**

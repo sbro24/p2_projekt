@@ -1,4 +1,4 @@
-import { runLogin, runRegister } from "./login";
+import { runLogin, runRegister } from "./login.js";
 
 export function router(req, res, data) {
     switch (req.url) {
@@ -7,7 +7,7 @@ export function router(req, res, data) {
             break;
         
         case '/login/register':
-            const Register = runRegister();
+            //const Register = runRegister();
             switch (Register.response) {
                 case 'responsed':
                     

@@ -2,22 +2,17 @@
 
 import fs from 'fs'
 import process from 'process';
-import { getSystemErrorMessage } from 'util';
 
 const dbPath = process.cwd() + '/src/data/data.json';
-
-const testData = {
-    companyName: "someCompanyName",
-    password: "password123"
-}
 
 // (Helper function) Load user data
 function loadUsers() {
     if (!fs.existsSync(dbPath)) { //Check if file can be opened/exists in the path
         fs.writeFileSync(dbPath, JSON.stringify({})); //"overwrites" the JSON file with an empty object 
     }                                                //to be filled with user data when it has been gathered from the register form
-    const data = fs.readFileSync(dbPath); //Stores the JSON in the variable "data". The file is stored as a string. 
-    return JSON.parse(data); //By using the parse function it transfrom the file from strings to usuable objects
+    let data = fs.readFileSync(dbPath); //Stores the JSON in the variable "data". The file is stored as a string. 
+    data = JSON.parse(data); //By using the parse function it transfrom the file from strings to usuable objects
+    return data.companies; //By using the parse function it transfrom the file from strings to usuable objects
 }
 
 // (Helper function) Function to save user data
@@ -29,16 +24,20 @@ function saveUsers(users) {
 // Function to register a company using name and password
 function register(companyName, password) {
     const users = loadUsers(); // Load the users from the JSON file
+    console.log(users)
+
     if (users[companyName]) { //Check if the entered company name is already inside the JSON file
         console.log(`Company "${companyName}" already exists.`); // Log a error message to the user if company name exists
         return;
     }
 
-    users[companyName] = { //Adds password to the company object
-        password, 
-    }; 
-    saveUsers(users); //Writes the new company object into the original JSON file
-    console.log(`Company "${companyName}" registered successfully.`);
+
+
+    //users[companyName] = { //Adds password to the company object
+    //    password, 
+    //}; 
+    //saveUsers(users); //Writes the new company object into the original JSON file
+    //console.log(`Company "${companyName}" registered successfully.`);
 }
 
 
@@ -64,12 +63,21 @@ export function runLogin(data) {
 }
 
 export function runRegister(data) {
-    console.log(data)
+
+
+
+    register(data.companyName, data.password)
     return {
         response: '',
-        data: {  },
+        data: {},
     }
 }
 
-runLogin(testData)
-runRegister(data)
+
+const testData = {
+    companyName: "someCompanyName",
+    password: "password123"
+}
+
+//runLogin(testData)
+//runRegister(testData)

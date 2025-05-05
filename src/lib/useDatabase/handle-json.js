@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs'
 
 //helper-functions to read from and write to JSON data
 function JsonReadFile(filePath, cb) {
