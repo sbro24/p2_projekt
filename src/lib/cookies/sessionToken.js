@@ -1,4 +1,4 @@
-import { RandomIntFromInterval } from "../maths/random";
+import { RandomIntFromInterval } from "../maths/random.js";
 
 
 

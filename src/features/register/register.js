@@ -57,14 +57,14 @@ function Register(data) {
     id = id.toString()
 
     AddNewProfile(id, data.companyName, '');
+
+    result.response = 'credited';
+    return
 }
-
-
 
 const testData = {
     companyName: "Testname5",
     password: "password123"
 }
 
-//runLogin(testData)
 console.log(Register(testData))
