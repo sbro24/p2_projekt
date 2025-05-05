@@ -50,20 +50,22 @@ class Forecast { // Class to store the ARIMA models
 const forecastHandler = new Forecast() // Create a forecast handler
 
 // Test data
-const data = [
-    248, 393, 777, 909, 320, 973, 191, 643, 41, 213, 629, 357,
-    604, 164, 327, 26, 432, 393, 122, 308, 411, 198, 846, 278,
-    225, 80, 397, 873, 968, 905, 433, 457, 154, 938, 370, 695,
-    62, 598, 379, 986, 281, 412, 300, 305, 27, 520, 929, 384
-  ];
-  
+const data = [  555866, 174701, 458500, 323800, 30750, 456900, 194000, 416297 ,303865, 448050, 178515, 168222,
+                333520, 330090, 325457, 367068, 327179, 247301, 340363, 553907, 361974, 242516, 124659, 223538,
+                108450, 306087, 340362, 388343, 448847, 107248, 428296, 324494, 922040, 
+                394335, 330600, 630237, 86555, 290790, 788550, 77700, 109050, 318261, 160350, 72089, 376368]; 
+
+
+/*  
 const dataCompany = [555866	,174701	,458500	,323800	,30750	,456900	,194000	,
     416297	,303865	,448050	,178515	,168222	,333520	,330090	,325457	,367068	,
     327179	,247301	,340363	,553907	,361974	,242516	,124659	,223538	,108450	,
     306087	,340362	,388343	,448847	,107248	,428296	,324494	,922040]; 
 
-const dataCompanyResult = [394335	,330600	,630237	,86555	,290790, 788550 ,
+const dataCompanyActualResult = [394335	,330600	,630237	,86555	,290790, 788550 ,
     77700	,109050	,318261	,160350	,72089	,376368	];
+
+*/
 
 
 //function ReadFromDatabase()
@@ -89,15 +91,21 @@ function CalcRSS(data, forecast) { // Calculate the residual sum of squares (RSS
     return rss;
 }
 
-function CalcVariance(rss, n) { // Calculate the variance of the data
-    const variance = rss / (n) // Calculate the variance of the data
-    return variance; // Return the variance
+/** Calculates the variance of the predicted values, to be used by flatForecast
+    @param {forecast = the predicted values from the model}
+ */
+function CalcForecastVariance(forecast) { // Calculate the variance of the data
+    const n = forecast.length // Number of forecasted values
+    const mean = forecast.reduce((sum, value) => sum + value, 0) / n // Calculate the mean of the data
+    const variance = forecast.reduce((sum, value) => sum + (value - mean) **2, 0) / n; // Calculate the variance of the data
+    return variance;
 }
 /** Checks if the forecast is flat, i.e. all values are the same
-    @param {forecast = the predicted values from the model}
+    @param {variance = the variance of the data}
 */
-function flatForecast(forecast, variance) {
+function FlatForecast(forecast) {
     const tolerance = 1e-2 // Set a tolerance for variation in forecast values
+    const variance = CalcForecastVariance(forecast) // Call the function to calculate the variance of the forecast
     return variance < tolerance // If variance is lower than the tolerance, return true
 }
 
@@ -108,10 +116,10 @@ function flatForecast(forecast, variance) {
     @returns {AIC of the given ARIMA model}
 */
 function CalcAIC(data, config, forecast) { // Calculate the AIC for the given ARIMA model
-    const n = data.length // Number of observations used for RSS
+    const n = forecast.length // Number of observations used for RSS
     const rss = CalcRSS(data, forecast) // Call the function to calculate RSS
-    const sigmaSquared = CalcVariance(rss, n) // Sigma squared is the residual variance
-    if (flatForecast(forecast, rss)) { // Check if the forecast is flat
+    const sigmaSquared = rss / n // Sigma squared is the residual variance
+    if (FlatForecast(forecast)) { // Check if the forecast is flat
         return Infinity; // If the forecast is flat, return infinity (the worst AIC possible)
     }
     let k = config.p + config.q  // the amount of parameters in the model
@@ -218,14 +226,9 @@ function SelectOrder(data) {
                         
                     const arima = new ARIMA(config).train(data) // Create a new ARIMA model using the config
                     const [testForecast, errors] = arima.predict(12) // Predict the next 12 months using the ARIMA model
-                        if (flatForecast(testForecast)) { // Check if the forecast is flat
-                            continue; // Skip this iteration if the forecast is flat
-                        }  
                     const aic = CalcAIC(data, config, testForecast) // calculate the AIC of the current ARIMA model
                     const model = new Model(data, config, aic, testForecast) // Create a new model object
                     forecastHandler.addModel(model) // Add the model to the forecast class
-                    console.log("Order", config) // Log the model to the console   
-                    console.log("AIC", aic) // Log the AIC to the console
                     
                     if (aic < bestAIC) { // If the AIC is lower than the best AIC found so far
                         bestAIC = aic // Update the best AIC
@@ -246,6 +249,4 @@ function SelectOrder(data) {
 SelectOrder(data)
 
 console.log("Best ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model
-console.log("Best ARIMA model order: ", forecastHandler.getBestOrder()) // Log the best ARIMA model order
-console.log("Best ARIMA model AIC: ", forecastHandler.getBestAIC()) // Log the best ARIMA model AIC
 
