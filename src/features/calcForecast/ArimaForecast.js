@@ -13,7 +13,7 @@ class Model { // Class to construct an ARIMA model
         this.w = 0 // Aikaike Weight; Normalized probability that a model is the best
     }
 }
-
+few
 class Forecast { // Class to store the ARIMA models
     constructor() {
         this.models = [] // Array to store the models
