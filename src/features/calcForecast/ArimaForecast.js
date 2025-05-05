@@ -6,6 +6,11 @@ class Model { // Class to construct an ARIMA model
         this.order = order // The order of the ARIMA model: {p, d, q, c}
         this.AIC = AIC // The AIC of the ARIMA model
         this.prediction = prediction // The predicted values from the model
+
+        // Model Averaging Values:
+        this.deltaAIC = 0 // Difference in AIC between this model and the best model
+        this.P = 0 // Relative Likelihood to the best model, i.e this model is P as likely to be true as the best model
+        this.w = 0 // Aikaike Weight; Normalized probability that a model is the best
     }
 }
 
@@ -57,6 +62,7 @@ const dataCompanyResult = [394335	,330600	,630237	,86555	,290790, 788550 ,
 
 //function ReadFromDatabase()
 
+
 //function FormatData()
 
 //function WriteToDatabase()
@@ -97,7 +103,75 @@ function CalcAIC(data, config, forecast) { // Calculate the AIC for the given AR
 }
 
 
-// function creatConfig() // Create a config object for the ARIMA model
+// ############### NEW STUFF NOT TESTED ##########################
+/*
+function CalcDeltaAIC(bestAIC, AIC){
+    return bestAIC - AIC
+}
+
+function CalcRelativeLikelihood(deltaAIC){
+    return Math.exp(-deltaAIC/2)
+}
+
+function CalcAikaikeWeight(models, model){
+    let sum = 0
+    for (let i=0; i<=models.length; i++){
+        sum = sum + models[i].P
+    }
+    return model.P/sum
+}
+
+// Thresholds:  (Needs more explanation)
+// DeltaAIC < 4
+// Aikaike Weight w > 0.1 (10%)
+
+// Screens all created models, excluding models that fail the abovementioned tresholds
+
+function GetBestModels(models, bestAIC){
+    let bestModels = []
+    let screenedModels = []
+
+    for (let i=0; i<=models.length; i++){
+        let model = models[i]
+        model.deltaAIC = CalcDeltaAIC(bestAIC, model.AIC)
+        if (model.deltaAIC < 4){  // deltaAIC filter
+            model.P = CalcRelativeLikelihood(deltaAIC)
+            screenedModels.push(model)
+        }
+    }
+    for (let j=0; j<=screenedModels.length; j++){
+        let model = screenedModels[j]
+        model.w = CalcAikaikeWeight(models, model)
+        if (model.w > 0.1){  // aikaike weight filter
+            bestModels.push(model)
+        }
+    }
+}
+
+
+// Treats forecast.models like a matrix, calculating the average of each column
+// to create an averaged result of the best models
+
+function ModelAverage(models){
+    bestModels = GetBestModels(models, bestAIC)
+    let averagedForecast = []
+    for (let i=0; i<=bestModels[0].data.length; i++){ // handles Column index
+        for (let j=0; j<=bestModels.length; j++){ // Handles Row index
+            if (averagedForecast[i] === undefined){ // handles first iteration, where the array is empty
+                averagedForecast[i].push(bestModels[j].data[i])
+            } else {
+                averagedForecast[i] = averagedForecast[i] + bestModels[j].data[i] // calculates sum of current column
+            }
+        }
+        averagedForecast[i] = averagedForecast[i] / bestModels[j].data.length // calculates average of current column
+    }
+    return averagedForecast
+}   
+
+
+*/
+
+// function createConfig() // Create a config object for the ARIMA model
 
 
 /** Selectes the best ARIMA model based on the AIC, and stores all the tested models in 
@@ -112,14 +186,15 @@ function SelectOrder(data) {
             for (let p = 0; p <= 5; p++) { // Loop through the AR orders
                 for (let q = 0; q <= 5; q++) { // Loop through the MA orders
                     
-                    const config = {p: p, d: d, q: q, verbose: false, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
+                    const config = {p: p, d: d, q: q, verbose: true, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
                         
                     const arima = new ARIMA(config).train(data) // Create a new ARIMA model using the config
                     const testForecast = arima.predict(12) // Predict the next 12 months using the ARIMA model
+                    const sameData = forecast[0].every(val => val === forecast[0]) // Check if the predicted values are the same as the data
+                    if (sameData) return Infinity; // Check if the predicted values are the same as the data, if so, return infinity 
                     const aic = CalcAIC(data, config, testForecast) // calculate the AIC of the current ARIMA model
                     const model = new Model(data, config, aic, testForecast) // Create a new model object
                     forecastHandler.addModel(model) // Add the model to the forecast class
-                    console.log(model.order)
 
                     if (aic < bestAIC) { // If the AIC is lower than the best AIC found so far
                         bestAIC = aic // Update the best AIC
@@ -136,3 +211,6 @@ function SelectOrder(data) {
     }  
 }
 SelectOrder(data)
+
+console.log("Best ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model
+console.log("Best ARIMA model order: ", forecastHandler.getBestOrder()) // Log the best ARIMA model order
