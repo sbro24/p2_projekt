@@ -1,7 +1,7 @@
 import { Company, CompanyData, FinancialMetric, FinancialYear } from './constructors.js';
-import {JsonWriteFile, JsonReadFile, JsonReadFileCb, JsonWriteFileCb} from './handle-json';
+import {JsonWriteFile, JsonReadFile, JsonReadFileCb, JsonWriteFileCb} from './handle-json.js';
 
-const path = '../../data/data.json' 
+const path = 'src/data/data.json' 
 
 // helper-functions for adding data to the JSON database in a structured manner according to the use cases
 
@@ -11,10 +11,11 @@ const path = '../../data/data.json'
  * It creates the dataById object with the company id. 
  * @param {string: 6 digits id on company} id 
  * @param {string: name of the company in the new profil} name 
+ * @param {string: a login Token so, different parts of the site knows that user is logged in} sessionToken 
  */
 
-function AddNewProfile (id, name) {
-    let newCompany = new Company (id, name);
+function AddNewProfile (id, name, sessionToken) {
+    let newCompany = new Company (id, name, sessionToken);
     let newCompanyData = new CompanyData(id);
     
     JsonReadFile(path, (err, data) => {
@@ -22,6 +23,7 @@ function AddNewProfile (id, name) {
             console.log(err);
         }
 
+        console.log(data);
         console.log("data read successfully");
         data.companies.push(newCompany);
         data.dataById[id] = newCompanyData;
