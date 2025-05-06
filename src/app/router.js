@@ -66,7 +66,7 @@ function ExtractBody(req) {
 
 function guessMimeType(fileName){
     const fileExtension=fileName.split('.').pop().toLowerCase();
-    const ext2Mime ={
+    const ext2Mime = {
         "txt": "text/txt",
         "html": "text/html",
         "ico": "image/ico",
@@ -87,7 +87,6 @@ function guessMimeType(fileName){
 
 export function FileResponse(res, filePath) {
     let path = PublicRessourcesDirctoryPath + filePath
-    console.log(path)
     fs.readFile(path, (err, data) => {
       if (err) {
         ErrorResponse(res, err, 404)
