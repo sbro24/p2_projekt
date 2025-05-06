@@ -1,24 +1,13 @@
+import { FileResponse } from "../../app/router.js";
+
 export function router(req, res, data) {
     switch (req.url) {
-        case '/login/login':
-            
+        case '/login':
+            FileResponse(res, 'login/html/login.html');
             break;
-        
-        case '/login/register':
-            //const Register = runRegister();
-            switch (Register.response) {
-                case 'responsed':
-                    
-                    break;
-                case 'vaildationError':
-                    
-                    break;
-            
-                default:
-                    
-                    break;
-            }
-        
+        case '/api/login/css':
+            FileResponse(res, 'login/css/login.css');
+            break;
         default:
             break;
     }

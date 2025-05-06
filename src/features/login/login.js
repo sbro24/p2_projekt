@@ -42,7 +42,7 @@ function Login(data) {
         return result
     }
 
-    let token = GenSessionToken()
+    let token = GenSessionToken();
     
     //EditProfile(id, 'what to edit', data)
 

@@ -56,7 +56,9 @@ function Register(data) {
     }
     id = id.toString()
 
-    AddNewProfile(id, data.companyName, '');
+    let token = GenSessionToken();
+
+    AddNewProfile(id, data.companyName, token);
 
     result.response = 'credited';
     return

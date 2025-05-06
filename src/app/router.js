@@ -7,7 +7,8 @@ import { Wait } from '../lib/time/time.js';
 const featureDirctoryPath = process.cwd() + '/src/features/';
 const featureDirctoryRelativePath = '../features/';
 
-const PublicRessourcesDirctoryPath = process.cwd() + '/src/PublicRessources/';
+const publicRessourcesDirctoryPath = process.cwd() + '/src/PublicRessources/';
+const dataJsonPath = process.cwd() + '/data/data.json';
 
 /**
  * Looks at the request method and calls the appropriate function.
@@ -37,6 +38,7 @@ export function processRequest(req, res) {
  * @param {string} data 
  */
 async function GetResponse(req, res, data) {
+    console.log(req, res, data);
     const pathFeatureFiles = fs.readdirSync(featureDirctoryPath);
     for (const feature of pathFeatureFiles) {
         if (!fs.existsSync(featureDirctoryPath + feature + '/router.js')) continue;
@@ -86,7 +88,8 @@ function guessMimeType(fileName){
     }
 
 export function FileResponse(res, filePath) {
-    let path = PublicRessourcesDirctoryPath + filePath
+    let path = publicRessourcesDirctoryPath + filePath
+    console.log(path)
     fs.readFile(path, (err, data) => {
       if (err) {
         ErrorResponse(res, err, 404)
