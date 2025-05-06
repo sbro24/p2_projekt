@@ -1,5 +1,3 @@
-import { runLogin, runRegister } from "./login.js";
-
 export function router(req, res, data) {
     switch (req.url) {
         case '/login/login':

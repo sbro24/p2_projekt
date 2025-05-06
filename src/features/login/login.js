@@ -55,5 +55,3 @@ const testData = {
     companyName: "Testname5",
     password: "password123"
 }
-
-console.log(Login(testData))

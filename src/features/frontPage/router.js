@@ -1,9 +1,18 @@
+import { FileResponse } from "../../app/router.js";
+
 export function router(req, res) {
-    if (req.url === '/') {
-        res.statusCode = 200;
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Content-Type', 'text/txt');
-        res.write('Frontpage');
-        res.end("\n");
+    switch (req.url) {
+        case '/':
+            FileResponse(res, 'frontPage/frontPage.html');
+            break;
+
+        case '/frontPage/style.css':
+            FileResponse(res, '/frontPage/style.css');
+            break;
+        
+
+        default:
+            break;
     }
+
 }
