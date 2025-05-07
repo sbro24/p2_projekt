@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opret Virksomhed</title>
+    <link rel="stylesheet" href="../../global/css/style.css">
+    
+</head>
+
+<body>
+   <!-- Header -->
+   <header>
+    <h1>Financial Management</h1>
+    <p>Administrer dit budget effektivt</p>
+</header>
+
+<!-- Navigation -->
+<script src="../../frontPage/js/navbarFrontpage.js"></script>
+
+<!-- Main Layout -->
+<div class="container">
+
+    <!-- Main Content Area -->
+    <main class="content">
+        <section id="create-business">
+            <h2>Opret din virkshomhed</h2>
+            <p>
+                På denne side kan du oprette din virksomhed.
+            </p>
+            <form id="company_name_id">
+                <fieldset>
+                 <div class="form">
+                    <label for="name_id"> Virksomhedens navn:</label>
+                    <input type="text" name="name" id="name_id" value="" required minlength="1" maxlength="50">
+                    <input type="submit" name="btn" id="company_btn_id" value="Submit">
+                </fieldset>
+            </form>
+
+            <!-- Midlertidigt link til homepage - fjernes når Login funktionen er integreret :) -->
+            <a href="../../userData/html/minSide.html">Homepage</a>
+
+        </section>
+    <script src="../js/createCompany.js"></script>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mine Data - Financial Management</title>
+    <script src="../js/mineData.js"></script>
+    <link rel="stylesheet" href="../../global/css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Financial Management</h1>
+        <p>Administrer dit budget effektivt</p>
+    </header>
+
+    <!-- "Add company name below"-section will possibly be omitted when login section is added? --> 
+    <section>
+        <h2>Tilføj virksomhedsnavn nedenfor</h2>
+        <div>
+            <label for="companyName">Virksomhedsnavn:</label>
+            <input type="text" id="companyName" placeholder="Indtast virksomhedsnavn">
+            <button id="addCompanyBtn">Tilføj Virksomhed</button>
+        </div>
+    </section>
+
+    <script src="../../global/js/navbar.js"></script>
+
+    <section> 
+    <input type="file" id="file" accept=".csv" />
+
+    <button id="btnManuelInput">Indtast manuelt</button>
+    <table id="table" border="1"></table>
+    </section>
+
+    <section>
+        <h2>Omsætning</h2>
+        <form>
+            <table border="1" id="revenue-table">
+                <tr>
+                    <th>Year</th>
+                    <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                    <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                </tr>
+            </table>
+        </form>
+    </section>
+
+    <section>
+        <h2>Omkostninger</h2>
+        <form>
+            <table border="1" id="expense-table">
+                <tr>
+                    <th>År</th>
+                    <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                    <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                </tr>
+            </table>
+        </form>
+    </section>
+
+    <section id="manuelInput" style="display: none">
+        <h2>Manuel indtastning</h2>
+    </section>
+
+    <section>    
+        <button id="exportButton">Eksporter</button>
+        <button id="saveButton">Gem ændringer</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
+    </footer>
+
+
+</body>
+</html>
