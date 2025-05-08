@@ -1,17 +1,24 @@
+export {
+    CalcRSS,
+    CalcForecastVariance,
+    FlatForecast,
+    CalcAIC,
+    CalcAICc,
+    SelectOrder,
+    Model,
+    Forecast
+};
+
 import ARIMA from 'arima' // Import the ARIMA library
 //import {jsonReadFile} from 'src/lib/useDatabase/handle-json.js'
 //const jsonFilePath = 'src/data/data.json' // Path to the JSON file
 
 class Model { // Class to construct an ARIMA model
-    constructor(data, order, IC, prediction) {
+    constructor(data, order, AIC, prediction) {
         this.data = data // The time series data given
         this.order = order // The order of the ARIMA model: {p, d, q, c}
-        this.IC = IC // The AIC of the ARIMA model
+        this.AIC = AIC // The AIC of the ARIMA model
         this.prediction = prediction // The predicted values from the model
-        // Model Averaging Values:
-        this.deltaAIC = 0 // Difference in AIC between this model and the best model
-        this.P = 0 // Relative Likelihood to the best model, i.e this model is P as likely to be true as the best model
-        this.w = 0 // Aikaike Weight; Normalized probability that a model is the best
     }
     setDeltaAIC(deltaAIC) {
         this.deltaAIC = deltaAIC // Set the delta AIC of the model
@@ -186,76 +193,6 @@ function CalcAICc(data, config, forecast) { // Calculate the AICc for the given 
     return AICc;
 }
 
-// ############### NEW STUFF NOT TESTED ##########################
-
-function CalcDeltaAIC(bestAIC, AIC){
-    return bestAIC - AIC
-}
-
-function CalcRelativeLikelihood(deltaAIC){
-    return Math.exp(-deltaAIC/2)
-}
-
-function CalcAikaikeWeight(models, model){
-    let sum = 0
-    for (let i=0; i<=models.length; i++){
-        sum = sum + models[i].P
-    }
-    return model.P/sum
-}
-
-// Thresholds:  (Needs more explanation)
-// DeltaAIC < 4
-// Aikaike Weight w > 0.1 (10%)
-
-// Screens all created models, excluding models that fail the abovementioned tresholds
-
-function GetBestModels(models, bestAIC){
-    let bestModels = []
-    let screenedModels = []
-
-    for (let i=0; i<=models.length; i++){
-        let model = models[i]
-        model.DeltaAIC = CalcDeltaAIC(bestAIC, modelHandler.getAIC(model)) // Calculate the delta AIC for the model
-        if (model.deltaAIC < 4){  // deltaAIC filter
-            model.P = CalcRelativeLikelihood(deltaAIC)
-            screenedModels.push(model)
-        }
-    }
-    for (let j=0; j<=screenedModels.length; j++){
-        let model = screenedModels[j]
-        model.w = CalcAikaikeWeight(models, model)
-        if (model.w > 0.1){  // aikaike weight filter
-            bestModels.push(model)
-        }
-    }
-}
-
-// Treats forecast.models like a matrix, calculating the average of each column
-// to create an averaged result of the best models
-
-function ModelAverage(models){
-    bestModels = GetBestModels(models, forecastHandler.getBestAIC)
-    let averagedForecast = []
-    for (let i=0; i<=bestModels[0].data.length; i++){ // handles Column index
-        for (let j=0; j<=bestModels.length; j++){ // Handles Row index
-            if (averagedForecast[i] === undefined){ // handles first iteration, where the array is empty
-                averagedForecast[i].push(bestModels[j].data[i])
-            } else {
-                averagedForecast[i] = averagedForecast[i] + bestModels[j].data[i] // calculates sum of current column
-            }
-        }
-        averagedForecast[i] = averagedForecast[i] / bestModels[j].data.length // calculates average of current column
-    }
-    return averagedForecast
-}   
-
-
-
-
-
-
-
 /** Selectes the best ARIMA model based on the AIC, and stores all the tested models in 
     @param {data = the time series data given}
     @returns {bestModel.order = The best ARIMA model order}
@@ -304,6 +241,3 @@ function SelectOrder(data) {
 SelectOrder(data)
 
 console.log("Best ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model
-
-ModelAverage(forecastHandler.getAllModels(), forecastHandler.getBestAIC()) // Call the function to average the models
-console.log("Averaged forecast: ", ModelAverage(forecastHandler.getAllModels())) // Log the averaged forecast
