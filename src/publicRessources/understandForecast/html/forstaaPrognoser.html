@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forstaa Prognoser - Financial Management</title>
+    <link rel="stylesheet" href="../../global/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="../js/forstaaPrognoser.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Financial Management</h1>
+        <p>Administrer dit budget effektivt</p>
+    </header>
+
+    <!-- Navigation -->
+    <script src="../../global/js/navbar.js"></script>
+
+    <!-- Main Layout -->
+    <div class="container">
+
+        <!-- Main Content Area -->
+        <main class="content">
+            <section id="budget-vs-actual">
+                <h2>Sammenligning af budget og prognose</h2>
+                <p>
+                    Her kan du sammenligne dit eget budget med den prognose, vi har beregnet.
+                    Hvis der er store afvigelser skal du overveje at ændre i dit budget.
+                </p>
+
+                <table>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Detaljer</th>
+                        <th>Forskel (total)</th>
+                    </tr>
+                    <tr>
+                        <td>Omsætning</td>
+                        <td><button id="btnDetailsRevenue">Se detaljer</button></td>
+                        <td id="diffRevenueTotal"></td>
+                    </tr>
+                    <tr>
+                        <td>Omkostninger</td>
+                        <td><button id="btnDetailsCost">Se detaljer</button></td>
+                        <td id="diffExpensesTotal"></td>
+                    </tr>
+                </table>
+            </section>
+            
+            <section id="graphRevenueTotal" style="width: 400px; display: none">
+                <!-- Graphical representation (optional) -->
+                 <h3>Totaler for omsætning per måned</h3>
+                <canvas id="budgetForecastChart" style="width: 100px; height: 50px;"></canvas>
+            </section>
+
+            <section id="graphRevenueDifference" style="width: 400px; display: none">
+                <h3>Forskel imellem budget og prognose</h3>
+                <canvas id="diffBudgetForecastChart" style="width: 400px; height: 200px;"></canvas>                
+            </section>
+
+            <section id="sectionTableBudgetForecast" style="display:none">
+                <table id="tableBudgetForecast"></table>
+            </section>
+
+            <section id="saveChangesTableBudgetForecast" style="display: none">
+                <button type="submit" id="submitAlteredBudget">Gem tilpasset budget</button>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
+    </footer>
+    
+</body>
+
+</html>

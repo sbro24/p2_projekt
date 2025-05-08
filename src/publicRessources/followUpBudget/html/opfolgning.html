@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opfolgning - Financial Management</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../../global/css/style.css">
+    <script src="../js/opfolgning.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Financial Management</h1>
+        <p>Administrer dit budget effektivt</p>
+    </header>
+
+    <!-- Navigation -->
+    <script src="../../global/js/navbar.js"></script>
+    
+    <!-- "Add company name below"-section will possibly be omitted when login section is added? --> 
+    <section>
+        <h2>Tilføj virksomhedsnavn nedenfor</h2>
+        <div>
+            <label for="companyName">Virksomhedsnavn:</label>
+            <input type="text" id="companyName" placeholder="Indtast virksomhedsnavn">
+            <button id="companyForecastBtn">Beregn Prognose</button>
+        </div>
+    </section>
+
+    <section id="sectionForecastRevenue" style="width: 400px">
+        <h3>Forecast på omkostninger</h3>
+        <canvas id="forecast-revenue" style="display: block; width: 250px; height: 125px;" width="250" height="125"></canvas>
+    </section>
+
+    <section id="sectionForecastExpenses" style="width: 400px">
+        <h3>Forecast på udgifter</h3>
+        <canvas id="forecast-expenses" style="display: block; width: 250px; height: 125px;" width="250" height="125"></canvas>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
+    </footer>
+    
+</body>
+
+</html>

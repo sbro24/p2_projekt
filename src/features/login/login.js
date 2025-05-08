@@ -42,7 +42,7 @@ function Login(data) {
         return result
     }
 
-    let token = GenSessionToken()
+    let token = GenSessionToken();
     
     //EditProfile(id, 'what to edit', data)
 
@@ -55,5 +55,3 @@ const testData = {
     companyName: "Testname5",
     password: "password123"
 }
-
-console.log(Login(testData))

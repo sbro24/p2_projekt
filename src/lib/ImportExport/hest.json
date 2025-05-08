@@ -1,0 +1,171 @@
+{
+    "result": {
+        "revenue": {
+            "Abekat": {
+                "name": "Abekat",
+                "data": [
+                    {
+                        "year": "2023",
+                        "months": {
+                            "january": 0,
+                            "february": 0,
+                            "march": 0,
+                            "april": 0,
+                            "may": 0,
+                            "june": 0,
+                            "july": 0,
+                            "august": 0,
+                            "september": 0,
+                            "october": 0,
+                            "november": 0,
+                            "december": 0
+                        }
+                    },
+                    {
+                        "year": "2025",
+                        "months": {
+                            "january": 101,
+                            "february": 102,
+                            "march": 103,
+                            "april": 104,
+                            "may": 105,
+                            "june": 106,
+                            "july": 107,
+                            "august": 108,
+                            "september": 109,
+                            "october": 110,
+                            "november": 111,
+                            "december": 112
+                        }
+                    }
+                ],
+                "characteristics": "Variabel"
+            },
+            "Lolhankat": {
+                "name": "Lolhankat",
+                "data": [
+                    {
+                        "year": "2025",
+                        "months": {
+                            "january": 113,
+                            "february": 114,
+                            "march": 115,
+                            "april": 116,
+                            "may": 117,
+                            "june": 118,
+                            "july": 119,
+                            "august": 120,
+                            "september": 121,
+                            "october": 122,
+                            "november": 123,
+                            "december": 124
+                        }
+                    }
+                ],
+                "characteristics": "Variabel"
+            }
+        },
+        "expense": {
+            "skibidi": {
+                "name": "skibidi",
+                "data": [
+                    {
+                        "year": "2025",
+                        "months": {
+                            "january": 125,
+                            "february": 126,
+                            "march": 127,
+                            "april": 128,
+                            "may": 129,
+                            "june": 130,
+                            "july": 131,
+                            "august": 132,
+                            "september": 133,
+                            "october": 134,
+                            "november": 135,
+                            "december": 136
+                        }
+                    }
+                ],
+                "characteristics": "Variabel"
+            },
+            "yaya": {
+                "name": "yaya",
+                "data": [
+                    {
+                        "year": "2025",
+                        "months": {
+                            "january": 137,
+                            "february": 138,
+                            "march": 139,
+                            "april": 140,
+                            "may": 141,
+                            "june": 142,
+                            "july": 143,
+                            "august": 144,
+                            "september": 145,
+                            "october": 146,
+                            "november": 147,
+                            "december": 148
+                        }
+                    }
+                ],
+                "characteristics": "Variabel"
+            },
+            "ff": {
+                "name": "ff",
+                "data": [
+                    {
+                        "year": "2025",
+                        "months": {
+                            "january": 149,
+                            "february": 150,
+                            "march": 151,
+                            "april": 152,
+                            "may": 153,
+                            "june": 154,
+                            "july": 155,
+                            "august": 156,
+                            "september": 157,
+                            "october": 158,
+                            "november": 159,
+                            "december": 160
+                        }
+                    }
+                ],
+                "characteristics": "Fast"
+            },
+            "gg": {
+                "name": "gg",
+                "data": [
+                    {
+                        "year": "2025",
+                        "months": {
+                            "january": 161,
+                            "february": 162,
+                            "march": 163,
+                            "april": 164,
+                            "may": 165,
+                            "june": 166,
+                            "july": 167,
+                            "august": 168,
+                            "september": 169,
+                            "october": 170,
+                            "november": 171,
+                            "december": 172
+                        }
+                    }
+                ],
+                "characteristics": "Fast"
+            }
+        }
+    },
+    "budget": {
+        "revenue": {},
+        "expense": {}
+    },
+    "forecast": {
+        "revenue": {},
+        "expense": {}
+    }
+}

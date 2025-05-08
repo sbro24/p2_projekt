@@ -7,6 +7,9 @@ import { Wait } from '../lib/time/time.js';
 const featureDirctoryPath = process.cwd() + '/src/features/';
 const featureDirctoryRelativePath = '../features/';
 
+const publicRessourcesDirctoryPath = process.cwd() + '/src/PublicRessources/';
+const dataJsonPath = process.cwd() + '/data/data.json';
+
 /**
  * Looks at the request method and calls the appropriate function.
  * @param {object} req 
@@ -35,6 +38,7 @@ export function processRequest(req, res) {
  * @param {string} data 
  */
 async function GetResponse(req, res, data) {
+    console.log(req, res, data);
     const pathFeatureFiles = fs.readdirSync(featureDirctoryPath);
     for (const feature of pathFeatureFiles) {
         if (!fs.existsSync(featureDirctoryPath + feature + '/router.js')) continue;
@@ -60,4 +64,40 @@ function ExtractBody(req) {
     req.on('end', () => {
         return body
     });
+}
+
+function guessMimeType(fileName){
+    const fileExtension=fileName.split('.').pop().toLowerCase();
+    const ext2Mime = {
+        "txt": "text/txt",
+        "html": "text/html",
+        "ico": "image/ico",
+        "js": "text/javascript",
+        "json": "application/json", 
+        "css": 'text/css',
+        "png": 'image/png',
+        "jpg": 'image/jpeg',
+        "wav": 'audio/wav',
+        "mp3": 'audio/mpeg',
+        "svg": 'image/svg+xml',
+        "pdf": 'application/pdf',
+        "doc": 'application/msword',
+        "docx": 'application/msword'
+        };
+    return (ext2Mime[fileExtension] || "text/plain");
+    }
+
+export function FileResponse(res, filePath) {
+    let path = publicRessourcesDirctoryPath + filePath
+    console.log(path)
+    fs.readFile(path, (err, data) => {
+      if (err) {
+        ErrorResponse(res, err, 404)
+      } else {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', guessMimeType(filePath));
+        res.write(data);
+        res.end('\n');
+      }
+    })
 }
