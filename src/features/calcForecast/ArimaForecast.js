@@ -1,17 +1,24 @@
+export {
+    CalcRSS,
+    CalcForecastVariance,
+    FlatForecast,
+    CalcAIC,
+    CalcAICc,
+    SelectOrder,
+    Model,
+    Forecast
+};
+
 import ARIMA from 'arima' // Import the ARIMA library
 //import {jsonReadFile} from 'src/lib/useDatabase/handle-json.js'
 //const jsonFilePath = 'src/data/data.json' // Path to the JSON file
 
 class Model { // Class to construct an ARIMA model
-    constructor(data, order, IC, prediction) {
+    constructor(data, order, AIC, prediction) {
         this.data = data // The time series data given
         this.order = order // The order of the ARIMA model: {p, d, q, c}
-        this.IC = IC // The AIC of the ARIMA model
+        this.AIC = AIC // The AIC of the ARIMA model
         this.prediction = prediction // The predicted values from the model
-        // Model Averaging Values:
-        this.deltaAIC = 0 // Difference in AIC between this model and the best model
-        this.P = 0 // Relative Likelihood to the best model, i.e this model is P as likely to be true as the best model
-        this.w = 0 // Aikaike Weight; Normalized probability that a model is the best
     }
     setDeltaAIC(deltaAIC) {
         this.deltaAIC = deltaAIC // Set the delta AIC of the model
@@ -58,17 +65,11 @@ class Forecast { // Class to store the ARIMA models
 }
 
 const forecastHandler = new Forecast() // Create a forecast handler
-const modelHandler = new Model() // Create a model handler
 
 
-// Test data
-const data = [  555866, 174701, 458500, 323800, 30750, 456900, 194000, 416297 ,303865, 448050, 178515, 168222,
-                333520, 330090, 325457, 367068, 327179, 247301, 340363, 553907, 361974, 242516, 124659, 223538,
-                108450, 306087, 340362, 388343, 448847, 107248, 428296, 324494, 922040,
-                394335	,330600	,630237	,86555	,290790, 788550 ,77700	,109050	,318261	,160350	,72089	,376368]; 
 
 
-/*  
+ 
 const dataCompany = [555866	,174701	,458500	,323800	,30750	,456900	,194000	,
     416297	,303865	,448050	,178515	,168222	,333520	,330090	,325457	,367068	,
     327179	,247301	,340363	,553907	,361974	,242516	,124659	,223538	,108450	,
@@ -77,7 +78,36 @@ const dataCompany = [555866	,174701	,458500	,323800	,30750	,456900	,194000	,
 const dataCompanyActualResult = [394335	,330600	,630237	,86555	,290790, 788550 ,
     77700	,109050	,318261	,160350	,72089	,376368	];
 
-*/
+const dataCompanySeasonal = [96000	,123000	,236000	,81600	,28800	,21000	,47600	,
+    17600	,11800	,69600	,107000	,163500	,117600	,126000	,166000	,84800	,33900	,
+    19800	,42400	,22600	,8800	,73600	,98000	,127500	,97200	,126000	,200000	,
+    74400	,24900	,23200	,36800	,16800	,11700	,95200	,102000	,172500	,104400	,
+    172500	,218000	,82400	,26700	,21400	,33200	,20400	,8500	,92000	,99000	,
+    168000	,108000	,135000	,208000	,78400	,30600	,17400	,44800	,17200	,10700	,
+    95200	,119000	,166500
+]
+
+const dataCompanySeasonalResult = [123600	,157500	,182000	,92000	,34500	,22400	,35600	,
+    22600	,9400	,69600	,90000	,132000
+]
+
+
+
+const dataCompanyLinearGrowth = [180000,227500,396667,416667,400000,501667,586667,735000,
+    783333,971667,1200000,1007500,956667,1125000,1320000,1374167,1530000,1409167,1833333,
+    2082500,1576667,1993333,1620000,2395833,1755000,2002500,2753333,2271667,2775000,2299167,
+    2826667,2447500,2720000,3325000,3210000,2528333,3230000,3412500,3600000,3553333,3290000,
+    3619167,3153333,3112500,3871667,3133333,4720000,3511667,4083333,4505000,3813333,4681667,
+    4860000,3895833,4900000,4702500,5075000,5064167,4600000,5896667
+]
+
+const dataCompanyLinearGrowthResult = [6300000,4373333,5741667,5060000,6197500,6346667,
+    5750000,6416667,6745000,6060000,5414167,7338333
+]
+
+
+//function ReadFromDatabase()
+
 
 //function FormatData()
 
@@ -156,77 +186,7 @@ function CalcAICc(data, config, forecast) { // Calculate the AICc for the given 
     return AICc;
 }
 
-// ############### NEW STUFF NOT TESTED ##########################
-
-function CalcDeltaAIC(bestAIC, AIC){
-    return bestAIC - AIC
-}
-
-function CalcRelativeLikelihood(deltaAIC){
-    return Math.exp(-deltaAIC/2)
-}
-
-function CalcAikaikeWeight(models, model){
-    let sum = 0
-    for (let i=0; i<=models.length; i++){
-        sum = sum + models[i].P
-    }
-    return model.P/sum
-}
-
-// Thresholds:  (Needs more explanation)
-// DeltaAIC < 4
-// Aikaike Weight w > 0.1 (10%)
-
-// Screens all created models, excluding models that fail the abovementioned tresholds
-
-function GetBestModels(models, bestAIC){
-    let bestModels = []
-    let screenedModels = []
-
-    for (let i=0; i<=models.length; i++){
-        let model = models[i]
-        model.DeltaAIC = CalcDeltaAIC(bestAIC, modelHandler.getAIC(model)) // Calculate the delta AIC for the model
-        if (model.deltaAIC < 4){  // deltaAIC filter
-            model.P = CalcRelativeLikelihood(deltaAIC)
-            screenedModels.push(model)
-        }
-    }
-    for (let j=0; j<=screenedModels.length; j++){
-        let model = screenedModels[j]
-        model.w = CalcAikaikeWeight(models, model)
-        if (model.w > 0.1){  // aikaike weight filter
-            bestModels.push(model)
-        }
-    }
-}
-
-// Treats forecast.models like a matrix, calculating the average of each column
-// to create an averaged result of the best models
-
-function ModelAverage(models){
-    bestModels = GetBestModels(models, forecastHandler.getBestAIC)
-    let averagedForecast = []
-    for (let i=0; i<=bestModels[0].data.length; i++){ // handles Column index
-        for (let j=0; j<=bestModels.length; j++){ // Handles Row index
-            if (averagedForecast[i] === undefined){ // handles first iteration, where the array is empty
-                averagedForecast[i].push(bestModels[j].data[i])
-            } else {
-                averagedForecast[i] = averagedForecast[i] + bestModels[j].data[i] // calculates sum of current column
-            }
-        }
-        averagedForecast[i] = averagedForecast[i] / bestModels[j].data.length // calculates average of current column
-    }
-    return averagedForecast
-}   
-
-
-
-
-
-
-
-/** Selectes the best ARIMA model based on the AIC, and stores all the tested models in 
+/** Selects the best ARIMA model based on the AIC, and stores all the tested models in 
     @param {data = the time series data given}
     @returns {bestModel.order = The best ARIMA model order}
  */
@@ -236,7 +196,7 @@ function SelectOrder(data) {
     const minComplexity = 1;
     for (let c = 0; c <= 1; c++) { // Loop through, to check if the constant should be included
         for (let d = 0; d <= 2; d++) { // Loop through the differencing orders
-            for (let p = 0; p <= 5; p++) { // Loop through the AR orders
+            for (let p = 1; p <= 5; p++) { //Æ Loop through the AR orders
                 for (let q = 0; q <= 5; q++) { // Loop through the MA orders
 
                     if (p + q <= minComplexity) { // Check if the model is too simple
@@ -246,10 +206,15 @@ function SelectOrder(data) {
                         c = 1 // sets the constant to be included in the model
                     }
                     const config = {p: p, d: d, q: q, auto: false, verbose: false, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
-                        
+                       
+                    let aic;
                     const arima = new ARIMA(config).train(data) // Create a new ARIMA model using the config
                     const [testForecast, errors] = arima.predict(12) // Predict the next 12 months using the ARIMA model
-                    const aic = CalcAICc(data, config, testForecast) // calculate the AIC of the current ARIMA model
+                    if (data.length < 61) { // If the data is short, use AICc instead of AIC
+                        aic = CalcAICc(data, config, testForecast) // calculate the AICc of the current ARIMA model
+                    } else {
+                        aic = CalcAIC(data, config, testForecast) // calculate the AIC of the current ARIMA model
+                    }
                     const model = new Model(data, config, aic, testForecast) // Create a new model object
                     forecastHandler.addModel(model) // Add the model to the forecast class
                     //console.log("Order: ", config, "AIC: ", aic) // Log the model and its AIC
@@ -271,9 +236,13 @@ function SelectOrder(data) {
     }  
 }
 
-SelectOrder(data)
-
-console.log("Best ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model
-
-ModelAverage(forecastHandler.getAllModels(), forecastHandler.getBestAIC()) // Call the function to average the models
-console.log("Averaged forecast: ", ModelAverage(forecastHandler.getAllModels())) // Log the averaged forecast
+SelectOrder(dataCompany)
+console.log("Best company ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model */
+/*
+SelectOrder(dataCompanySeasonal)
+console.log("Best seasonal ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model
+*/
+/*
+SelectOrder(dataCompanyLinearGrowth)
+console.log("Best linear growth ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model
+*/
