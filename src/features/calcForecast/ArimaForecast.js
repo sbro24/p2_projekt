@@ -64,7 +64,7 @@ class Forecast { // Class to store the ARIMA models
     }
 }
 
-const forecastHandler = new Forecast() // Create a forecast handler
+
 
 
 
@@ -191,6 +191,7 @@ function CalcAICc(data, config, forecast) { // Calculate the AICc for the given 
     @returns {bestModel.order = The best ARIMA model order}
  */
 function SelectOrder(data) {
+    const forecastHandler = new Forecast() // Create a forecast handler
     // const d = 0 // Get_d(data) // Call the function to get the differencing order
     let bestAIC = Infinity // Initialize the best AIC to infinity
     const minComplexity = 1;
@@ -229,6 +230,7 @@ function SelectOrder(data) {
                 }  
             }
         }
+        return forecastHandler
     }   
     if (forecastHandler.bestOrder) { // If a best model was found // Set the best order in the forecast handler 
     } else {
@@ -236,8 +238,8 @@ function SelectOrder(data) {
     }  
 }
 
-SelectOrder(dataCompany)
-console.log("Best company ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model */
+const forecast = SelectOrder(dataCompany)
+console.log("Best company ARIMA model: ", forecast.getBestModel()) // Log the best ARIMA model */
 /*
 SelectOrder(dataCompanySeasonal)
 console.log("Best seasonal ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model
