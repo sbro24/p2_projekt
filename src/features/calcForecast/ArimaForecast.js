@@ -1,19 +1,29 @@
 import ARIMA from 'arima' // Import the ARIMA library
+//import {jsonReadFile} from 'src/lib/useDatabase/handle-json.js'
+//const jsonFilePath = 'src/data/data.json' // Path to the JSON file
 
 class Model { // Class to construct an ARIMA model
-    constructor(data, order, AIC, prediction) {
+    constructor(data, order, IC, prediction) {
         this.data = data // The time series data given
         this.order = order // The order of the ARIMA model: {p, d, q, c}
-        this.AIC = AIC // The AIC of the ARIMA model
+        this.IC = IC // The AIC of the ARIMA model
         this.prediction = prediction // The predicted values from the model
-
         // Model Averaging Values:
         this.deltaAIC = 0 // Difference in AIC between this model and the best model
         this.P = 0 // Relative Likelihood to the best model, i.e this model is P as likely to be true as the best model
         this.w = 0 // Aikaike Weight; Normalized probability that a model is the best
     }
+    setDeltaAIC(deltaAIC) {
+        this.deltaAIC = deltaAIC // Set the delta AIC of the model
+    }
+    getAIC() {
+        return this.AIC // Return the AIC of the model, so it is accessible for later use
+    }
+    getDeltaAIC() {
+        return this.deltaAIC // Return the delta AIC of the model, so it is accessible for later use
+    }
 }
-few
+
 class Forecast { // Class to store the ARIMA models
     constructor() {
         this.models = [] // Array to store the models
@@ -48,12 +58,14 @@ class Forecast { // Class to store the ARIMA models
 }
 
 const forecastHandler = new Forecast() // Create a forecast handler
+const modelHandler = new Model() // Create a model handler
+
 
 // Test data
 const data = [  555866, 174701, 458500, 323800, 30750, 456900, 194000, 416297 ,303865, 448050, 178515, 168222,
                 333520, 330090, 325457, 367068, 327179, 247301, 340363, 553907, 361974, 242516, 124659, 223538,
-                108450, 306087, 340362, 388343, 448847, 107248, 428296, 324494, 922040, 
-                394335, 330600, 630237, 86555, 290790, 788550, 77700, 109050, 318261, 160350, 72089, 376368]; 
+                108450, 306087, 340362, 388343, 448847, 107248, 428296, 324494, 922040,
+                394335	,330600	,630237	,86555	,290790, 788550 ,77700	,109050	,318261	,160350	,72089	,376368]; 
 
 
 /*  
@@ -66,10 +78,6 @@ const dataCompanyActualResult = [394335	,330600	,630237	,86555	,290790, 788550 ,
     77700	,109050	,318261	,160350	,72089	,376368	];
 
 */
-
-
-//function ReadFromDatabase()
-
 
 //function FormatData()
 
@@ -109,7 +117,7 @@ function FlatForecast(forecast) {
     return variance < tolerance // If variance is lower than the tolerance, return true
 }
 
-/**  Calculates the (AIC) for parameter selection 
+/**  Calculates the AIC for parameter selection 
     @param {data = the time series data given}
     @param {config = the order of the ARIMA model}
     @param {forecast = the predicted values from the model}
@@ -131,9 +139,25 @@ function CalcAIC(data, config, forecast) { // Calculate the AIC for the given AR
     return AIC;
 }
 
+/**  Calculates the AICc for parameter selection 
+    @param {data = the time series data given}
+    @param {config = the order of the ARIMA model}
+    @param {forecast = the predicted values from the model}
+    @returns {AICc of the given ARIMA model}
+*/
+function CalcAICc(data, config, forecast) { // Calculate the AICc for the given ARIMA model
+    const AIC = CalcAIC(data, config, forecast) // Call the function to calculate AIC 
+    const n = forecast.length // Number of observations used for RSS
+    let k = config.p + config.q // the amount of parameters in the model
+        if (config.constant) { // If a constant is included in the model, add 1 to k
+            k += 1
+    }   
+    const AICc = AIC + (2 * k * (k + 1)) / (n - k - 1) // Calculates the AICc
+    return AICc;
+}
 
 // ############### NEW STUFF NOT TESTED ##########################
-/*
+
 function CalcDeltaAIC(bestAIC, AIC){
     return bestAIC - AIC
 }
@@ -162,7 +186,7 @@ function GetBestModels(models, bestAIC){
 
     for (let i=0; i<=models.length; i++){
         let model = models[i]
-        model.deltaAIC = CalcDeltaAIC(bestAIC, model.AIC)
+        model.DeltaAIC = CalcDeltaAIC(bestAIC, modelHandler.getAIC(model)) // Calculate the delta AIC for the model
         if (model.deltaAIC < 4){  // deltaAIC filter
             model.P = CalcRelativeLikelihood(deltaAIC)
             screenedModels.push(model)
@@ -177,12 +201,11 @@ function GetBestModels(models, bestAIC){
     }
 }
 
-
 // Treats forecast.models like a matrix, calculating the average of each column
 // to create an averaged result of the best models
 
 function ModelAverage(models){
-    bestModels = GetBestModels(models, bestAIC)
+    bestModels = GetBestModels(models, forecastHandler.getBestAIC)
     let averagedForecast = []
     for (let i=0; i<=bestModels[0].data.length; i++){ // handles Column index
         for (let j=0; j<=bestModels.length; j++){ // Handles Row index
@@ -198,9 +221,9 @@ function ModelAverage(models){
 }   
 
 
-*/
 
-// function createConfig() // Create a config object for the ARIMA model
+
+
 
 
 /** Selectes the best ARIMA model based on the AIC, and stores all the tested models in 
@@ -215,7 +238,7 @@ function SelectOrder(data) {
         for (let d = 0; d <= 2; d++) { // Loop through the differencing orders
             for (let p = 0; p <= 5; p++) { // Loop through the AR orders
                 for (let q = 0; q <= 5; q++) { // Loop through the MA orders
-                    
+
                     if (p + q <= minComplexity) { // Check if the model is too simple
                         continue; // Skip this iteration if the model is too simple
                     }
@@ -226,10 +249,12 @@ function SelectOrder(data) {
                         
                     const arima = new ARIMA(config).train(data) // Create a new ARIMA model using the config
                     const [testForecast, errors] = arima.predict(12) // Predict the next 12 months using the ARIMA model
-                    const aic = CalcAIC(data, config, testForecast) // calculate the AIC of the current ARIMA model
+                    const aic = CalcAICc(data, config, testForecast) // calculate the AIC of the current ARIMA model
                     const model = new Model(data, config, aic, testForecast) // Create a new model object
                     forecastHandler.addModel(model) // Add the model to the forecast class
-                    
+                    //console.log("Order: ", config, "AIC: ", aic) // Log the model and its AIC
+                    //console.log("Forecast: ", testForecast) // Log the forecasted values
+
                     if (aic < bestAIC) { // If the AIC is lower than the best AIC found so far
                         bestAIC = aic // Update the best AIC
                         forecastHandler.setBestOrder(config)// Update the best model parameters
@@ -250,3 +275,5 @@ SelectOrder(data)
 
 console.log("Best ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model
 
+ModelAverage(forecastHandler.getAllModels(), forecastHandler.getBestAIC()) // Call the function to average the models
+console.log("Averaged forecast: ", ModelAverage(forecastHandler.getAllModels())) // Log the averaged forecast
