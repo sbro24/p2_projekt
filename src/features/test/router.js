@@ -1,12 +1,11 @@
+import { DataResponse } from "../../app/router.js";
+
+
 export function router(req, res) {
-    switch (res.url) {
+    switch (req.url) {
         case '/test':
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            res.writeHeader(200, {
-                'Content-Type': 'text/txt'
-            });
-            res.write('test');
-            res.end();
+            console.log('test');
+            DataResponse(res, data);
             break;
         case '/test/data':
             
@@ -16,3 +15,5 @@ export function router(req, res) {
             break;
     }
 }
+
+const data = 'AAAAAAAAAAAAAAA'
