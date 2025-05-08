@@ -8,7 +8,6 @@ const featureDirctoryPath = process.cwd() + '/src/features/';
 const featureDirctoryRelativePath = '../features/';
 
 const publicRessourcesDirctoryPath = process.cwd() + '/src/PublicRessources/';
-const dataJsonPath = process.cwd() + '/data/data.json';
 
 /**
  * Looks at the request method and calls the appropriate function.
@@ -38,7 +37,6 @@ export function processRequest(req, res) {
  * @param {string} data 
  */
 async function GetResponse(req, res, data) {
-    console.log(req, res, data);
     const pathFeatureFiles = fs.readdirSync(featureDirctoryPath);
     for (const feature of pathFeatureFiles) {
         if (!fs.existsSync(featureDirctoryPath + feature + '/router.js')) continue;
@@ -85,11 +83,20 @@ function guessMimeType(fileName){
         "docx": 'application/msword'
         };
     return (ext2Mime[fileExtension] || "text/plain");
-    }
+}
+
+function guessDataType(data){
+    let type = typeof data;
+    const type2Mime = {
+        "string": "text/txt",
+        "number": "text/txt",
+        "object": "application/json", 
+        };
+    return (type2Mime[type] || "text/plain");
+}
 
 export function FileResponse(res, filePath) {
     let path = publicRessourcesDirctoryPath + filePath
-    console.log(path)
     fs.readFile(path, (err, data) => {
       if (err) {
         ErrorResponse(res, err, 404)
@@ -100,4 +107,16 @@ export function FileResponse(res, filePath) {
         res.end('\n');
       }
     })
+}
+
+export function DataResponse(res, data) {
+    if (err) {
+        ErrorResponse(res, err, 404)
+    } else {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', guessDataType(filePath));
+        res.write(data);
+        res.end('\n');
+    }
+
 }
