@@ -1,115 +1,267 @@
-import { Company, CompanyData, FinancialMetric, FinancialYear } from './constructors.js';
-import {JsonWriteFile, JsonReadFile, JsonReadFileCb, JsonWriteFileCb} from './handle-json.js';
+import { Company, CompanyData } from "./constructors.js";
 
-const path = 'src/data/data.json' 
+const filePathDatabase = '../../data/data.json';
 
-// helper-functions for adding data to the JSON database in a structured manner according to the use cases
+async function GetCompaniesArray() {
+    try {
+        const data = await JsonReadFile(filePathDatabase);
+        if (!data || !Array.isArray(data.companies)) {
+            console.warn("There is no valid companies array");
+            return [];
+        }
+        return data.companies;
+    } catch (err) {
+        console.error("Could not get companies array from database", err);
+        return [];
+    }
+}
 
-/**
- * Adds a new profile to the JSON file. 
- * It creates and pushed the company object to the companies array.
- * It creates the dataById object with the company id. 
- * @param {string: 6 digits id on company} id 
- * @param {string: name of the company in the new profil} name 
- * @param {string: a login Token so, different parts of the site knows that user is logged in} sessionToken 
- */
+async function AddNewCompany(name, id, sessionToken) {
 
-function AddNewProfile (id, name, sessionToken) {
-    let newCompany = new Company (id, name, sessionToken);
+    let newCompany = new Company(id, name, sessionToken);
     let newCompanyData = new CompanyData(id);
-    
-    JsonReadFile(path, (err, data) => {
-        if (err) {
-            console.log(err);
+
+    try {
+        //async reading of database
+        const data = await JsonReadFile(filePathDatabase);
+        console.log("data read successfully");
+
+        //data validation before writing to database
+        if (data.companies.some(company => company.name === name)) {
+            console.log(`A company with the name "${name}" already exists`);
+            return null;
         }
 
-        console.log(data);
-        console.log("data read successfully");
+        if (data.dataById.hasOwnProperty(id)) {
+            console.error(`A company with the id "${id}" already exists`);
+            return null;
+        }
+
+        //adding data to the object
+        //the company is pushed to the companies array
+        //dataById is added as an object since a object with that id does not exist
         data.companies.push(newCompany);
         data.dataById[id] = newCompanyData;
 
-        JsonWriteFile(path, data, JsonWriteFileCb);
+        //async writing to database
+        await JsonWriteFile(filePathDatabase, data);
+        console.log("Company added to database successfully");
 
-        console.log(data);
-    });
+    } catch (err) {
+        console.error("Not able to add new company to database:", err);
+        return null;
+    }
 }
 
-/**
- * Adds new financial metrics in data.json to an existing company
- * @param {string: existing id of the company} companyId 
- * @param {string: result || budget || forecast} financialType 
- * @param {string: revenue || expenses} financialCategory 
- * @param {string: user defined name of the financial metric fx "sales"} financialMetric
- */
-
-function AddNewFinancialMetric(companyId, financialType, financialCategory, financialMetric){
-    
-    let newFinancialMetric = new FinancialMetric(financialMetric);
-    let metricName = newFinancialMetric.name;
-    console.log(`Metric Name:`, metricName);
-    
-    JsonReadFile(path, (err, data) => {
-        if (err) {
-            console.log(err);
-        }
-
-        console.log("data read successfully");
-        data.dataById[companyId][financialType][financialCategory][metricName] = newFinancialMetric;
-
-        JsonWriteFile(path, data, JsonWriteFileCb);
-        console.log(data);
-    });
-}
-
-/**
- * Adds a new year to data on an existing metric in a company
- * @param {string: existing id of the company} companyId 
- * @param {string: result || budget || forecast} financialType 
- * @param {string: revenue || expenses} financialCategory 
- * @param {string: user defined name of the financial metric fx "sales"} financialMetric 
- * @param {string: user defined year fx "2024"} financialYear 
- */
-
-function AddNewFinancialYear (companyId, financialType, financialCategory, financialMetric, financialYear) {
-    let newFinancialYear = new FinancialYear(financialYear);
-    
-    JsonReadFile(path, (err, data) => {
-        if (err) {
-            console.log(err);
-        }
-
-        console.log("data read successfully");
-        data.dataById[companyId][financialType][financialCategory][financialMetric].data.push(newFinancialYear);
-
-        JsonWriteFile(path, data, JsonWriteFileCb);
-        console.log(data);
-    });
-}
-
-function filterData (name) {
-
-    let companyLoggedIn = {};
-
-    JsonReadFile(path, (err, data) => {
-        if (err) {
-            console.log(err);
-        }
-
+async function UpdateCompanyName(fromName, toName) {
+    try {
+        //async reading of database
+        const data = await JsonReadFile(filePathDatabase);
         console.log("data read successfully");
 
-        const result = data.companies.find(company => company.name === name);
-        
-        if (result) {
-            companyLoggedIn = result;
-            console.log("Company found:", companyLoggedIn);
-            let companyData = data.dataById[companyLoggedIn.id];
-            console.log(companyData); 
+        //Find a rename the company    
+        const companyToRename = data.companies.find(company => company.name === fromName);
+
+        if (companyToRename) {
+            companyToRename.name = toName;
+            console.log(`Renamed company from '${fromName}' to '${toName}'`);
         } else {
-            console.log("Company not found");
+            console.log("Company name is not in the database");
         }
-    });
 
-    return companyLoggedIn;
-};
+        //async writing to database
+        await JsonWriteFile(filePathDatabase, data);
+        console.log("Company name updated successfully");
 
-export {AddNewProfile, AddNewFinancialMetric, AddNewFinancialYear, filterData}
+    } catch (err) {
+        console.error("Not able to update company name:", err);
+        return null;
+    }
+}
+
+async function UpdateSessionToken(companyName, newSessionToken) {
+    try {
+        //async reading of database
+        const data = await JsonReadFile(filePathDatabase);
+        console.log("data read successfully");
+
+        //Find a rename the company    
+        const companySessionTokenToUpdate = data.companies.find(company => company.name === companyName);
+
+        if (companySessionTokenToUpdate) {
+            companySessionTokenToUpdate.sessionToken = newSessionToken;
+            console.log(`The token for company ${companyName} has been updated to ${newSessionToken}`);
+        } else {
+            console.log("Company name is not in the database");
+        }
+
+        //async writing to database
+        await JsonWriteFile(filePathDatabase, data);
+        console.log("Session token updated successfully");
+
+    } catch (err) {
+        console.error("Not able to update session token:", err);
+        return null;
+    }
+}
+
+async function GetCompanyObject(companyName) {
+    try {
+        //async reading of database
+        const data = await JsonReadFile(filePathDatabase);
+        console.log("data read successfully");
+
+        const company = data.companies.find(company => company.name === companyName)
+        const id = company.id;
+
+        return data.dataById[id];
+
+    } catch (err) {
+        console.error("Not able to get company object:", err);
+        return null;
+    }
+}
+
+async function UpdateCompanyObject(companyObject) {
+    try {
+        //async reading of database
+        const data = await JsonReadFile(filePathDatabase);
+        console.log("data read successfully");
+
+        const id = Object.keys(companyObject)[0];
+
+        //Find a rename the company    
+        data.dataById[id] = companyObject[id];
+
+        //async writing to database
+        await JsonWriteFile(filePathDatabase, data);
+        console.log("Company name updated successfully");
+
+    } catch (err) {
+        console.error("Not able to update company name:", err);
+        return null;
+    }
+}
+
+async function GetFinancialMetricArray(id, financialType, financialCategory, financialMetric) {
+    let financialMetricArray = [];
+
+    try {
+        //async reading of database
+        const data = await JsonReadFile(filePathDatabase);
+        console.log("data read successfully");
+
+        //get company object
+        const companyObject = data.dataById[id];
+        const financialMetricForecast = companyObject[financialType][financialCategory][financialMetric].data;
+
+        //loops through all years in the data array on the relevant metric
+        financialMetricForecast.forEach(yearData => {
+            // Append the months of each year to the financialMetricArray
+            financialMetricArray.push(...Object.values(yearData.months)); //uses the spread operator to push them into the array as indiviual elements
+        });
+
+        return financialMetricArray
+
+    } catch (error) {
+        console.error("Error in GetFinancialMetricArray:", error);
+        return [];
+    }
+}
+
+async function JsonReadFile(filePath) {
+    try {
+        const jsonString = await fs.readFile(filePath, 'utf-8');
+        return JSON.parse(jsonString);
+    } catch (err) {
+        console.error("Error reading or parsing JSON:", err);
+        return null;
+    }
+}
+
+async function JsonWriteFile(filePath, data) {
+    try {
+        const jsonString = JSON.stringify(data, null, 2); // pretty print
+        await fs.writeFile(filePath, jsonString, 'utf-8');
+    } catch (err) {
+        console.error("Error writing JSON to file:", err);
+        throw err;
+    }
+}
+
+async function LogResult(inputFunction) {
+    const result = await inputFunction;
+    console.log("result:", result);
+}
+
+
+
+export { GetCompaniesArray, AddNewCompany, UpdateCompanyName, UpdateSessionToken, GetFinancialMetricArray, UpdateCompanyObject, GetCompanyObject };
+
+
+//functions and object for testing
+
+//LogResult(GetCompaniesArray());
+//LogResult(AddNewCompany("Mikkels test3", "999999", ""));
+//LogResult(UpdateCompanyName("name", "newName"))
+//LogResult(UpdateSessionToken("newName", "123401470983274"));
+//LogResult(GetFinancialMetricArray("123456", "result", "revenue", "sales"));
+//LogResult(UpdateCompanyObject(companyObject));
+//LogResult(GetCompanyObject("newName"));
+
+/* const companyObject = {
+    "123234": {
+      result: {
+        revenue: {
+          sales: {
+            characteristics: [],
+            data: [
+              {
+                year: 2025,
+                months: {
+                  January: 0,
+                  February: 100,
+                  March: 0,
+                  April: 0,
+                  May: 0,
+                  June: 0,
+                  July: 0,
+                  August: 0,
+                  September: 0,
+                  October: 0,
+                  November: 0,
+                  December: 0
+                }
+              },
+              {
+                year: 2025,
+                months: {
+                  January: 1,
+                  February: 1,
+                  March: 1,
+                  April: 0,
+                  May: 0,
+                  June: 0,
+                  July: 0,
+                  August: 0,
+                  September: 0,
+                  October: 0,
+                  November: 0,
+                  December: 0
+                }
+              }
+            ]
+          }
+        },
+        expense: {}
+      },
+      budget: {
+        revenue: {},
+        expense: {}
+      },
+      forecast: {
+        revenue: {},
+        expense: {}
+      }
+    }
+  }; */
