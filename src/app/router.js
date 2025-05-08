@@ -3,6 +3,7 @@ import fs from 'fs';
 import { Log } from '../lib/logging/log.js';
 import { ErrorResponse } from '../lib/errorHandling/error.js';
 import { Wait } from '../lib/time/time.js';
+import path from 'path';
 
 const featureDirctoryPath = process.cwd() + '/src/features/';
 const featureDirctoryRelativePath = '../features/';
@@ -87,6 +88,7 @@ function guessMimeType(fileName){
 
 function guessDataType(data){
     let type = typeof data;
+    console.log('guessDataType', type);
     const type2Mime = {
         "string": "text/txt",
         "number": "text/txt",
@@ -96,11 +98,19 @@ function guessDataType(data){
 }
 
 export function FileResponse(res, filePath) {
-    let path = publicRessourcesDirctoryPath + filePath
-    fs.readFile(path, (err, data) => {
+    if (filePath.startsWith('/')) filePath = filePath.substring(1);
+
+    let extension = filePath.split('.').pop().toLowerCase();
+    let ressourceFolder = filePath.split('/')[0];
+    filePath = filePath.split('/').splice(1).join('/');
+
+    let ressourcePath = path.join(publicRessourcesDirctoryPath, ressourceFolder, extension, filePath);
+
+    fs.readFile(ressourcePath, (err, data) => {
       if (err) {
         ErrorResponse(res, err, 404)
       } else {
+        Log('sending: ' + path.join(ressourceFolder, extension, filePath));
         res.statusCode = 200;
         res.setHeader('Content-Type', guessMimeType(filePath));
         res.write(data);
@@ -110,13 +120,10 @@ export function FileResponse(res, filePath) {
 }
 
 export function DataResponse(res, data) {
-    if (err) {
-        ErrorResponse(res, err, 404)
-    } else {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', guessDataType(filePath));
-        res.write(data);
-        res.end('\n');
-    }
-
+    if (data === undefined) data = 'undefined';
+    console.log('DataResponse', data);
+    res.statusCode = 200;
+    res.setHeader('Content-Type', guessDataType(data));
+    res.write(JSON.stringify(data));
+    res.end('\n');
 }

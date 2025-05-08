@@ -4,7 +4,8 @@ import { DataResponse } from "../../app/router.js";
 export function router(req, res) {
     switch (req.url) {
         case '/test':
-            DataResponse
+            console.log('test');
+            DataResponse(res, data);
             break;
         case '/test/data':
             
@@ -15,9 +16,4 @@ export function router(req, res) {
     }
 }
 
-const data = {
-    name: 'test',
-    data: {
-        test: 'test'
-    }
-}
+const data = 'AAAAAAAAAAAAAAA'
