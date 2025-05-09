@@ -3,12 +3,12 @@ import fs from 'fs';
 import { Log } from '../lib/logging/log.js';
 import { ErrorResponse } from '../lib/errorHandling/error.js';
 import { Wait } from '../lib/time/time.js';
+import path from 'path';
 
 const featureDirctoryPath = process.cwd() + '/src/features/';
 const featureDirctoryRelativePath = '../features/';
 
 const publicRessourcesDirctoryPath = process.cwd() + '/src/PublicRessources/';
-const dataJsonPath = process.cwd() + '/data/data.json';
 
 /**
  * Looks at the request method and calls the appropriate function.
@@ -38,7 +38,6 @@ export function processRequest(req, res) {
  * @param {string} data 
  */
 async function GetResponse(req, res, data) {
-    console.log(req, res, data);
     const pathFeatureFiles = fs.readdirSync(featureDirctoryPath);
     for (const feature of pathFeatureFiles) {
         if (!fs.existsSync(featureDirctoryPath + feature + '/router.js')) continue;
@@ -85,19 +84,46 @@ function guessMimeType(fileName){
         "docx": 'application/msword'
         };
     return (ext2Mime[fileExtension] || "text/plain");
-    }
+}
+
+function guessDataType(data){
+    let type = typeof data;
+    console.log('guessDataType', type);
+    const type2Mime = {
+        "string": "text/txt",
+        "number": "text/txt",
+        "object": "application/json", 
+        };
+    return (type2Mime[type] || "text/plain");
+}
 
 export function FileResponse(res, filePath) {
-    let path = publicRessourcesDirctoryPath + filePath
-    console.log(path)
-    fs.readFile(path, (err, data) => {
+    if (filePath.startsWith('/')) filePath = filePath.substring(1);
+
+    let extension = filePath.split('.').pop().toLowerCase();
+    let ressourceFolder = filePath.split('/')[0];
+    filePath = filePath.split('/').splice(1).join('/');
+
+    let ressourcePath = path.join(publicRessourcesDirctoryPath, ressourceFolder, extension, filePath);
+
+    fs.readFile(ressourcePath, (err, data) => {
       if (err) {
         ErrorResponse(res, err, 404)
       } else {
+        Log('sending: ' + path.join(ressourceFolder, extension, filePath));
         res.statusCode = 200;
         res.setHeader('Content-Type', guessMimeType(filePath));
         res.write(data);
         res.end('\n');
       }
     })
+}
+
+export function DataResponse(res, data) {
+    if (data === undefined) data = 'undefined';
+    console.log('DataResponse', data);
+    res.statusCode = 200;
+    res.setHeader('Content-Type', guessDataType(data));
+    res.write(JSON.stringify(data));
+    res.end('\n');
 }

@@ -6,11 +6,6 @@ export function router(req, res) {
             FileResponse(res, 'frontPage/frontPage.html');
             break;
 
-        case '/frontPage/style.css':
-            FileResponse(res, '/frontPage/style.css');
-            break;
-        
-
         default:
             break;
     }

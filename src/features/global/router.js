@@ -2,11 +2,11 @@ import { FileResponse } from "../../app/router.js";
 
 export function router(req, res, data) {
     switch (req.url) {
-        case '/login':
-            FileResponse(res, 'login/login.html');
+        case '/api/global/style':
+            FileResponse(res, 'global/style.css');
             break;
-        case '/api/login/css':
-            FileResponse(res, 'login/login.css');
+        case '/api/global/navbar':
+            FileResponse(res, 'global/navbar.js');
             break;
         default:
             break;
