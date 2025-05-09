@@ -111,14 +111,28 @@ async function UpdateSessionToken(companyName, newSessionToken) {
     }
 }
 
-async function GetCompanyObject(companyName) {
+async function GetFinancialDataByName(name) {
     try {
         //async reading of database
         const data = await JsonReadFile(filePathDatabase);
         console.log("data read successfully");
 
-        const company = data.companies.find(company => company.name === companyName)
+        const company = data.companies.find(company => company.name === name)
         const id = company.id;
+
+        return data.dataById[id];
+
+    } catch (err) {
+        console.error("Not able to get company object:", err);
+        return null;
+    }
+}
+
+async function GetFinancialDataById(id) {
+    try {
+        //async reading of database
+        const data = await JsonReadFile(filePathDatabase);
+        console.log("data read successfully");
 
         return data.dataById[id];
 
@@ -205,7 +219,7 @@ async function LogResult(inputFunction) {
     console.log("result:", result);
 }
 
-export { GetCompaniesArray, AddNewCompany, UpdateCompanyName, UpdateSessionToken, GetFinancialMetricArray, UpdateCompanyObject, GetCompanyObject };
+export { GetFinancialDataById, GetCompaniesArray, AddNewCompany, UpdateCompanyName, UpdateSessionToken, GetFinancialMetricArray, UpdateCompanyObject, GetFinancialDataByName };
 
 
 //functions and object for testing
