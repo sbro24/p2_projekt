@@ -237,14 +237,3 @@ function SelectOrder(data) {
         throw new Error("No ARIMA model found") // If no model was found, throw an error
     }  
 }
-
-const forecast = SelectOrder(dataCompany)
-console.log("Best company ARIMA model: ", forecast.getBestModel()) // Log the best ARIMA model */
-/*
-SelectOrder(dataCompanySeasonal)
-console.log("Best seasonal ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model
-*/
-/*
-SelectOrder(dataCompanyLinearGrowth)
-console.log("Best linear growth ARIMA model: ", forecastHandler.getBestModel()) // Log the best ARIMA model
-*/
