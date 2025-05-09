@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mine Data - Financial Management</title>
-    <script src="../js/mineData.js"></script>
-    <link rel="stylesheet" href="../../global/css/style.css">
+    <link rel="stylesheet" href="/api/global/style">
+    <script src="/api/global/navbar"></script>
 </head>
 
 <body>
@@ -23,8 +23,6 @@
             <button id="addCompanyBtn">Tilføj Virksomhed</button>
         </div>
     </section>
-
-    <script src="../../global/js/navbar.js"></script>
 
     <section> 
     <input type="file" id="file" accept=".csv" />
@@ -73,6 +71,7 @@
         <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
     </footer>
 
+    <script src="/api/financialData/saveData"></script>
 
 </body>
 </html>
