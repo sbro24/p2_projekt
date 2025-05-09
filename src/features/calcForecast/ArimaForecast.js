@@ -5,13 +5,13 @@ export {
     CalcAIC,
     CalcAICc,
     SelectOrder,
+    RunForecast,
     Model,
     Forecast
 };
 
 import ARIMA from 'arima' // Import the ARIMA library
-//import {jsonReadFile} from 'src/lib/useDatabase/handle-json.js'
-//const jsonFilePath = 'src/data/data.json' // Path to the JSON file
+import { database } from '../lib/handle-data.js'
 
 class Model { // Class to construct an ARIMA model
     constructor(data, order, AIC, prediction) {
@@ -63,12 +63,6 @@ class Forecast { // Class to store the ARIMA models
         return this.bestAIC // Return the best AIC of the ARIMA model, so it is accessible for later use
     }
 }
-
-
-
-
-
-
  
 const dataCompany = [555866	,174701	,458500	,323800	,30750	,456900	,194000	,
     416297	,303865	,448050	,178515	,168222	,333520	,330090	,325457	,367068	,
@@ -91,8 +85,6 @@ const dataCompanySeasonalResult = [123600	,157500	,182000	,92000	,34500	,22400	,
     22600	,9400	,69600	,90000	,132000
 ]
 
-
-
 const dataCompanyLinearGrowth = [180000,227500,396667,416667,400000,501667,586667,735000,
     783333,971667,1200000,1007500,956667,1125000,1320000,1374167,1530000,1409167,1833333,
     2082500,1576667,1993333,1620000,2395833,1755000,2002500,2753333,2271667,2775000,2299167,
@@ -112,8 +104,6 @@ const dataCompanyLinearGrowthResult = [6300000,4373333,5741667,5060000,6197500,6
 //function FormatData()
 
 //function WriteToDatabase()
-
-//function Get_d()
 
 /** Calculates the residual sum of squares (RSS), to be used by the AIC
     @param {data = the financial data given}
@@ -237,3 +227,24 @@ function SelectOrder(data) {
         throw new Error("No ARIMA model found") // If no model was found, throw an error
     }  
 }
+
+
+/** Runs the ARIMA forecast on each metric sent by the user, and saves the metric and predictions to the database
+    @param {metrics = the metrics to be forecasted}
+    @param {data = the financial data given}
+    @returns {predictionArray = The array of metric predictions}
+ */
+async function RunForecast(data) {
+    const predictionArray = [/*Get from server/JSON*/ ] // Initialize the prediction array
+    const metrics = [/*Get from server/JSON*/ ] // Initialize the metrics array
+    for (let i = 0; i < metrics.length; i++) { // Loop through the metrics  
+        const forecast = SelectOrder(/* get data from router */)
+        let bestModel = forecast.getBestModel() // Get the best model
+        predictionArray.push(metrics[i], bestModel.prediction) // Push the metric's best model's predictions to the prediction array
+        //await database.saveForecast(metrics[i], bestModel.prediction) // Save the forecast to the database
+    }
+    return predictionArray // Return the array of metric predictions
+
+}
+
+RunForecast()

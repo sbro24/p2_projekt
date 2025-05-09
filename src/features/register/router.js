@@ -6,6 +6,9 @@ export function router(req, res, data) {
         case '/register':
             FileResponse(res, 'login/register.html')
             break;
+        case '/api/register/script':
+            FileResponse(res, 'login/register.js')
+            break;
         default:
             break;
     }

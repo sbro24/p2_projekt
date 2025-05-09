@@ -5,7 +5,10 @@ export function router(req, res, data) {
         case '/login':
             FileResponse(res, 'login/login.html');
             break;
-        case '/api/login/css':
+        case '/api/login/style':
+            FileResponse(res, 'login/login.css');
+            break;
+        case '/api/login/script':
             FileResponse(res, 'login/login.css');
             break;
         default:
