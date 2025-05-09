@@ -1,4 +1,5 @@
-import { FileResponse } from "../../app/router.js";
+import { FileResponse, DataResponse } from "../../app/router.js";
+import {  GetFinancialDataById } from "../../lib/useDatabase/handle-data.js";
 
 export function router(req, res, data) {
     switch (req.url) {
@@ -7,6 +8,10 @@ export function router(req, res, data) {
             break;
         case '/api/global/navbar':
             FileResponse(res, 'global/navbar.js');
+            break;
+        case '/api/global/getdata':
+            GetFinancialDataById(111111)
+            .then(data => DataResponse(res, data))
             break;
         default:
             break;

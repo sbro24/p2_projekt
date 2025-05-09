@@ -5,6 +5,7 @@ export {
     CalcAIC,
     CalcAICc,
     SelectOrder,
+    RunForecast,
     Model,
     Forecast
 };
@@ -64,36 +65,30 @@ class Forecast { // Class to store the ARIMA models
     }
 }
 
-
-
-
-
-
- 
-const dataCompany = [555866	,174701	,458500	,323800	,30750	,456900	,194000	,
+// Test data
+const data = { 
+dataCompany: [555866	,174701	,458500	,323800	,30750	,456900	,194000	,
     416297	,303865	,448050	,178515	,168222	,333520	,330090	,325457	,367068	,
     327179	,247301	,340363	,553907	,361974	,242516	,124659	,223538	,108450	,
-    306087	,340362	,388343	,448847	,107248	,428296	,324494	,922040]; 
+    306087	,340362	,388343	,448847	,107248	,428296	,324494	,922040], 
 
-const dataCompanyActualResult = [394335	,330600	,630237	,86555	,290790, 788550 ,
-    77700	,109050	,318261	,160350	,72089	,376368	];
+/*const dataCompanyActualResult = [394335	,330600	,630237	,86555	,290790, 788550 ,
+    77700	,109050	,318261	,160350	,72089	,376368	]*/
 
-const dataCompanySeasonal = [96000	,123000	,236000	,81600	,28800	,21000	,47600	,
+dataCompanySeasonal: [96000	,123000	,236000	,81600	,28800	,21000	,47600	,
     17600	,11800	,69600	,107000	,163500	,117600	,126000	,166000	,84800	,33900	,
     19800	,42400	,22600	,8800	,73600	,98000	,127500	,97200	,126000	,200000	,
     74400	,24900	,23200	,36800	,16800	,11700	,95200	,102000	,172500	,104400	,
     172500	,218000	,82400	,26700	,21400	,33200	,20400	,8500	,92000	,99000	,
     168000	,108000	,135000	,208000	,78400	,30600	,17400	,44800	,17200	,10700	,
     95200	,119000	,166500
-]
+],
 
-const dataCompanySeasonalResult = [123600	,157500	,182000	,92000	,34500	,22400	,35600	,
+/*const dataCompanySeasonalResult = [123600	,157500	,182000	,92000	,34500	,22400	,35600	,
     22600	,9400	,69600	,90000	,132000
-]
+]*/
 
-
-
-const dataCompanyLinearGrowth = [180000,227500,396667,416667,400000,501667,586667,735000,
+dataCompanyLinearGrowth: [180000,227500,396667,416667,400000,501667,586667,735000,
     783333,971667,1200000,1007500,956667,1125000,1320000,1374167,1530000,1409167,1833333,
     2082500,1576667,1993333,1620000,2395833,1755000,2002500,2753333,2271667,2775000,2299167,
     2826667,2447500,2720000,3325000,3210000,2528333,3230000,3412500,3600000,3553333,3290000,
@@ -101,19 +96,16 @@ const dataCompanyLinearGrowth = [180000,227500,396667,416667,400000,501667,58666
     4860000,3895833,4900000,4702500,5075000,5064167,4600000,5896667
 ]
 
-const dataCompanyLinearGrowthResult = [6300000,4373333,5741667,5060000,6197500,6346667,
+/*const dataCompanyLinearGrowthResult = [6300000,4373333,5741667,5060000,6197500,6346667,
     5750000,6416667,6745000,6060000,5414167,7338333
-]
-
+]*/
+}
 
 //function ReadFromDatabase()
-
 
 //function FormatData()
 
 //function WriteToDatabase()
-
-//function Get_d()
 
 /** Calculates the residual sum of squares (RSS), to be used by the AIC
     @param {data = the financial data given}
@@ -237,3 +229,23 @@ function SelectOrder(data) {
         throw new Error("No ARIMA model found") // If no model was found, throw an error
     }  
 }
+
+/** Runs the ARIMA forecast on each metric sent by the user, and saves the metric and predictions to the database
+    @param {metrics = the metrics to be forecasted}
+    @param {data = the financial data given}
+    @returns {predictionArray = The array of metric predictions}
+ */
+
+async function RunForecast(data) {
+    const predictionArray = [/*Get from server/JSON*/ ] // Initialize the prediction array
+ 
+    const forecast = SelectOrder(data/* get data from router */)
+    let bestModel = forecast.getBestModel() // Get the best model
+    predictionArray.push(bestModel.prediction) // Push the metric's best model's predictions to the prediction array
+    //await database.saveForecast(bestModel.prediction) // Save the forecast to the database
+
+    return predictionArray // Return the array of metric predictions
+
+}
+
+RunForecast()
