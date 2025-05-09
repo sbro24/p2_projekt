@@ -10,7 +10,7 @@ export function router(req, res, data) {
             FileResponse(res, 'login/login.css');
             break;
         case '/api/login/script':
-            FileResponse(res, 'login/login.js');
+            FileResponse(res, 'login/login2.js');
             break;
         case '/api/login/submit':
             const result = Login(data);
