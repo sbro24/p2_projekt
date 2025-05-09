@@ -56,12 +56,11 @@ async function GetResponse(req, res, data) {
  * @returns {Promise<string>} - Returns a promise that resolves to the body of the request.
  */
 function ExtractBody(req) {
-    let body = '';
-    req.on('data', chunk => {
-        body += chunk.toString(); // convert Buffer to string
-    });
-    req.on('end', () => {
-        return body
+    return new Promise((resolve, reject) => {
+        let body = '';
+        req.on('data', chunk => body += chunk.toString());
+        req.on('end', () => resolve(body));
+        req.on('error', reject);
     });
 }
 
@@ -104,6 +103,8 @@ export function FileResponse(res, filePath) {
     let ressourceFolder = filePath.split('/')[0];
     filePath = filePath.split('/').splice(1).join('/');
 
+    if (extension !== 'js' && extension !== 'html' && extension !== 'css') extension = 'assets';
+    
     let ressourcePath = path.join(publicRessourcesDirctoryPath, ressourceFolder, extension, filePath);
 
     fs.readFile(ressourcePath, (err, data) => {
