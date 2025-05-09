@@ -1,6 +1,12 @@
 import { Company, CompanyData } from "./constructors.js";
+import { promises as fs } from 'fs';
 
-const filePathDatabase = '../../data/data.json';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const filePathDatabase = path.join(__dirname, '../../data/data.json');
+
 
 async function GetCompaniesArray() {
     try {
@@ -126,7 +132,12 @@ async function UpdateCompanyObject(companyObject) {
     try {
         //async reading of database
         const data = await JsonReadFile(filePathDatabase);
-        console.log("data read successfully");
+        if (data) {
+            console.log("data read successfully");
+        } else {
+            console.log("error reading data");
+        }
+        console.log(data);
 
         const id = Object.keys(companyObject)[0];
 
@@ -193,8 +204,6 @@ async function LogResult(inputFunction) {
     const result = await inputFunction;
     console.log("result:", result);
 }
-
-
 
 export { GetCompaniesArray, AddNewCompany, UpdateCompanyName, UpdateSessionToken, GetFinancialMetricArray, UpdateCompanyObject, GetCompanyObject };
 
