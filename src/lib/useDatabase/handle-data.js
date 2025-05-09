@@ -8,7 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const filePathDatabase = path.join(__dirname, '../../data/data.json');
 
 
-async function GetCompaniesArray() {
+export async function GetCompanyies() {
     try {
         const data = await JsonReadFile(filePathDatabase);
         if (!data || !Array.isArray(data.companies)) {
@@ -22,9 +22,45 @@ async function GetCompaniesArray() {
     }
 }
 
-async function AddNewCompany(name, id, sessionToken) {
+export async function GetCompanyProfileById(id) {
+    try {
+        GetCompanyies()
+        .then(companies => {
+            return companies.filter(company => company.id === id);
+        });
+    } catch (err) {
+        console.error("Could not get companies array from database", err);
+        return [];
+    }
+}
 
-    let newCompany = new Company(id, name, sessionToken);
+export async function GetCompanyProfileByName(name) {
+    try {
+        GetCompanyies()
+        .then(companies => {
+            return companies.filter(company => company.name === name);
+        });
+    } catch (err) {
+        console.error("Could not get companies array from database", err);
+        return [];
+    }
+}
+
+export async function GetCompanyProfileByToken(token) {
+    try {
+        GetCompanyies()
+        .then(companies => {
+            return companies.filter(company => company.sessionToken === token);
+        });
+    } catch (err) {
+        console.error("Could not get companies array from database", err);
+        return [];
+    }
+}
+
+export async function AddNewCompany(id, name, password, sessionToken) {
+
+    let newCompany = new Company(id, name, password, sessionToken);
     let newCompanyData = new CompanyData(id);
 
     try {
@@ -59,18 +95,18 @@ async function AddNewCompany(name, id, sessionToken) {
     }
 }
 
-async function UpdateCompanyName(fromName, toName) {
+export async function UpdateCompanyName(companyId, toName) {
     try {
         //async reading of database
         const data = await JsonReadFile(filePathDatabase);
         console.log("data read successfully");
 
         //Find a rename the company    
-        const companyToRename = data.companies.find(company => company.name === fromName);
+        const companyToRename = data.companies.find(company => company.id === companyId);
 
         if (companyToRename) {
             companyToRename.name = toName;
-            console.log(`Renamed company from '${fromName}' to '${toName}'`);
+            console.log(`Renamed company '${companyId}' to '${toName}'`);
         } else {
             console.log("Company name is not in the database");
         }
@@ -85,18 +121,18 @@ async function UpdateCompanyName(fromName, toName) {
     }
 }
 
-async function UpdateSessionToken(companyName, newSessionToken) {
+export async function UpdateSessionToken(companyId, newSessionToken) {
     try {
         //async reading of database
         const data = await JsonReadFile(filePathDatabase);
         console.log("data read successfully");
 
         //Find a rename the company    
-        const companySessionTokenToUpdate = data.companies.find(company => company.name === companyName);
+        const companySessionTokenToUpdate = data.companies.find(company => company.id === companyId);
 
         if (companySessionTokenToUpdate) {
             companySessionTokenToUpdate.sessionToken = newSessionToken;
-            console.log(`The token for company ${companyName} has been updated to ${newSessionToken}`);
+            console.log(`The token for company ${companyId} has been updated to ${newSessionToken}`);
         } else {
             console.log("Company name is not in the database");
         }
@@ -111,7 +147,7 @@ async function UpdateSessionToken(companyName, newSessionToken) {
     }
 }
 
-async function GetFinancialDataByName(name) {
+export async function GetFinancialDataByName(name) {
     try {
         //async reading of database
         const data = await JsonReadFile(filePathDatabase);
@@ -128,7 +164,7 @@ async function GetFinancialDataByName(name) {
     }
 }
 
-async function GetFinancialDataById(id) {
+export async function GetFinancialDataById(id) {
     try {
         //async reading of database
         const data = await JsonReadFile(filePathDatabase);
@@ -142,7 +178,7 @@ async function GetFinancialDataById(id) {
     }
 }
 
-async function UpdateCompanyObject(companyObject) {
+export async function UpdateCompanyObject(companyObject) {
     try {
         //async reading of database
         const data = await JsonReadFile(filePathDatabase);
@@ -168,7 +204,7 @@ async function UpdateCompanyObject(companyObject) {
     }
 }
 
-async function GetFinancialMetricArray(id, financialType, financialCategory, financialMetric) {
+export async function GetFinancialMetricArray(id, financialType, financialCategory, financialMetric) {
     let financialMetricArray = [];
 
     try {
@@ -194,7 +230,7 @@ async function GetFinancialMetricArray(id, financialType, financialCategory, fin
     }
 }
 
-async function JsonReadFile(filePath) {
+export async function JsonReadFile(filePath) {
     try {
         const jsonString = await fs.readFile(filePath, 'utf-8');
         return JSON.parse(jsonString);
@@ -204,7 +240,7 @@ async function JsonReadFile(filePath) {
     }
 }
 
-async function JsonWriteFile(filePath, data) {
+export async function JsonWriteFile(filePath, data) {
     try {
         const jsonString = JSON.stringify(data, null, 2); // pretty print
         await fs.writeFile(filePath, jsonString, 'utf-8');
@@ -218,9 +254,6 @@ async function LogResult(inputFunction) {
     const result = await inputFunction;
     console.log("result:", result);
 }
-
-export { GetFinancialDataById, GetCompaniesArray, AddNewCompany, UpdateCompanyName, UpdateSessionToken, GetFinancialMetricArray, UpdateCompanyObject, GetFinancialDataByName };
-
 
 //functions and object for testing
 

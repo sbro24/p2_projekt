@@ -2,7 +2,8 @@
   "companies": [
     {
       "id": "123456",
-      "name": "newName",
+      "name": "user",
+      "password": "pass",
       "sessionToken": "123401470983274"
     },
     {

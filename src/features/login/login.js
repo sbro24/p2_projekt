@@ -1,21 +1,24 @@
 import fs from 'fs'
 import process from 'process';
 import { GenSessionToken } from '../../lib/cookies/sessionToken.js';
+import { GetCompanyies } from '../../lib/useDatabase/handle-data.js';
 
 const dbPath = process.cwd() + '/src/data/data.json';
 
-function loadUsers() {
-    let data = fs.readFileSync(dbPath);
-    data = JSON.parse(data);
-    return data.companies;
-}
-
-function CheakLogin(companyName) {
-    const users = loadUsers();
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].name === companyName) return users[i];
-    }
-    return false;
+function CheakLogin(data) {
+    return new Promise((resolve) => {
+        GetCompanyies()
+        .then(companies => {
+            for (const company of companies) {
+                if (company.name === data.username && company.password === data.password) resolve(company);
+            }
+            resolve('false');
+        })
+        .catch(err => {
+            console.error("Could not get companies array from database", err);
+            resolve('error');
+        });
+    });
 }
 
 function LoginDataValidation(data) {
@@ -24,29 +27,25 @@ function LoginDataValidation(data) {
 }
 
 // Function to register a company using name and password
-export function Login(data) {
-    let result = {
-        response: '',
-        data: {},
-    }
-    
-    if (LoginDataValidation(data) === false) {
-        result.response = 'data validation';
-        return result
-    }
+export async function Login(data) {
+    return new Promise(async function (resolve) {
+        let result = {
+            response: '',
+            data: {}
+        }
+        
+        if (LoginDataValidation(data) === false) {
+            result.response = 'data validation';
+            resolve(result);
+        }
 
-    let user = CheakLogin(data.companyName);
+        const cheakLogin = await CheakLogin(data);
+        console.log(cheakLogin);
+        if (cheakLogin === 'false') {
+            result.response = 'wrong login';
+            resolve(result);
+        }
 
-    if (user === false) {
-        result.response = 'wrong login';
-        return result
-    }
-
-    let token = GenSessionToken();
-    
-    //EditProfile(id, 'what to edit', data)
-
-    result.response = 'logged in';
-    result.data = { sessionToken: token }
-    return result
+        resolve(result);
+    })
 }

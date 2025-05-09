@@ -13,8 +13,11 @@ export function router(req, res, data) {
             FileResponse(res, 'login/login2.js');
             break;
         case '/api/login/submit':
-            const result = Login(data);
-            DataResponse(res, result);
+            Login(JSON.parse(data))
+            .then(result => {
+                console.log(result);
+                DataResponse(res, result)
+            });
             break;
         default:
             break;
