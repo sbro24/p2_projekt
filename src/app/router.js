@@ -95,7 +95,7 @@ function guessDataType(data){
     return (type2Mime[type] || "text/plain");
 }
 
-export function FileResponse(res, filePath) {
+export function FileResponse(res, filePath, cookies = []) {
     if (filePath.startsWith('/')) filePath = filePath.substring(1);
 
     let extension = filePath.split('.').pop().toLowerCase();
@@ -112,6 +112,7 @@ export function FileResponse(res, filePath) {
       } else {
         Log('sending: ' + path.join(ressourceFolder, extension, filePath));
         res.statusCode = 200;
+        res.setHeader('Set-Cookie', cookies);
         res.setHeader('Content-Type', guessMimeType(filePath));
         res.write(data);
         res.end('\n');
@@ -119,9 +120,10 @@ export function FileResponse(res, filePath) {
     })
 }
 
-export function DataResponse(res, data) {
-    if (data === undefined) data = 'undefined';
+export function DataResponse(res, data = 'undefined', cookies = []) {
     res.statusCode = 200;
+    console.log(cookies);
+    res.setHeader('Set-Cookie', cookies);
     res.setHeader('Content-Type', guessDataType(data));
     res.write(JSON.stringify(data));
     res.end('\n');

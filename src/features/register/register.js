@@ -1,31 +1,43 @@
 import process from "process";
-import fs from 'fs'
-import { AddNewProfile } from "../../lib/useDatabase/handle-data.js";
-import { RandomIntFromInterval } from "../../lib/maths/random.js";
+import crypto from "crypto";
 
+import { RandomIntFromInterval } from "../../lib/maths/random.js";
+import { AddNewCompany, GetCompanyies } from "../../lib/useDatabase/handle-data.js";
+import { GenSessionToken } from "../../lib/cookies/sessionToken.js";
 
 const dbPath = process.cwd() + '/src/data/data.json';
 
-function loadUsers() {
-    let data = fs.readFileSync(dbPath);
-    data = JSON.parse(data);
-    return data.companies;
-}
 
-function DoesCompanynameExist(companyName) {
-    const users = loadUsers();
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].name === companyName) return true;
-    }
-    return false;
+function DoesCompanynameExist(name) {
+        return new Promise((resolve) => {
+            GetCompanyies()
+            .then(companies => {
+                for (const company of companies) {
+                    if (company.name === name) resolve(true);
+                }
+                resolve(false);
+            })
+            .catch(err => {
+                console.error("Could not get companies array from database", err);
+                resolve(true);
+            });
+        });
 }
 
 function DoesIdExist(id) {
-    const users = loadUsers();
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].id === id) return true;
-    }
-    return false;
+        return new Promise((resolve) => {
+            GetCompanyies()
+            .then(companies => {
+                for (const company of companies) {
+                    if (company.id === id) resolve(true);
+                }
+                resolve(false);
+            })
+            .catch(err => {
+                console.error("Could not get companies array from database", err);
+                resolve(err);
+            });
+        });
 }
 
 function RegisterDataValidation(data) {
@@ -34,39 +46,48 @@ function RegisterDataValidation(data) {
 }
 
 // Function to register a company using name and password
-function Register(data) {
+export async function Register(data) {
     let result = {
         response: '',
-        data: {},
     }
     
     if (RegisterDataValidation(data) === false) {
         result.response = 'data validation';
         return result
     }
-
-    if (DoesCompanynameExist(data.companyName) === true) {
+    
+    if (await DoesCompanynameExist(data.username)) {
         result.response = 'companyname already exists';
         return result
     }
-
-    let id = RandomIntFromInterval(100000, 999999)
-    while (DoesIdExist(id)) {
-        id = RandomIntFromInterval(100000, 999999)
+    
+    let id = GenId();
+    while (await DoesIdExist(id) || typeof id === 'error') {
+        id = GenId()
     }
-    id = id.toString()
+    
+    if (typeof id === 'error') {
+        result.response = 'error';
+        return result
+    }
 
     let token = GenSessionToken();
+    
+    data.password = crypto.createHash('sha256').update(data.password).digest('hex');
 
-    AddNewProfile(id, data.companyName, data.password, token);
-
-    result.response = 'credited';
-    return
+    AddNewCompany(id, data.username, data.password, token)
+    result.response = 'success';
+    return result
 }
 
-const testData = {
-    companyName: "Testname5",
-    password: "password123"
+function GenId() {
+    let result = '';
+    const n = 18
+    const chars = '1234567890'
+    const min = 0
+    const max = chars.length - 1
+    for (let i = 0; i < n; i++) {
+        result += chars.charAt(RandomIntFromInterval(min, max));
+    }
+    return result
 }
-
-console.log(Register(testData))

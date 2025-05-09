@@ -1,33 +1,36 @@
 
 
 document.addEventListener("DOMContentLoaded", (event) => {
-});
-const loginForm = document.getElementById("loginForm");
-loginForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const data = {}; 
-    for (var element of loginForm) {
-        if (element.type === "submit") continue;
-        data[element.name] = element.value;
-    }
-    // Send the data to the server
+    const loginForm = document.getElementById("loginForm");
+    loginForm.addEventListener("submit", (event) => {
+        event.preventDefault();
     
-    fetch('/api/login/submit', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(body => body.json())
-    .then(data => {
-        console.log(data);
-        alert(data.response);  
-    })
+        const data = {}; 
+        for (var element of loginForm) {
+            if (element.type === "submit") continue;
+            data[element.name] = element.value;
+        }
+        // Send the data to the server
+        
+        fetch('/api/login/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data === 'success') {
+                window.location.href = '/'; // Redirect to home page on success
+            } else {
+                alert('Login failed: ' + data); // Show error message
+            }
+        })
+    
+    
+    });
 });
-
-
 
 //let loginButton = document.getElementById("loginButton");
 //loginButton.addEventListener("click", function(event) {

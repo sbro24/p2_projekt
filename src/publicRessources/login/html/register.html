@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
-    <link rel = "stylesheet" href="api/global/style">
-    <!--<link rel="stylesheet" href="/api/login/css">-->
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Registration</title>
+        <link rel = "stylesheet" href="api/global/style">
+        <script src="/api/register/script"></script>
 </head>
 
 <body>
@@ -27,27 +27,20 @@
         <section id="create-business">
             <h2>Opret din virkshomhed</h2>
             <p>På denne side kan du oprette din virksomhed.</p>
-            
-            <form action="#" method="">
-                <form id="registrationForm">   
-                    <input type="text" id="companyName" placeholder="Indtast firmanavn" required>
-                    <input type="password" id="password" placeholder="Vælg adgangskode" required>
-                    <input type="submit" class="button" value="Log ind">
-                </form>
+        
 
-                <div class="signup">
-                    <span class="signup">Already have an account?
-                        <a href="/login">Login</a>
-                    </span>
-                </div>
+            <form id="registerForm">   
+                <input type="text" name="username" placeholder="Indtast firmanavn" required>
+                <input type="password" name="password" placeholder="Vælg adgangskode" required>
+                <input type="submit" class="button" value="Opret Virksomhed">
             </form>
 
-
-            <!-- Midlertidigt link til homepage - fjernes når Login funktionen er integreret :) -->
-            <a href="/userData/minSide">Homepage</a>
-
+            <div class="signup">
+                <span class="signup">Already have an account?
+                    <a href="/login">Login</a>
+                </span>
+                </div>
         </section>
-    <script src="/api/register/script"></script>
 
     <!-- Footer -->
     <footer>

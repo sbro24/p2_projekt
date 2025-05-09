@@ -14,10 +14,7 @@ export function router(req, res, data) {
             break;
         case '/api/login/submit':
             Login(JSON.parse(data))
-            .then(result => {
-                console.log(result);
-                DataResponse(res, result)
-            });
+            .then(result => DataResponse(res, result.response, result.cookie))
             break;
         default:
             break;

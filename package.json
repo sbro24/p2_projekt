@@ -9,7 +9,7 @@
   },
   "scripts": {
     "app": "node src/app/server.js",
-    "nodemon": "nodemon src/app/server.js",
+    "nodemon": "nodemon --ignore src/data/* src/app/server.js",
     "test": "jest --coverage"
   },
   "repository": {
