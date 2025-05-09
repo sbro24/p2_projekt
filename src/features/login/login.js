@@ -24,7 +24,7 @@ function LoginDataValidation(data) {
 }
 
 // Function to register a company using name and password
-function Login(data) {
+export function Login(data) {
     let result = {
         response: '',
         data: {},
@@ -49,9 +49,4 @@ function Login(data) {
     result.response = 'logged in';
     result.data = { sessionToken: token }
     return result
-}
-
-const testData = {
-    companyName: "Testname5",
-    password: "password123"
 }

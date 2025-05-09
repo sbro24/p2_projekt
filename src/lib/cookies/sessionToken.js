@@ -13,7 +13,6 @@ export function GenSessionToken() {
     }
     return result
 }
-console.log(GenSessionToken(20))
 
 export function CompareSessionTokens(token1, token2) {
     if (token1 === token2) return true

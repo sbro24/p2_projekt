@@ -87,7 +87,6 @@ function guessMimeType(fileName){
 
 function guessDataType(data){
     let type = typeof data;
-    console.log('guessDataType', type);
     const type2Mime = {
         "string": "text/txt",
         "number": "text/txt",
@@ -122,7 +121,6 @@ export function FileResponse(res, filePath) {
 
 export function DataResponse(res, data) {
     if (data === undefined) data = 'undefined';
-    console.log('DataResponse', data);
     res.statusCode = 200;
     res.setHeader('Content-Type', guessDataType(data));
     res.write(JSON.stringify(data));
