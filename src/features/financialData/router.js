@@ -1,5 +1,6 @@
 import { FileResponse } from "../../app/router.js";
 import fs from 'fs/promises';
+import { UpdateCompanyObject } from "../../lib/useDatabase/handle-data.js";
 
 export async function router(req, res, data) {
     switch (req.url) {
@@ -10,10 +11,10 @@ export async function router(req, res, data) {
         case '/api/financialData/saveData':
             FileResponse(res, 'financialData/mineData.js');
             break;
-
+        
         case '/api/saveData':
             await SaveData(req, res, data)
-            break
+        break
 
         default:
             break;
@@ -22,7 +23,7 @@ export async function router(req, res, data) {
 
 async function SaveData(req, res, data) {
     const parsed = JSON.parse(data);
-    await fs.writeFile('testData.json', JSON.stringify(parsed, null, 2));
+    await UpdateCompanyObject(parsed);
 
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
