@@ -56,12 +56,11 @@ async function GetResponse(req, res, data) {
  * @returns {Promise<string>} - Returns a promise that resolves to the body of the request.
  */
 function ExtractBody(req) {
-    let body = '';
-    req.on('data', chunk => {
-        body += chunk.toString(); // convert Buffer to string
-    });
-    req.on('end', () => {
-        return body
+    return new Promise((resolve, reject) => {
+        let body = '';
+        req.on('data', chunk => body += chunk.toString());
+        req.on('end', () => resolve(body));
+        req.on('error', reject);
     });
 }
 
