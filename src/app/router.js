@@ -103,7 +103,7 @@ export function FileResponse(res, filePath) {
     let ressourceFolder = filePath.split('/')[0];
     filePath = filePath.split('/').splice(1).join('/');
 
-    if (extension !== 'js' && extension !== 'json' && extension !== 'css') extension = 'assets';
+    if (extension !== 'js' && extension !== 'html' && extension !== 'css') extension = 'assets';
     
     let ressourcePath = path.join(publicRessourcesDirctoryPath, ressourceFolder, extension, filePath);
 
