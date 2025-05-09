@@ -3,7 +3,6 @@
 document.addEventListener("DOMContentLoaded", (event) => {
 });
 const loginForm = document.getElementById("loginForm");
-
 loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -21,10 +20,11 @@ loginForm.addEventListener("submit", (event) => {
         },
         body: JSON.stringify(data)
     })
-    //.then(result => 
-    //    alert(result.response)
-    //    console.log(result)
-    //)
+    .then(body => body.json())
+    .then(data => {
+        console.log(data);
+        alert(data.response);  
+    })
 });
 
 
