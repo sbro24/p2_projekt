@@ -58,7 +58,14 @@ async function GetResponse(req, res, data) {
 function ExtractBody(req) {
     return new Promise((resolve, reject) => {
         let body = '';
-        req.on('data', chunk => body += chunk.toString());
+        req.on('data', chunk => {
+            body += chunk.toString()
+            if (body.length > 1e7) { 
+                // Protect against attacks.
+                request.connection.destroy();
+                reject(Error('Request body too large'));
+            }
+        });
         req.on('end', () => resolve(body));
         req.on('error', reject);
     });
@@ -122,7 +129,6 @@ export function FileResponse(res, filePath, cookies = []) {
 
 export function DataResponse(res, data = 'undefined', cookies = []) {
     res.statusCode = 200;
-    console.log(cookies);
     res.setHeader('Set-Cookie', cookies);
     res.setHeader('Content-Type', guessDataType(data));
     res.write(JSON.stringify(data));
