@@ -184,8 +184,7 @@ function CalcAICc(data, config, forecast) { // Calculate the AICc for the given 
  */
 function SelectOrder(data) {
     const forecastHandler = new Forecast() // Create a forecast handler
-    // const d = 0 // Get_d(data) // Call the function to get the differencing order
-    let bestAIC = Infinity // Initialize the best AIC to infinity
+    let bestAICc = Infinity // Initialize the best AIC to infinity
     const minComplexity = 1;
     for (let c = 0; c <= 1; c++) { // Loop through, to check if the constant should be included
         for (let d = 0; d <= 2; d++) { // Loop through the differencing orders
@@ -200,31 +199,25 @@ function SelectOrder(data) {
                     }
                     const config = {p: p, d: d, q: q, auto: false, verbose: false, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
                        
-                    let aic;
+                    let AICc;
                     const arima = new ARIMA(config).train(data) // Create a new ARIMA model using the config
                     const [testForecast, errors] = arima.predict(12) // Predict the next 12 months using the ARIMA model
-                    if (data.length < 61) { // If the data is short, use AICc instead of AIC
-                        aic = CalcAICc(data, config, testForecast) // calculate the AICc of the current ARIMA model
-                    } else {
-                        aic = CalcAIC(data, config, testForecast) // calculate the AIC of the current ARIMA model
-                    }
-                    const model = new Model(data, config, aic, testForecast) // Create a new model object
-                    forecastHandler.addModel(model) // Add the model to the forecast class
-                    //console.log("Order: ", config, "AIC: ", aic) // Log the model and its AIC
-                    //console.log("Forecast: ", testForecast) // Log the forecasted values
+                    AICc = CalcAICc(data, config, testForecast) // calculate the AICc of the current ARIMA model
+                    const model = new Model(data, config, AICc, testForecast) // Create a new model object
+                    forecastHandler.addModel(model) // Add the model to the forecast class          
 
-                    if (aic < bestAIC) { // If the AIC is lower than the best AIC found so far
-                        bestAIC = aic // Update the best AIC
+                    if (AICc < bestAICc) { // If the AIC is lower than the best AIC found so far
+                        bestAICc = AICc // Update the best AIC
                         forecastHandler.setBestOrder(config)// Update the best model parameters
                         forecastHandler.setBestModel(model) // Update the best model
-                        forecastHandler.setBestAIC(aic)
+                        forecastHandler.setBestAIC(AICc) // Update the best AIC
                     }
                 }  
             }
         }
-        return forecastHandler
     }   
-    if (forecastHandler.bestOrder) { // If a best model was found // Set the best order in the forecast handler 
+    if (forecastHandler.bestOrder) { // If a best model was found return the forecast handler 
+        return forecastHandler
     } else {
         throw new Error("No ARIMA model found") // If no model was found, throw an error
     }  
@@ -235,10 +228,9 @@ function SelectOrder(data) {
     @param {data = the financial data given}
     @returns {predictionArray = The array of metric predictions}
  */
-
-async function RunForecast(data) {
+function RunForecast(data) {
     const predictionArray = [/*Get from server/JSON*/ ] // Initialize the prediction array
- 
+    
     const forecast = SelectOrder(data/* get data from router */)
     let bestModel = forecast.getBestModel() // Get the best model
     predictionArray.push(bestModel.prediction) // Push the metric's best model's predictions to the prediction array
@@ -248,4 +240,4 @@ async function RunForecast(data) {
 
 }
 
-RunForecast()
+//console.log(RunForecast(data.dataCompany)) // Log the result to the console
