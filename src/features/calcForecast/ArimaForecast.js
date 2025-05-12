@@ -184,7 +184,6 @@ function CalcAICc(data, config, forecast) { // Calculate the AICc for the given 
  */
 function SelectOrder(data) {
     const forecastHandler = new Forecast() // Create a forecast handler
-    // const d = 0 // Get_d(data) // Call the function to get the differencing order
     let bestAICc = Infinity // Initialize the best AIC to infinity
     const minComplexity = 1;
     for (let c = 0; c <= 1; c++) { // Loop through, to check if the constant should be included
@@ -217,11 +216,11 @@ function SelectOrder(data) {
             }
         }
     }   
-    if (forecastHandler.bestOrder) { // If a best model was found // Set the best order in the forecast handler 
+    if (forecastHandler.bestOrder) { // If a best model was found return the forecast handler 
+        return forecastHandler
     } else {
         throw new Error("No ARIMA model found") // If no model was found, throw an error
     }  
-    return forecastHandler
 }
 
 /** Runs the ARIMA forecast on each metric sent by the user, and saves the metric and predictions to the database
@@ -241,4 +240,4 @@ function RunForecast(data) {
 
 }
 
-RunForecast()
+//console.log(RunForecast(data.dataCompany)) // Log the result to the console
