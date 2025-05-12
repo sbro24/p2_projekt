@@ -194,9 +194,6 @@ function SelectOrder(data) {
                     if (p + q <= minComplexity) { // Check if the model is too simple
                         continue; // Skip this iteration if the model is too simple
                     }
-                    if (d > 0) { // Check if the differencing order is greater than 0
-                        c = 1 // sets the constant to be included in the model
-                    }
                     const config = {p: p, d: d, q: q, auto: false, verbose: false, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
                        
                     let AICc;
