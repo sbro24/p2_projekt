@@ -10,7 +10,8 @@ const companyDataTemplate = {
             sales: {
                 characteristics: [],
                 data: [{
-                    year: new Date().getFullYear(),
+                    name: "",
+                    year: "",
                     months: {
                         January: 0,
                         February: 0,
@@ -39,3 +40,5 @@ const companyDataTemplate = {
         expense: {}
     }
 };
+
+export {companyDataTemplate}
