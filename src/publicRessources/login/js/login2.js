@@ -10,8 +10,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
             if (element.type === "submit") continue;
             data[element.name] = element.value;
         }
+
+        const validationMessage = ValidationLoginData(data);
+        if (validationMessage !== '') {
+            alert('Validation error: ' + validationMessage);
+            return;
+        }
+
         // Send the data to the server
-        
         fetch('/api/login/submit', {
             method: 'POST',
             headers: {
@@ -30,38 +36,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
     
     
     });
-});
 
-//let loginButton = document.getElementById("loginButton");
-//loginButton.addEventListener("click", function(event) {
-//    event.preventDefault(); // Prevent the default form submission
-//
-//    
-//    // Get the form data
-//    const loginForm = document.getElementById("loginForm");
-//    const data = loginForm;
-//    console.log(data);
-//
-//
-//
-//    //// Send the data to the server
-//    //fetch('/api/login/submit', {
-//    //    method: 'POST',
-//    //    headers: {
-//    //        'Content-Type': 'application/json'
-//    //    },
-//    //    body: JSON.stringify(data)
-//    //})
-//    //.then(response => response.json())
-//    //.then(data => {
-//    //    console.log('Success:', data);
-//    //    if (data.success) {
-//    //        window.location.href = '/home'; // Redirect to home page on success
-//    //    } else {
-//    //        alert('Login failed: ' + data.message); // Show error message
-//    //    }
-//    //})
-//    //.catch((error) => {
-//    //    console.error('Error:', error);
-//    //});
-//});
+    function ValidationLoginData(data) {
+        if (ValidateObjectStructureStrict(data, expected) === false) return false;
+        if (data.username.length > 128) return 'username must be less than 128 characters';
+        if (data.password.length > 128) return 'password must be less than 128 characters';
+        if (data.username.length < 4) return 'Username must be at least 4 characters long';
+        if (data.password.length < 8) return 'Password must be at least 8 characters long';
+        return '';
+    }
+});

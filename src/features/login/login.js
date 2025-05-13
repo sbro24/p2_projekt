@@ -29,6 +29,7 @@ function LoginDataValidation(data) {
     }
 
     if (ValidateObjectStructureStrict(data, expected) === false) return false;
+    if (data.username.length > 128 || data.password.length > 128) return false
     if (data.username.length < 4 || data.password.length < 8) return false
     return true;
 }

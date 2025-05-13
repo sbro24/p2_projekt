@@ -4,6 +4,7 @@ import crypto from "crypto";
 import { RandomIntFromInterval } from "../../lib/maths/random.js";
 import { AddNewCompany, GetCompanyies } from "../../lib/useDatabase/handle-data.js";
 import { GenSessionToken } from "../../lib/cookies/sessionToken.js";
+import { ValidateObjectStructureStrict } from "../../lib/dataValidation/validateObject.js";
 
 const dbPath = process.cwd() + '/src/data/data.json';
 
@@ -41,7 +42,14 @@ function DoesIdExist(id) {
 }
 
 function RegisterDataValidation(data) {
-    //TODO
+    const expected = {
+        username: '',
+        password: ''
+    }
+
+    if (ValidateObjectStructureStrict(data, expected) === false) return false;
+    if (data.username.length > 128 || data.password.length > 128) return false
+    if (data.username.length < 4 || data.password.length < 8) return false
     return true;
 }
 
@@ -52,7 +60,7 @@ export async function Register(data) {
     }
     
     if (RegisterDataValidation(data) === false) {
-        result.response = 'data validation';
+        result.response = 'validation error';
         return result
     }
     

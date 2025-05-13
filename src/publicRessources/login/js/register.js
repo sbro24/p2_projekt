@@ -10,8 +10,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
             if (element.type === "submit") continue;
             data[element.name] = element.value;
         }
-        // Send the data to the server
 
+        const validationMessage = ValidationRegisterData(data);
+        if (validationMessage !== '') {
+            alert('Validation error: ' + validationMessage);
+            return;
+        }
+        
+        // Send the data to the server
         fetch('/api/register/submit', {
             method: 'POST',
             headers: {
@@ -29,4 +35,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
         })
     
     });
+
+    function ValidationRegisterData(data) {
+        if (ValidateObjectStructureStrict(data, expected) === false) return false;
+        if (data.username.length > 128) return 'username must be less than 128 characters';
+        if (data.password.length > 128) return 'password must be less than 128 characters';
+        if (data.username.length < 4) return 'Username must be at least 4 characters long';
+        if (data.password.length < 8) return 'Password must be at least 8 characters long';
+        return '';
+    }
 });
