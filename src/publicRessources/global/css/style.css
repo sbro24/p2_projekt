@@ -104,3 +104,12 @@ form {
       grid-auto-flow: row;
       grid-gap: .8em;
 }
+
+.btnInsertYear {
+    margin-bottom: 20px;
+}
+
+.btnInsertCategory {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

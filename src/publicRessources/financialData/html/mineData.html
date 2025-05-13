@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mine Data - Financial Management</title>
     <link rel="stylesheet" href="/api/global/style">
-    <script src="/api/global/navbar"></script>
 </head>
 
 <body>
@@ -14,15 +13,8 @@
         <p>Administrer dit budget effektivt</p>
     </header>
 
-    <!-- "Add company name below"-section will possibly be omitted when login section is added? --> 
-    <section>
-        <h2>Tilføj virksomhedsnavn nedenfor</h2>
-        <div>
-            <label for="companyName">Virksomhedsnavn:</label>
-            <input type="text" id="companyName" placeholder="Indtast virksomhedsnavn">
-            <button id="addCompanyBtn">Tilføj Virksomhed</button>
-        </div>
-    </section>
+        <!-- Navigation -->
+    <script src="/api/global/navbar"></script>
 
     <section> 
     <input type="file" id="file" accept=".csv" />
@@ -32,30 +24,158 @@
     </section>
 
     <section>
-        <h2>Omsætning</h2>
-        <form>
-            <table border="1" id="revenue-table">
-                <tr>
-                    <th>Year</th>
-                    <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
-                    <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
-                </tr>
-            </table>
-        </form>
-    </section>
+        <h1>Mine resultater</h1>    
+        
+            <h2>Total omsætning</h2> 
+            <button class="btnInsertYear">Indsæt nyt år</button>
+                <form>
+                    <table border="1" id="revenue-table">
+                        <thead>
+                            <tr>
+                                <th>År</th>
+                                <th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th>
+                            </tr>
+                            <tr>
+                                <th>Resultat</th>  
+                        </thead>
+                    </table>
+                </form>
 
+                <h3>Indtægt 1</h3>
+                    <form>
+                        <table border="1" id="revenue-table">
+                            <tr>
+                                <th>År</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </table>
+                    </form>
+                <h3>Indtægt 2</h3>
+                    <form>
+                        <table border="1" id="revenue-table">
+                            <tr>
+                                <th>År</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </table>
+                    </form>    
+                    <button class="btnInsertCategory">Indsæt ny indtægt</button>
+                
+                <h2>Totale omkostninger</h2>
+                <button class="btnInsertYear">Indsæt nyt år</button>
+                <form>
+                    <table border="1" id="expense-table">
+                        <thead>
+                            <tr>
+                                <th>År</th>
+                                <th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th>
+                            </tr>
+                            <tr>
+                                <th>Resultat</th>  
+                        </thead>
+                    </table>
+                </form>
+
+                <h3>Omkostning 1</h3>
+                    <form>
+                        <table border="1" id="expense-table">
+                            <tr>
+                                <th>År</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </table>
+                    </form>
+            
+                <h3>Omkostning 2</h3>
+                    <form>
+                        <table border="1" id="expense-table">
+                            <tr>
+                                <th>År</th>
+                                <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                                <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                            </tr>
+                        </table>
+                    </form>
+                    <button class="btnInsertCategory">Indsæt ny omkostning</button>
+                </section>
+                
     <section>
-        <h2>Omkostninger</h2>
-        <form>
-            <table border="1" id="expense-table">
-                <tr>
-                    <th>År</th>
-                    <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
-                    <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
-                </tr>
-            </table>
-        </form>
-    </section>
+        <h1>Min budget</h1>    
+        
+        <h2>Omsætning</h2>
+            <form>
+                <table border="1" id="revenue-table">
+                    <thead>
+                        <tr>
+                            <th>År</th>
+                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                        </tr>
+                    </thead>
+                </table>
+            </form>
+
+            <h3>Indtægt 1</h3>
+                <form>
+                    <table border="1" id="revenue-table">
+                        <tr>
+                            <th>År</th>
+                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                        </tr>
+                    </table>
+                </form>
+            <h3>Indtægt 2</h3>
+                <form>
+                    <table border="1" id="revenue-table">
+                        <tr>
+                            <th>År</th>
+                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                        </tr>
+                    </table>
+                </form>    
+                <button class="btnInsertCategory">Indsæt ny indtægt</button>
+
+            <h2>Omkostninger</h2>
+            <form>
+                <table border="1" id="expense-table">
+                    <thead>
+                        <tr>
+                            <th>År</th>
+                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                        </tr>
+                    </thead>
+                </table>
+            </form>
+
+            <h3>Omkostning 1</h3>
+                <form>
+                    <table border="1" id="expense-table">
+                        <tr>
+                            <th>År</th>
+                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                        </tr>
+                    </table>
+                </form>
+        
+            <h3>Omkostning 2</h3>
+                <form>
+                    <table border="1" id="expense-table">
+                        <tr>
+                            <th>År</th>
+                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                        </tr>
+                    </table>
+                </form>
+                <button class="btnInsertCategory">Indsæt ny omkostning</button>
+            </section>
 
     <section id="manuelInput" style="display: none">
         <h2>Manuel indtastning</h2>
@@ -71,7 +191,7 @@
         <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
     </footer>
 
-    <script src="/api/financialData/saveData"></script>
+    <script src="/api/financialData/mineData"></script>
 
 </body>
 </html>
