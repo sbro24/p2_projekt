@@ -2,54 +2,27 @@ import {JsonReadFile, JsonWriteFile, JsonReadFileCb, JsonWriteFileCb} from '../u
 import {SplitRowsIntoCategories, CheckIfCategoryDataExists, CSVObjectCreator, ParseCSV} from '../ImportExport/CSVParser.js'
 import {Company, CompanyData, FinancialMetric, FinancialYear} from '../useDatabase/constructors.js'
 
-const txt_test = '../ImportExport/lololol.txt'
-
-let hest1 = "Abekat";
-let hest2 = "2023";
-let hest = new FinancialMetric(hest1)
-let hest5 = new FinancialYear(hest2)
-hest.data.push(hest5)
-
-let sss
-let company = new CompanyData(sss);
-company.result.revenue["Abekat"] = hest
-import { readFile } from 'fs/promises';
-
-try {
-  const affe = await ParseCSV(txt_test)
-  CSVObjectCreator(affe, company)
-  console.log(company.result)
-  console.log(company.result.revenue)
-  Object.values(company.result.revenue).forEach(metric => {
-    console.log(metric.data); // metric is each FinancialMetric
-  });
-} catch (err) {
-    console.error('Error reading file:', err);
-}
-
-console.log(company)
-
 const DELIMITER = ';'
 const NEWLINE = '\n';
+let Year = "2025";
 
-function ExportToCSV() {
-    let Year = "2025";
-    var rows = [];
+function ExportToCSV(company, Year) {
+    var rows = []; //Initiate rows array
+    //Initiate headers array with the given year and every month
     var headers = [Year, "Januar", "Februar", "Marts", "April", "May", "Juni", 
                   "Juli", "August", "September", "October", "November", "December", NEWLINE];
 
-    // Add headers
-    rows.push(headers.join(DELIMITER));
+    rows.push(headers.join(DELIMITER)); // Add headers
 
-    ExtractOmsætningData (company, Year, rows)
+    ExtractOmsætningData (company, Year, rows) //Run ExtractOmsætningData function with specific year
 
-    rows[rows.length-1] = rows[rows.length-1] + ";\n"
+    rows[rows.length-1] = rows[rows.length-1] + ";\n" //Add NEWLINE
 
-    ExtractOmkostningData (company, Year, rows)
+    ExtractOmkostningData (company, Year, rows) //Run ExtractOmkostningData function with specific year
 
-    const hest = { name: "Cool Company" };
+    const hest = { name: "Cool Company" }; //CSV file name
 
-    DownloadCSVToDisk(rows, hest)
+    DownloadCSVToDisk(rows, hest) //Run "DownloadCSVToDisk" function
 };
 
 import { writeFile } from 'fs/promises';
@@ -58,15 +31,20 @@ import path from 'path';
 
 async function DownloadCSVToDisk(rows, lompany) {
     const NEWLINE = '\n';
+
+    //csvContent = each overcategory and its undercategories joined together by NEWLINE
+    //This means csvContent is now one long string
     const csvContent = rows.join(NEWLINE);
 
+    //
     const filename = lompany?.name
         ? `${lompany.name.replace(/[^a-z0-9]/gi, '_')}_data.csv`
         : 'financial_data.csv';
 
-    const outputDir = 'C:/Users/keanv/Downloads'; // Make sure to use forward slashes or escape backslashes
-    const filePath = path.join(outputDir, filename);
+    const outputDir = 'C:/Users/keanv/Downloads'; //Folder to store new csv file
+    const filePath = path.join(outputDir, filename); //filepath contains folder and name of csv file
 
+    //Write csv into filepath using the long string from csvContent
     try {
         await writeFile(filePath, csvContent, 'utf8');
         console.log(`CSV file saved to: ${filePath}`);
@@ -76,7 +54,11 @@ async function DownloadCSVToDisk(rows, lompany) {
 }
 
 function ExtractOmsætningData (company, Year, rows) {
+    //Push "omsætning" overcategory name into rows
     rows.push("Omsætning:")
+
+    //Push undercategory name and the given years' data into rowData array, and join each index
+    //in the rowData array with a DELIMITER and push into "rows" array.
     Object.values(company.result.revenue).forEach(metric => {
         let rowData = []
         for (let l = 0; l < metric.data.length; l++) {
@@ -92,9 +74,13 @@ function ExtractOmsætningData (company, Year, rows) {
 }
 
 function ExtractOmkostningData (company, Year, rows) {
+    //Initiate "rowDataVariabel" array, which will act as "rowData" but
+    //for "Variabel Omkostning" overcategory
     let rowDataVariabel = []
-    let rowDataFast = []
+    let rowDataFast = [] //Same as "rowDataVariabel" but for "faste omkostninger" overcategory
 
+    //Same as in "ExtractOmsætningData" but checks for "characteristic" first to know which array
+    //to place data into
     Object.values(company.result.expense).forEach(metric => {
         let rowData = []
         for (let k = 0; k < metric.data.length; k++) {
@@ -116,15 +102,15 @@ function ExtractOmkostningData (company, Year, rows) {
         }
     });
 
-    rows.push("Variable omkostninger:")
-    rows.push(rowDataVariabel.join(NEWLINE))
+    rows.push("Variable omkostninger:") //Push overcategory name
+    rows.push(rowDataVariabel.join(NEWLINE)) //join "rowDataVariabel" index' with newline and push to "rows"
     rows[rows.length-1] = rows[rows.length-1] + ";\n"
 
-    rows.push("Faste omkostninger:")
-    rows.push(rowDataFast.join(NEWLINE))
+    rows.push("Faste omkostninger:") //push overcategory name
+    rows.push(rowDataFast.join(NEWLINE)) //join "rowDataFast" index' with newline and push to "rows"
     rows[rows.length-1] = rows[rows.length-1] + ";\n"
 }
 
-ExportToCSV()
+ExportToCSV(company, Year)
 
 export {DownloadCSVToDisk, ExportToCSV}

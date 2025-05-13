@@ -2,10 +2,31 @@ import {Company, CompanyData, FinancialMetric, FinancialYear} from '../useDataba
 
 import {JsonReadFile, JsonWriteFile, JsonReadFileCb, JsonWriteFileCb} from '../useDatabase/handle-json.js'
 
+import { companyDataTemplate } from '../../publicRessources/login/js/companies.js'
+
+import {SumUndercategories, OvercategoryFinder, OvercategoryRunner} from '../maths/SumUndercategories.js'
+
 const txt_test = '../ImportExport/lololol.txt'
+const test_csv = '../../../../../../Downloads/case1-2020(in)rettedhestabe.csv'
+
+/*
+async function CSVHest (file) {
+const hest123 = await ParseCSV(file)
+console.log(hest123);
+}
+*/
 
 const DELIMITER = ';'
 const NEWLINE = '\n';
+
+
+async function CSVImporter (file, company) {
+    const csvText = await ParseCSV(file) //Read the file
+
+    CSVObjectCreator(csvText, company) //Make objects with file contents and compare them to company data object
+
+    SumUndercategories(company, "2021")
+}
 
 //Parses CSV file content into one long string of text, with each new column seperated 
 //by NEWLINE
@@ -16,6 +37,7 @@ async function ParseCSV (file) {
         return;
     }
 
+    //Read contents of file, return as one long string
     try {
         const data = await readFile(file, 'utf8');
         return data;
@@ -26,18 +48,7 @@ async function ParseCSV (file) {
 
 //Transforms parsed CSV text into arrays, either being "Omsætning", "variable omkostninger"
 //or "Faste omkostninger"
-//Divides each new line inside these arrays into its own array
-//Takes the name from column[0] and creates a new object using a constructor, consisting
-//of a "characteristics" array and a "data" array as its properties
-//Takes data from column[1] to column [12] and inputs it into each month under the "month"
-//property of the "data" array
-//It will also need to be able to read the year at the top of the csv file, which it will
-//need to input under the "year" property of the "data" array
-//Also needs to recognize which "omsætning", "variable omkostninger" or "Faste omkostninger"
-//array the data it taken from and input it into the "characteristics" array under the
-//object created from the column[0] name
-
-async function CSVObjectCreator (text, company) {
+function CSVObjectCreator (text, company) {
     // Check that text and tables exist
     if (!text) {
         console.error("No text or tables found!");
@@ -45,7 +56,7 @@ async function CSVObjectCreator (text, company) {
     }
     
     // Split the text into arrays
-    var first_rows = text.split(/Omsætning|Variable omkostninger|Faste omkostninger/i);
+    var first_rows = text.split(/Omsaetning|Variable omkostninger|Faste omkostninger/i);
 
     //Seperate year from the read CSV file
     var year_array = first_rows[0].split(DELIMITER);
@@ -54,14 +65,18 @@ async function CSVObjectCreator (text, company) {
     //Remove index [0] from the array
     var rows = first_rows.slice(1);
 
+    //Split each over-categorys' under-categories into an array seperated by NEWLINE
     var omsætningsDeler = rows[0].split(NEWLINE);
     var variableOmkostningerDeler = rows[1].split(NEWLINE)
     var fasteOmkostningerDeler = rows[2].split(NEWLINE)
 
+    //Take undercategories and create dataobjects with constructors based on undercategory name and
+    //its data
     var omsætning = omsætningsDeler.map(r => SplitRowsIntoCategories(r, year)).filter(Boolean)
     var variableOmkostninger = variableOmkostningerDeler.map(r => SplitRowsIntoCategories(r, year)).filter(Boolean)
     var fasteOmkostninger = fasteOmkostningerDeler.map(r => SplitRowsIntoCategories(r, year)).filter(Boolean)
 
+    //Take each new under-category object and compare it to the existing company data object
     omsætning.forEach(category => {
         CheckIfCategoryDataExists(category, variableOmkostninger, fasteOmkostninger, company)
     })
@@ -76,8 +91,13 @@ async function CSVObjectCreator (text, company) {
 
 //Inputs created Objects from CSVObjectCreator into the companys' object
 function CheckIfCategoryDataExists (UnderCategory, variableOmkostninger, fasteOmkostninger, company) {
+    //Checks if the undercategory belongs to "variableomkostninger" or "fasteomkostninger" over-category
     if (variableOmkostninger.includes(UnderCategory) || fasteOmkostninger.includes(UnderCategory)) {
+
+        //Checks if an undercategory by given undercategory name already exists in company object
         if (company.result.expense[UnderCategory.name]) {
+
+            //Runs through the undercategory in the company object and inputs dat if data year exists
             for (let l = 0; l < company.result.expense[UnderCategory.name].data.length; l++) {
                 if (company.result.expense[UnderCategory.name].data[l].year === UnderCategory.data[0].year) {
                  company.result.expense[UnderCategory.name].data[l].months = UnderCategory.data[0].months
@@ -85,12 +105,14 @@ function CheckIfCategoryDataExists (UnderCategory, variableOmkostninger, fasteOm
                 }
             }
 
+            //If the undercategory year does not exist, insert year with its data at rigth place
             for (let k = 0; k < company.result.expense[UnderCategory.name].data.length; k++) {
                 if (Number(company.result.expense[UnderCategory.name].data[k].year) > Number(UnderCategory.data[0].year))
                 company.result.expense[UnderCategory.name].data[k-1].push(UnderCategory.data[0])
                 return;
             }
 
+            //Assign undercategory characteristic
         } else {
             if (variableOmkostninger.includes(UnderCategory)) {
                 UnderCategory.characteristics = "Variabel"
@@ -102,6 +124,7 @@ function CheckIfCategoryDataExists (UnderCategory, variableOmkostninger, fasteOm
 
         }
 
+        //If undercategory is not an "omkostning", goes through same process but with "omsætning"
     } else {
         if (company.result.revenue[UnderCategory.name]) {
             company.result.revenue[UnderCategory.name].characteristics = "Variabel"
@@ -136,27 +159,31 @@ function SplitRowsIntoCategories (r, year) {
     if (!r) return null; // Skip empty rows
 
     var cols = r.split(DELIMITER);
+    if (cols.every(col => !col.trim())) return null;
     if (cols.length === 0) return null; // Skip if no columns
 
     var type = cols[0]; // "sales" property in the object
-    var data = cols.slice(1).map(Number); // Monthly data
+    var data = cols.slice(1).map(cell => {
+        let normalized = cell.replace(/\./g, '').replace(',', '.'); // Remove thousands separator, fix decimal
+        return Number(normalized);
+    });
 
-    let salesObject = new FinancialMetric(type)
-    let dataObject = new FinancialYear(year)
+    let salesObject = new FinancialMetric(type) //Create new undercategory object with undercategory name
+    let dataObject = new FinancialYear(year) //Create new "year" object which goes in "data" array
 
+    //Insert data into "year" object
     let i = 0;
     Object.keys(dataObject.months).forEach(key => {
         dataObject.months[key] = data[i];
         i++;
     });
 
+    //Push "year" object into data array in undercategory object
     salesObject.data.push(dataObject)
 
     return salesObject
 }
-import { readFile } from 'fs/promises';
 
-/*
 let hest1 = "Abekat";
 let hest2 = "2023";
 let hest = new FinancialMetric(hest1)
@@ -167,30 +194,8 @@ let sss
 let company = new CompanyData(sss);
 company.result.revenue["Abekat"] = hest
 
+CSVImporter(test_csv, company)
 
 import { readFile } from 'fs/promises';
-
-try {
-  const affe = await ParseCSV(txt_test)
-  CSVObjectCreator(affe)
-  
-  console.log(company.result)
-  console.log(company.result.revenue)
-  Object.values(company.result.revenue).forEach(metric => {
-    console.log(metric.data); // metric is each FinancialMetric
-  });
-  let filepath = '../ImportExport/hest.json'
-  JsonWriteFile(filepath, company, function (err) {
-    if (err) {
-        console.error("Error writing file:", err);
-    } else {
-        console.log("File written successfully!");
-    }
-});
-  
-} catch (err) {
-  console.error('Error reading file:', err);
-}
-*/
 
 export {SplitRowsIntoCategories, CheckIfCategoryDataExists, CSVObjectCreator, ParseCSV}
