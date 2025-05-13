@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
 
     function ValidationRegisterData(data) {
-        if (ValidateObjectStructureStrict(data, expected) === false) return false;
         if (data.username.length > 128) return 'username must be less than 128 characters';
         if (data.password.length > 128) return 'password must be less than 128 characters';
         if (data.username.length < 4) return 'Username must be at least 4 characters long';

@@ -1,14 +1,14 @@
 {
   "companies": [
     {
-      "id": "677844153521088424",
-      "name": "user",
-      "password": "d74ff0ee8da3b9806b18c877dbf29bbde50b5bd8e4dad7a3a725000feb82e8f1",
-      "sessionToken": "-7w-Re3lcvaoLW7qKnq2"
+      "id": "111111111111111111",
+      "name": "username",
+      "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+      "sessionToken": "pUgbSRVCBG0QNgZBPCVX"
     }
   ],
   "dataById": {
-    "677844153521088424": {
+    "111111111111111111": {
       "result": {
         "revenue": {},
         "expense": {}

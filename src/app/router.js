@@ -117,7 +117,9 @@ export function FileResponse(res, filePath, cookies = []) {
       if (err) {
         ErrorResponse(res, err, 404)
       } else {
-        Log('sending: ' + path.join(ressourceFolder, extension, filePath));
+        let headersObject = {};
+        
+        Log(`${res.req.method} @ "${res.req.url}" => "${path.join(ressourceFolder, extension, filePath)}"`);
         res.statusCode = 200;
         res.setHeader('Set-Cookie', cookies);
         res.setHeader('Content-Type', guessMimeType(filePath));
