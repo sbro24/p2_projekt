@@ -1,5 +1,6 @@
 import fs from "fs";
 import process from 'process';
+import util from "util";
 import { StartTimestamp, TimestampFormatter } from "../time/time.js";
 import { ErrorToString } from "../errorHandling/error.js";
 
@@ -16,15 +17,7 @@ export function Log(content, type = 'info') {
     if (!validTypes.includes(type)) type = 'Info'; //default to info if type is not valid.
     
     //convert error to string.
-    if (content instanceof Error) {
-        type = 'Error';
-        content = ErrorToString(content);
-    }
-
-    //convert Object to string.
-    if (content instanceof Object) {
-        content = JSON.stringify(content, null, 2); //convert object to string.
-    }
+    if (content instanceof Error) type = 'Error';
 
     //figure out the log file name and path.
     const fileName = TimestampFormatter(startupTime, 'YYYY-DD-HH_HH-mm-ss') + '.log';
@@ -35,11 +28,15 @@ export function Log(content, type = 'info') {
     
     //create time stamp and log message.
     const currentTime = new Date();
-    const logMessage = `[${TimestampFormatter(currentTime, 'HH:mm:ss')}/${type}]: ${content}`;
-
-    //log to console and file.
-    console.log(logMessage);
-    fs.appendFile(filePath, logMessage + '\n', (err) => {
+    const timestamp = `[${TimestampFormatter(currentTime, 'HH:mm:ss')}/${type}]: `;
+    
+    //log to console
+    process.stdout.write(timestamp);
+    console.log(content);
+    
+    const formattedMessage = util.format(content)
+    //log to file.
+    fs.appendFile(filePath, timestamp + formattedMessage + '\n', (err) => {
         if (err) {
             console.log(err);
         }
