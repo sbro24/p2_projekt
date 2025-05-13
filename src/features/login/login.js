@@ -2,6 +2,7 @@ import process from 'process';
 import crypto from 'crypto';
 import { GenSessionToken } from '../../lib/cookies/sessionToken.js';
 import { GetCompanyies, UpdateSessionToken } from '../../lib/useDatabase/handle-data.js';
+import { ValidateObjectStructureStrict } from '../../lib/dataValidation/validateObject.js';
 
 const dbPath = process.cwd() + '/src/data/data.json';
 
@@ -22,7 +23,14 @@ function CheakLogin(data) {
 }
 
 function LoginDataValidation(data) {
-    //TODO
+    const expected = {
+        username: '',
+        password: ''
+    }
+
+    if (ValidateObjectStructureStrict(data, expected) === false) return false;
+    if (data.username.length > 128 || data.password.length > 128) return false
+    if (data.username.length < 4 || data.password.length < 8) return false
     return true;
 }
 
@@ -35,14 +43,13 @@ export async function Login(data) {
         }
         
         if (LoginDataValidation(data) === false) {
-            result.response = 'data validation';
+            result.response = 'validation error';
             resolve(result);
         }
 
         data.password = crypto.createHash('sha256').update(data.password).digest('hex');
 
         const cheakLogin = await CheakLogin(data);
-        console.log(cheakLogin);
         if (cheakLogin === 'false') {
             result.response = 'wrong login';
             resolve(result);
@@ -50,7 +57,6 @@ export async function Login(data) {
 
         const sessionToken = GenSessionToken();
         await UpdateSessionToken(cheakLogin.id, sessionToken);
-        console.log(sessionToken);
 
         result.response = 'success';
         result.cookie = [`sessionToken=${sessionToken}; HttpOnly; Path=/; Max-Age=Session; SameSite=Strict; Secure`];
