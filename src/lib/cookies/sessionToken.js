@@ -16,22 +16,22 @@ export function GenSessionToken() {
 }
 
 export function CheckAuth(req, res) {
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
         const cookies = GetCookies(req);
-        GetCompanyies()
-        .then(companies => {
-            for (const company of companies) {
-                if (company.sessionToken === cookies.sessionToken) {
-                    resolve(true)
-                }
+        const companies = await GetCompanyies();
+        for (const company of companies) {
+            if (company.sessionToken === cookies.sessionToken) {
+                resolve(true)
             }
-            resolve(false)
-        })
-        .catch(err => {
-            console.error("Could not get companies array from database", err);
-            resolve(false)
-        });
-    })
+        }
+        resolve(false)
+    });
+}
+
+export function GetSessionToken(req) {
+    const cookies = GetCookies(req);
+    if (!cookies.sessionToken) return '';
+    return cookies.sessionToken
 }
 
 function GetCookies(req) {
