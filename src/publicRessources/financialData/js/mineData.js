@@ -1,59 +1,31 @@
-const object = {
-    "123456": {
-        result: {
-            revenue: {
-                sales: {
-                    characteristics: [],
-                    data: [
-                        {
-                            year: 2025,
-                            months: {
-                                January: 0,
-                                February: 100,
-                                March: 0,
-                                April: 0,
-                                May: 0,
-                                June: 0,
-                                July: 0,
-                                August: 0,
-                                September: 0,
-                                October: 0,
-                                November: 0,
-                                December: 0
-                            }
-                        },
-                        {
-                            year: 2025,
-                            months: {
-                                January: 1,
-                                February: 1,
-                                March: 1,
-                                April: 0,
-                                May: 0,
-                                June: 0,
-                                July: 0,
-                                August: 0,
-                                September: 0,
-                                October: 0,
-                                November: 0,
-                                December: 0
-                            }
-                        }
-                    ]
-                }
-            },
-            expense: {}
-        },
-        budget: {
-            revenue: {},
-            expense: {}
-        },
-        forecast: {
-            revenue: {},
-            expense: {}
-        }
-    }
-};
+const saveBtn = document.getElementById("saveButton")
+
+let years = [2020, 2021, 2022, 2023, 2024];
+let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function generateTable(sectionClass, isExpense = false) {
+    let tables = document.getElementByClassName(sectionClass);
+    for (let table of tables) {
+        let count = 0;
+        years.forEach(year => {
+            let row = `<tr><td>${year}</td>`;
+            months.forEach(month => {
+                let inputName = isExpense ? `exp_${month.toLowerCase()}${year}` : `${month.toLowerCase()}${year}`;
+                row += `<td><input type='number' name='${inputName}' placeholder="0.00"></td>`;
+                count++;
+            });
+            row += `</tr>`;
+            table.innerHTML += row;
+    })};
+}
+
+const btnManuelInput = document.querySelector("#btnManuelInput");
+
+btnManuelInput.addEventListener("click", function() {
+    generateTable("result-table");
+    generateTable("budget-table", true);
+});
+
 
 document.addEventListener("DOMContentLoaded", (event) => {
     const saveBtn = document.getElementById("saveButton")
