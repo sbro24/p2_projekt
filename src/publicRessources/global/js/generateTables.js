@@ -1,6 +1,3 @@
-import {SplitRowsIntoCategories, CheckIfCategoryDataExists, CSVObjectCreator, ParseCSV} from '../ImportExport/CSVParser.js'
-
-
 /**
 * Converts CSV text to HTML table format
 * @param {string} text - The CSV content to convert

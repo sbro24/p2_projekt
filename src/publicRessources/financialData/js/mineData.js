@@ -27,19 +27,31 @@ btnManuelInput.addEventListener("click", function() {
 });
 
 
-saveBtn.addEventListener("click", () => {
-    fetch('/api/saveData', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(object)
+document.addEventListener("DOMContentLoaded", (event) => {
+    const saveBtn = document.getElementById("saveButton")
+    
+    saveBtn.addEventListener("click", () => {
+        console.log("Button clicked");
+        fetch('/api/user/data')
+        .then(response => response.json())
+        .then(data => toTableRevenue(data, '2024'))
+        
+    
+        //fetch('/api/saveData', {
+        //    method: 'POST',
+        //    headers: { 'Content-Type': 'application/json' },
+        //    body: JSON.stringify(object)
+        //})
+        //    .then(res => res.json())
+        //    .then(response => {
+        //        console.log("Server response:", response);
+        //        // You can update the DOM here if needed
+        //        console.log("fetch is made");
+        //    })
+        //    .catch(error => {
+        //        console.error("Error saving data:", error);
+        //    });
     })
-        .then(res => res.json())
-        .then(response => {
-            console.log("Server response:", response);
-            // You can update the DOM here if needed
-            console.log("fetch is made");
-        })
-        .catch(error => {
-            console.error("Error saving data:", error);
-        });
-})
+});
+
+
