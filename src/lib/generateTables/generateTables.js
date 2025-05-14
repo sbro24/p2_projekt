@@ -1,0 +1,142 @@
+import {SplitRowsIntoCategories, CheckIfCategoryDataExists, CSVObjectCreator, ParseCSV} from '../ImportExport/CSVParser.js'
+
+
+/**
+* Converts CSV text to HTML table format
+* @param {string} text - The CSV content to convert
+*/
+function toTableRevenue(company, Year) {
+
+    const DELIMITER = ";"
+
+    // Check that text and tables exist
+    if (!text || !revenueTable || !variabelExpenseTable || !fastExpenseTable) {
+        console.error("No text or tables found!");
+        return;
+    }
+
+    // Clear existing table data while preserving headers
+    clearTableData(revenueTable);
+    clearTableData(variabelExpenseTable);
+    clearTableData(fastExpense)
+    
+
+    // Define table headers
+    var headers = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    // Add headers if they don't exist
+    if (revenueTable.rows.length === 0) {
+        addHeaders(revenueTable, headers);
+    }
+    
+    if (variabelExpenseTable.rows.length === 0) {
+        addHeaders(expenseTable, headers);
+    }
+    if (fastExpenseTable.rows.length === 0) {
+        addHeaders(expenseTable, headers);
+    }
+    
+
+    Object.keys(company.result.revenue).forEach(key => {
+        const revenueItem = company.result.revenue[key];
+        var dataOmsætning = "1";
+        revenueItem.data.forEach(index => {
+            if (Number(index.year) === Number(Year)) {
+                Object.keys(index.months).forEach(month => {
+                    dataOmsætning += ";" + String(index.months[month])
+                })
+            }
+            console.log(dataOmsætning)
+            var cols = dataOmsætning.split(DELIMITER)
+            var data = cols.slice(1)
+            console.log(data)
+            addRow(revenueTable, revenueItem.name, data);
+        })
+    })
+
+    Object.keys(company.result.expense).forEach(key => {
+        const variabelExpenseItem = company.result.expense[key];
+        if (variabelExpenseItem.characteristics === "Variabel") {
+            var dataVariabelExpense = "1";
+            variabelExpenseItem.data.forEach(index => {
+                if (Number(index.year) === Number(Year)) {
+                    Object.keys(index.months).forEach(month => {
+                        dataVariabelExpense += ";" + String(index.months[month])
+                    })
+                }
+                console.log(dataVariabelExpense)
+                var cols = dataVariabelExpense.split(DELIMITER)
+                var data = cols.slice(1)
+                console.log(data)
+                addRow(variabelExpenseTable, variabelExpenseItem.name, data);
+            })
+        } else {
+            var dataVariabelExpense = "1";
+            variabelExpenseItem.data.forEach(index => {
+                if (Number(index.year) === Number(Year)) {
+                    Object.keys(index.months).forEach(month => {
+                        dataVariabelExpense += ";" + String(index.months[month])
+                    })
+                }
+                console.log(dataVariabelExpense)
+                var cols = dataVariabelExpense.split(DELIMITER)
+                var data = cols.slice(1)
+                console.log(data)
+                addRow(fastExpenseTable, variabelExpenseItem.name, data);
+            })
+        }
+    })
+}
+
+
+/**
+ * Clears table data while preserving headers
+ * @param {HTMLTableElement} table - The table to clear
+ */
+function clearTableData(table) {
+    // Keep the header row (index 0) and remove all others
+    while (table.rows.length > 1) {
+        table.deleteRow(1);
+    }
+}
+
+/**
+ * Adds headers to a table
+ * @param {HTMLTableElement} table - The table to add headers to
+ * @param {Array} headers - The header labels
+ */
+function addHeaders(table, headers) {
+    var headerRow = table.createTHead().insertRow(); // Create header row
+
+    // Add each header cell
+    headers.forEach(function (h) {
+        var th = document.createElement('th');
+        th.textContent = h;
+        headerRow.appendChild(th);
+    });
+}
+
+/**
+ * Adds a data row to a table
+ * @param {HTMLTableElement} table - The table to add to
+ * @param {string} year - The year for the row
+ * @param {Array} data - The monthly data values
+ */
+function addRow(table, undercategory, data) {
+    var newRow = table.insertRow(); // Create new row
+
+    // Add year column
+    var undercategoryCell = newRow.insertCell();
+    undercategoryCell.textContent = undercategory;
+
+    // Add monthly data columns
+    data.forEach(function (d) {
+        var cell = newRow.insertCell();
+        cell.textContent = d.trim();
+        cell.setAttribute('contenteditable', 'true'); // Make cells editable
+    });
+}
+
+
+export {toTableRevenue, addRow, addHeaders, clearTableData}
