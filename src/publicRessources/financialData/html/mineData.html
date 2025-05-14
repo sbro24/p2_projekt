@@ -12,14 +12,20 @@
         <h1>Financial Management</h1>
         <p>Administrer dit budget effektivt</p>
     </header>
-    
-    <script src="/api/global/gentabel"></script>
 
         <!-- Navigation -->
     <script src="/api/global/navbar"></script>
 
     <section> 
-    <input type="file" id="file" accept=".csv" />
+    <label for="yearSelect">Vælg år:</label>
+    <select id="yearSelect">
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+
+    <input type="file" id="file" accept=".csv" style="margin-left: 15 px;"/>
 
     <button id="btnManuelInput">Indtast manuelt</button>
     <table id="table" border="1"></table>
@@ -75,6 +81,7 @@
                         </tr>
                         <tr>
                             <th>Resultat</th>  
+                        </tr>    
                     </thead>
                 </table>
             </form>
@@ -93,7 +100,7 @@
             
                 <h3>Omkostning 2</h3>
                     <form>
-                        <table border="1" class="expense-table">
+                        <table border="1" class="expe-table">
                             <tr>
                                 <th>År</th>
                                 <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
@@ -193,7 +200,7 @@
         <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
     </footer>
 
-    <script src="/api/mineData/script"></script>
+    <script src="/api/financialData/mineData"></script>
 
 </body>
 </html>
