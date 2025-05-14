@@ -9,9 +9,8 @@ export function router(req, res, data) {
         case '/api/global/navbar':
             FileResponse(res, 'global/navbar.js');
             break;
-        case '/api/global/getdata':
-            GetFinancialDataById(111111)
-            .then(data => DataResponse(res, data))
+        case '/api/global/gentabel':
+            FileResponse(res, 'global/generateTables.js');
             break;
         default:
             break;
