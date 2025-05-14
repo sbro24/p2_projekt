@@ -8,7 +8,7 @@ export async function router(req, res, data) {
             FileResponse(res, 'financialData/mineData.html');
             break;
 
-        case '/api/financialData/saveData':
+        case '/api/mineData/script':
             FileResponse(res, 'financialData/mineData.js');
             break;
         
