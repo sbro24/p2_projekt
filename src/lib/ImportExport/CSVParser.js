@@ -1,20 +1,15 @@
 import {Company, CompanyData, FinancialMetric, FinancialYear} from '../useDatabase/constructors.js'
 
-import {JsonReadFile, JsonWriteFile, JsonReadFileCb, JsonWriteFileCb} from '../useDatabase/handle-json.js'
-
 import { companyDataTemplate } from '../../publicRessources/login/js/companies.js'
 
-import {SumUndercategories, OvercategoryFinder, OvercategoryRunner} from '../maths/SumUndercategories.js'
+import {SumUndercategories, OvercategoryFinder, OvercategoryRunner, SumUndercategories1, OvercategoryFinder1, OvercategoryRunner1} from '../maths/SumUndercategories.js'
+
+//import {toTableRevenue, addRow, addHeaders, clearTableData, toTableForecast} from '../generateTables/generateTables.js'
+
+import { UpdateCompanyObject } from '../useDatabase/handle-data.js'
 
 const txt_test = '../ImportExport/lololol.txt'
-const test_csv = '../../../../../../Downloads/case1-2020(in)rettedhestabe.csv'
-
-/*
-async function CSVHest (file) {
-const hest123 = await ParseCSV(file)
-console.log(hest123);
-}
-*/
+const test_csv = '../../../../../../Downloads/case1-result-2022(in).csv'
 
 const DELIMITER = ';'
 const NEWLINE = '\n';
@@ -25,7 +20,15 @@ async function CSVImporter (file, company) {
 
     CSVObjectCreator(csvText, company) //Make objects with file contents and compare them to company data object
 
-    SumUndercategories(company, "2021")
+    //var hest = SumUndercategories1(company, "2022", "omkostning");
+
+    //console.log(hest["Faste expenses"].data)
+
+    //console.log(company)
+
+    UpdateCompanyObject(company)
+
+    //toTableRevenue(company, "2021")
 }
 
 //Parses CSV file content into one long string of text, with each new column seperated 
