@@ -30,8 +30,8 @@ btnManuelInput.addEventListener("click", function() {
 document.addEventListener("DOMContentLoaded", (event) => {
     const saveBtn = document.getElementById("saveButton")
     var revenueTable = document.getElementById('revenue-table'); // Revenue table element
-    var variabelExpenseTable = document.getElementById('variabel-expense-table'); // Expenses table element
-    var fastExpenseTable = document.getElementById('fast-expense-table'); // Expenses table element
+    //var variabelExpenseTable = document.getElementById('variabel-expense-table'); // Expenses table element
+    //var fastExpenseTable = document.getElementById('fast-expense-table'); // Expenses table element
     
     saveBtn.addEventListener("click", () => {
         console.log("Button clicked");
