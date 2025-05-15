@@ -1,6 +1,5 @@
 const saveBtn = document.getElementById("saveButton")
-
-let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function BuildTables(tableClass, prefix = "", year) {
     let tables = document.getElementsByClassName(tableClass);
@@ -53,8 +52,107 @@ document.addEventListener("DOMContentLoaded", () => {
     }}); 
 });
 
+
+
+
+
+
+const templateHtmlStructure = `
+            <section>
+                <h2 class="section-header">Mine resultater YEAR</h2>   
+
+                <h2>Omsætning</h2>      
+                    <form>
+                        <table border="1" id="results-revenue-table">
+                            <thead>
+                                <tr>
+                                    <th>Indtægt</th>
+                                    <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                    <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                </tr> 
+                            </thead>
+                        </table>
+                    </form>
+                <button class="btnInsertCategory">Indsæt ny indtægt</button>
+                        
+                <h2>Faste Omkostninger</h2>             
+                    <form>
+                        <table border="1" id="results-faste-expense-table">
+                            <thead>
+                                <tr>
+                                    <th>Omkostning</th>
+                                    <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                    <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                </tr> 
+                            </thead>
+                        </table>
+                    </form>
+                <button class="btnInsertCategory">Indsæt ny omkostning</button>
+
+                <h2>Variable Omkostninger</h2>             
+                    <form>
+                        <table border="1" id="results-variable-expense-table">
+                            <thead>
+                                <tr>
+                                    <th>Omkostning</th>
+                                    <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                    <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                </tr> 
+                            </thead>
+                        </table>
+                    </form>
+                <button class="btnInsertCategory">Indsæt ny omkostning</button>
+            </section>
+                        
+            <section>
+                <h2 class="section-header">Min budget YEAR</h2>    
+                
+                <h2>Omsætning</h2>      
+                    <form>
+                        <table border="1" id="budget-revenue-table">
+                            <thead>
+                                <tr>
+                                    <th>Indtægt</th>
+                                    <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                    <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                </tr> 
+                            </thead>
+                        </table>
+                    </form>
+                <button class="btnInsertCategory">Indsæt ny indtægt</button>
+                        
+                <h2>Faste Omkostninger</h2>             
+                    <form>
+                        <table border="1" id="budget-faste-expense-table">
+                            <thead>
+                                <tr>
+                                    <th>Omkostning</th>
+                                    <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                    <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                </tr> 
+                            </thead>
+                        </table>
+                    </form>
+                <button class="btnInsertCategory">Indsæt ny omkostning</button>
+
+                <h2>Variable Omkostninger</h2>             
+                    <form>
+                        <table border="1" id="budget-variable-expense-table">
+                            <thead>
+                                <tr>
+                                    <th>Omkostning</th>
+                                    <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                    <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                </tr> 
+                            </thead>
+                        </table>
+                    </form>
+                <button class="btnInsertCategory">Indsæt ny omkostning</button>
+            </section>
+        `;
+
+
 document.addEventListener("DOMContentLoaded", (event) => {
-    const saveBtn = document.getElementById("saveButton")
     var revenueTable = document.getElementById('revenue-table'); // Revenue table element
     //var variabelExpenseTable = document.getElementById('variabel-expense-table'); // Expenses table element
     //var fastExpenseTable = document.getElementById('fast-expense-table'); // Expenses table element
