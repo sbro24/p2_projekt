@@ -59,7 +59,7 @@ export async function Login(data) {
         await UpdateSessionToken(cheakLogin.id, sessionToken);
 
         result.response = 'success';
-        result.cookie = [`sessionToken=${sessionToken}; HttpOnly; Path=/; Max-Age=Session; SameSite=Strict; Secure`];
+        result.cookie = [`sessionToken=${sessionToken}; HttpOnly; Path=/; Max-Age=Session; SameSite=Strict; Secure;`];
         resolve(result);
     })
 }

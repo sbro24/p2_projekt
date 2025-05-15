@@ -15,13 +15,8 @@ document.addEventListener('DOMContentLoaded', async (event) => {
         </div>
     `;
 
-    console.log(await loginLink());
     const header = document.querySelector('header');
     header.insertAdjacentHTML('afterend', navbar);
-    
-    document.ready(function() {
-        $('#body').show();
-    });
 });
 
 async function loginLink() {
@@ -30,7 +25,7 @@ async function loginLink() {
         .then(response => response.json())
         .then(data => {
             if (data === 'true') {
-                resolve(`<li><a href="/logout">Log ud</a></li>`);
+                resolve(`<li><a href="#" onclick="logOut()">Log ud</a></li>`);
             } else {
                 resolve(`<li><a href="/login">Log in</a></li>`);
             }
@@ -39,5 +34,14 @@ async function loginLink() {
             console.error('Error fetching login status:', error)
             resolve(`<li><a href="/logout">Log ud</a></li>`)
         });
+    })
+}
+
+function logOut() {
+    fetch('/logout')
+    .then(res => res.text())
+    .then(data => {
+        console.log(data);
+        window.location.href = '/'
     })
 }

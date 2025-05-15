@@ -7,6 +7,10 @@ export async function router(req, res, data) {
         case '/login/':
             FileResponse(res, 'login/login.html');
             break;
+        case '/logout/':
+            let cookie = 'sessionToken=; HttpOnly; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Strict; Secure;';
+            DataResponse(res, 'logout', cookie);
+            break;
         case '/api/checkAuth/':
             if (await CheckAuth(req, res)) {
                 DataResponse(res, 'true');
