@@ -2,10 +2,14 @@ import { DataResponse, FileResponse } from "../../app/router.js";
 import { Register } from "./register.js";
 
 
-export function router(req, res, data) {
+export async function router(req, res, data) {
     switch (req.url) {
         case '/register/':
-            FileResponse(res, 'login/register.html')
+            if (await CheckAuth(req, res)) {
+                FileResponse(res, 'userData/minSide.html');
+            } else {
+                FileResponse(res, 'login/register.html')
+            }
             break;
         case '/api/register/script/':
             FileResponse(res, 'login/register.js')

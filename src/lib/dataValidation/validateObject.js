@@ -35,3 +35,10 @@ export function ValidateObjectStructureStrict(x, y) {
     }
     return true;
 }
+
+export function allowedChars(srting, chars) {
+    for (let i = 0; i < srting.length; i++) {
+        if (!chars.includes(srting[i])) return false;
+    }
+    return true;
+}

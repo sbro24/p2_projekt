@@ -16,6 +16,7 @@
 
         <!-- Navigation -->
     <script src="/api/global/navbar"></script>
+    <script src="/api/mineData/upload"></script>
 
     <section> 
     <label for="yearSelect">Vælg år:</label>
@@ -26,8 +27,10 @@
         <option value="2021">2021</option>
         <option value="2020">2020</option>
     </select>     
-
-    <input type="file" id="file" accept=".csv" style="margin-left: 15 px;"/>
+    <form id="uploadForm">
+        <input type="file" id="file" accept=".csv" style="margin-left: 15 px;"/><br>
+        <input type="submit" value="Upload"/>
+    </form>
 
     <button id="btnManuelInput">Indtast manuelt</button>
     <table id="table" border="1"></table>

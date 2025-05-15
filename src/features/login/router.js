@@ -5,7 +5,11 @@ import { Login } from "./login.js";
 export async function router(req, res, data) {
     switch (req.url) {
         case '/login/':
-            FileResponse(res, 'login/login.html');
+            if (await CheckAuth(req, res)) {
+                FileResponse(res, 'userData/minSide.html');
+            } else {
+                FileResponse(res, 'login/login.html');
+            }
             break;
         case '/logout/':
             let cookie = 'sessionToken=; HttpOnly; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Strict; Secure;';
