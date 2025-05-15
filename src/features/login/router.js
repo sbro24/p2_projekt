@@ -1,10 +1,18 @@
 import { DataResponse, FileResponse } from "../../app/router.js";
+import { CheckAuth } from "../../lib/cookies/sessionToken.js";
 import { Login } from "./login.js";
 
-export function router(req, res, data) {
+export async function router(req, res, data) {
     switch (req.url) {
         case '/login/':
             FileResponse(res, 'login/login.html');
+            break;
+        case '/api/checkAuth/':
+            if (await CheckAuth(req, res)) {
+                DataResponse(res, 'true');
+            } else {
+                DataResponse(res, 'false');
+            }
             break;
         case '/api/login/style/':
             FileResponse(res, 'login/login.css');
