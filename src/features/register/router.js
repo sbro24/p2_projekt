@@ -4,13 +4,13 @@ import { Register } from "./register.js";
 
 export function router(req, res, data) {
     switch (req.url) {
-        case '/register':
+        case '/register/':
             FileResponse(res, 'login/register.html')
             break;
-        case '/api/register/script':
+        case '/api/register/script/':
             FileResponse(res, 'login/register.js')
             break;
-        case '/api/register/submit':
+        case '/api/register/submit/':
             Register(JSON.parse(data))
             .then(result => {
                 console.log('register result: ', result);

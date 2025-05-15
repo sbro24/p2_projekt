@@ -3,13 +3,14 @@ import { CheckAuth } from "../../lib/cookies/sessionToken.js";
 
 export async function router(req, res, data) {
     switch (req.url) {
-        case '/minSide/':
+        case '/forstaaPrognoser/':
             if (await CheckAuth(req, res)) {
-                FileResponse(res, 'userData/minSide.html');
+                FileResponse(res, 'improveBudget/forbedrBudget.html');
             } else {
                 FileResponse(res, 'login/needLogin.html');
             }
             break;
+
         default:
             break;
     }

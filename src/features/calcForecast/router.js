@@ -1,10 +1,18 @@
-export function router(req, res) {
-    if (req.url === '/editdata') {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.writeHeader(200, {
-            'Content-Type': 'application/json'
-        });
-        res.write('{"test": 1}');
-        res.end();
+import { FileResponse } from "../../app/router.js";
+import { CheckAuth } from "../../lib/cookies/sessionToken.js";
+import { UpdateCompanyObject } from "../../lib/useDatabase/handle-data.js";
+
+export async function router(req, res, data) {
+    switch (req.url) {
+        case '/forbedrBudget/':
+            if (await CheckAuth(req, res)) {
+                FileResponse(res, 'improveBudget/forbedrBudget.html');
+            } else {
+                FileResponse(res, 'login/needLogin.html');
+            }
+            break;
+
+        default:
+            break;
     }
 }

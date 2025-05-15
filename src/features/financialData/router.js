@@ -1,15 +1,23 @@
 import { FileResponse } from "../../app/router.js";
-import fs from 'fs/promises';
+import { CheckAuth } from "../../lib/cookies/sessionToken.js";
 import { UpdateCompanyObject } from "../../lib/useDatabase/handle-data.js";
 
 export async function router(req, res, data) {
     switch (req.url) {
-        case '/mineData':
-            FileResponse(res, 'financialData/mineData.html');
+        case '/mineData/':
+            if (await CheckAuth(req, res)) {
+                FileResponse(res, 'financialData/mineData.html');
+            } else {
+                FileResponse(res, 'login/needLogin.html');
+            }
             break;
 
         case '/api/mineData/script':
             FileResponse(res, 'financialData/mineData.js');
+            break;
+
+        case '/api/mineData/style':
+            FileResponse(res, 'financialData/mineData.css');
             break;
         
         case '/api/saveData':

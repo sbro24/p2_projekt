@@ -4,14 +4,475 @@
       "id": "111111111111111111",
       "name": "username",
       "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
-      "sessionToken": "pUgbSRVCBG0QNgZBPCVX"
+      "sessionToken": "AMfcQtNDv4gX_eRkG8oH"
     }
   ],
   "dataById": {
     "111111111111111111": {
       "result": {
-        "revenue": {},
-        "expense": {}
+        "revenue": {
+          "Abekat": {
+            "name": "Abekat",
+            "data": [
+              {
+                "year": "2023",
+                "months": {
+                  "january": 0,
+                  "february": 0,
+                  "march": 0,
+                  "april": 0,
+                  "may": 0,
+                  "june": 0,
+                  "july": 0,
+                  "august": 0,
+                  "september": 0,
+                  "october": 0,
+                  "november": 0,
+                  "december": 0
+                }
+              }
+            ]
+          },
+          "salesItemOne": {
+            "name": "salesItemOne",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 16875.29,
+                  "february": 17377.89,
+                  "march": 17911.34,
+                  "april": 18348.12,
+                  "may": 18560.44,
+                  "june": 17246.84,
+                  "july": 16912.85,
+                  "august": 17944.73,
+                  "september": 16549.07,
+                  "october": 16530.31,
+                  "november": 16693.69,
+                  "december": 18511.71
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "salesItemThree": {
+            "name": "salesItemThree",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 2000.17,
+                  "february": 2946.75,
+                  "march": 2266.57,
+                  "april": 2722.01,
+                  "may": 2148.82,
+                  "june": 2700.35,
+                  "july": 2708.18,
+                  "august": 2409.13,
+                  "september": 2653.12,
+                  "october": 2827.59,
+                  "november": 2993.73,
+                  "december": 2165.85
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "salesItemTwo": {
+            "name": "salesItemTwo",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 4383.92,
+                  "february": 4011.6,
+                  "march": 4030.4,
+                  "april": 4494.45,
+                  "may": 5366.09,
+                  "june": 4524.18,
+                  "july": 6063.14,
+                  "august": 5083.52,
+                  "september": 7938.27,
+                  "october": 8201.41,
+                  "november": 9040.92,
+                  "december": 7941.73
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "revenue sum": {
+            "name": "revenue sum",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 0,
+                  "february": 1,
+                  "march": 2,
+                  "april": 3,
+                  "may": 4,
+                  "june": 5,
+                  "july": 6,
+                  "august": 7,
+                  "september": 8,
+                  "october": 9,
+                  "november": 10,
+                  "december": 11
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          }
+        },
+        "expense": {
+          "Advertising": {
+            "name": "Advertising",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 249.53,
+                  "february": 250.7,
+                  "march": 269.95,
+                  "april": 270.46,
+                  "may": 261.31,
+                  "june": 281.48,
+                  "july": 280.47,
+                  "august": 286.19,
+                  "september": 334.18,
+                  "october": 290.52,
+                  "november": 300.53,
+                  "december": 324.67
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Cost prize - item one": {
+            "name": "Cost prize - item one",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 4955.9,
+                  "february": 5173.54,
+                  "march": 5317.54,
+                  "april": 5422.16,
+                  "may": 5634.23,
+                  "june": 5165.94,
+                  "july": 5032.11,
+                  "august": 5420.49,
+                  "september": 4905.19,
+                  "october": 5074.03,
+                  "november": 5097.17,
+                  "december": 5505.46
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Cost prize - item three": {
+            "name": "Cost prize - item three",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 609.12,
+                  "february": 887.43,
+                  "march": 669.92,
+                  "april": 800.7,
+                  "may": 651.09,
+                  "june": 800.43,
+                  "july": 800.12,
+                  "august": 708.97,
+                  "september": 784.43,
+                  "october": 855.21,
+                  "november": 889.98,
+                  "december": 653.05
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Cost prize - item two": {
+            "name": "Cost prize - item two",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 1330.4,
+                  "february": 1189.57,
+                  "march": 1181.88,
+                  "april": 1369.92,
+                  "may": 1578.99,
+                  "june": 1353.27,
+                  "july": 1780.38,
+                  "august": 1553.09,
+                  "september": 2404.24,
+                  "october": 2455.97,
+                  "november": 2735.9,
+                  "december": 2390.25
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Packaging": {
+            "name": "Packaging",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 254.87,
+                  "february": 248.43,
+                  "march": 271.52,
+                  "april": 273.08,
+                  "may": 262.28,
+                  "june": 284.02,
+                  "july": 284.06,
+                  "august": 281.78,
+                  "september": 325.32,
+                  "october": 298.87,
+                  "november": 308.2,
+                  "december": 327.05
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Shipping": {
+            "name": "Shipping",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 1017.98,
+                  "february": 1023.01,
+                  "march": 1141.78,
+                  "april": 1054.92,
+                  "may": 1121.59,
+                  "june": 1110.51,
+                  "july": 1153.79,
+                  "august": 1129.31,
+                  "september": 1267.83,
+                  "october": 1218.26,
+                  "november": 1198.86,
+                  "december": 1322.83
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Transaction Fees": {
+            "name": "Transaction Fees",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 409.08,
+                  "february": 415.61,
+                  "march": 454.94,
+                  "april": 448.64,
+                  "may": 439.01,
+                  "june": 470.91,
+                  "july": 474.73,
+                  "august": 462.52,
+                  "september": 543.01,
+                  "october": 485.2,
+                  "november": 516.41,
+                  "december": 551.79
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Variable expenses sum": {
+            "name": "Variable expenses sum",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 0,
+                  "february": 0,
+                  "march": 0,
+                  "april": 0,
+                  "may": 0,
+                  "june": 0,
+                  "july": 0,
+                  "august": 0,
+                  "september": 0,
+                  "october": 0,
+                  "november": 0,
+                  "december": 0
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Daekningsbidrag": {
+            "name": "Daekningsbidrag",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 0,
+                  "february": 0,
+                  "march": 0,
+                  "april": 0,
+                  "may": 0,
+                  "june": 0,
+                  "july": 0,
+                  "august": 0,
+                  "september": 0,
+                  "october": 0,
+                  "november": 0,
+                  "december": 0
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Funktionaerloen (inkl. ATP m.m.)": {
+            "name": "Funktionaerloen (inkl. ATP m.m.)",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 4000,
+                  "february": 4000,
+                  "march": 4000,
+                  "april": 4000,
+                  "may": 4000,
+                  "june": 4000,
+                  "july": 6000,
+                  "august": 6000,
+                  "september": 6000,
+                  "october": 6000,
+                  "november": 6000,
+                  "december": 6000
+                }
+              }
+            ],
+            "characteristics": "Fast"
+          },
+          "El, vand og varme": {
+            "name": "El, vand og varme",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 10878.52,
+                  "february": 10405.19,
+                  "march": 10341.55,
+                  "april": 10150.84,
+                  "may": 10824.22,
+                  "june": 10513.48,
+                  "july": 10376.28,
+                  "august": 10596.89,
+                  "september": 10016.71,
+                  "october": 10483.28,
+                  "november": 10937.99,
+                  "december": 10420.14
+                }
+              }
+            ],
+            "characteristics": "Fast"
+          },
+          "Lokaleleje": {
+            "name": "Lokaleleje",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 1308,
+                  "february": 1297,
+                  "march": 1330,
+                  "april": 1310,
+                  "may": 1295,
+                  "june": 1302,
+                  "july": 1329,
+                  "august": 1342,
+                  "september": 1300,
+                  "october": 1324,
+                  "november": 1318,
+                  "december": 1334
+                }
+              }
+            ],
+            "characteristics": "Fast"
+          },
+          "Reperation og vedligeholdelse af lokaler": {
+            "name": "Reperation og vedligeholdelse af lokaler",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 454,
+                  "february": 446,
+                  "march": 451,
+                  "april": 457,
+                  "may": 448,
+                  "june": 452,
+                  "july": 443,
+                  "august": 456,
+                  "september": 453,
+                  "october": 450,
+                  "november": 455,
+                  "december": 459
+                }
+              }
+            ],
+            "characteristics": "Fast"
+          },
+          "Faste expenses sum": {
+            "name": "Faste expenses sum",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 0,
+                  "february": 0,
+                  "march": 0,
+                  "april": 0,
+                  "may": 0,
+                  "june": 0,
+                  "july": 0,
+                  "august": 0,
+                  "september": 0,
+                  "october": 0,
+                  "november": 0,
+                  "december": 0
+                }
+              }
+            ],
+            "characteristics": "Fast"
+          },
+          "Nettooverskud": {
+            "name": "Nettooverskud",
+            "data": [
+              {
+                "year": "2022",
+                "months": {
+                  "january": 0,
+                  "february": 0,
+                  "march": 0,
+                  "april": 0,
+                  "may": 0,
+                  "june": 0,
+                  "july": 0,
+                  "august": 0,
+                  "september": 0,
+                  "october": 0,
+                  "november": 0,
+                  "december": 0
+                }
+              }
+            ],
+            "characteristics": "Fast"
+          }
+        }
       },
       "budget": {
         "revenue": {},
