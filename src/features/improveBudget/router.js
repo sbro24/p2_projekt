@@ -1,10 +1,9 @@
 import { FileResponse } from "../../app/router.js";
 import { CheckAuth } from "../../lib/cookies/sessionToken.js";
-import { UpdateCompanyObject } from "../../lib/useDatabase/handle-data.js";
 
 export async function router(req, res, data) {
     switch (req.url) {
-        case '/forbedrBudget':
+        case '/forstaaPrognoser':
             if (await CheckAuth(req, res)) {
                 FileResponse(res, 'improveBudget/forbedrBudget.html');
             } else {
