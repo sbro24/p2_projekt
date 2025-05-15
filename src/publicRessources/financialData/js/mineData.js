@@ -1,31 +1,57 @@
 const saveBtn = document.getElementById("saveButton")
 
-let years = [2020, 2021, 2022, 2023, 2024];
 let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-function generateTable(sectionClass, isExpense = false) {
-    let tables = document.getElementByClassName(sectionClass);
+function BuildTables(tableClass, prefix = "", year) {
+    let tables = document.getElementsByClassName(tableClass);
     for (let table of tables) {
-        let count = 0;
-        years.forEach(year => {
-            let row = `<tr><td>${year}</td>`;
+            // Overwrite existing tables
+            let tbody = table.querySelector("tbody");
+            if (tbody) {
+                tbody.remove();
+            }
+            tbody = document.createElement("tbody");
+
+            let row = document.createElement("tr");
+            let yearCell = document.createElement("td");
+            yearCell.textContent = year;
+            row.appendChild(yearCell);
+
             months.forEach(month => {
-                let inputName = isExpense ? `exp_${month.toLowerCase()}${year}` : `${month.toLowerCase()}${year}`;
-                row += `<td><input type='number' name='${inputName}' placeholder="0.00"></td>`;
-                count++;
+                let cell = document.createElement("td");
+                let input = document.createElement("input");
+                input.type = "number";
+                input.name = `${prefix}${month.toLowerCase()}${year}`;
+                input.placeholder = "0.00"
+                cell.appendChild(input);
+                row.appendChild(cell);
             });
-            row += `</tr>`;
-            table.innerHTML += row;
-    })};
+            tbody.appendChild(row);
+            table.appendChild(tbody);
+    };
 }
 
-const btnManuelInput = document.querySelector("#btnManuelInput");
+function GenerateAllTables() {
+    const selectedYear = document.getElementById("yearSelect").value;
+    BuildTables("revenue-table", "rev_", selectedYear);
+    BuildTables("expense-table", "exp_", selectedYear);
+}
 
-btnManuelInput.addEventListener("click", function() {
-    generateTable("result-table");
-    generateTable("budget-table", true);
+document.addEventListener("DOMContentLoaded", () => {
+    GenerateAllTables();
+
+    const yearSelect = document.getElementById("yearSelect");
+    yearSelect.addEventListener("change", () => {
+        GenerateAllTables();
+    });
+
+    const btnManuelInput = document.querySelector("#btnManuelInput");
+    btnManuelInput.addEventListener("click", () => {
+        const confirmation = confirm("Advarsel: Alle eksisterende data i tabellerne vil blive overskrevet. Vil du fortsætte?");
+        if (confirmation) {  
+            GenerateAllTables();
+    }}); 
 });
-
 
 document.addEventListener("DOMContentLoaded", (event) => {
     const saveBtn = document.getElementById("saveButton")
