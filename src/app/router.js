@@ -38,6 +38,8 @@ export function processRequest(req, res) {
  * @param {string} data 
  */
 async function GetResponse(req, res, data) {
+    if (!req.url.endsWith('/')) req.url += '/';
+
     const pathFeatureFiles = fs.readdirSync(featureDirctoryPath);
     for (const feature of pathFeatureFiles) {
         if (!fs.existsSync(featureDirctoryPath + feature + '/router.js')) continue;
@@ -55,6 +57,7 @@ async function GetResponse(req, res, data) {
  * @param {object} req 
  * @returns {Promise<string>} - Returns a promise that resolves to the body of the request.
  */
+
 function ExtractBody(req) {
     return new Promise((resolve, reject) => {
         let body = '';
