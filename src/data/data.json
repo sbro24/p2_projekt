@@ -5,10 +5,30 @@
       "name": "username",
       "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
       "sessionToken": "pUgbSRVCBG0QNgZBPCVX"
+    },
+    {
+      "id": "606045963775475394",
+      "name": "hjalmar",
+      "password": "d4b696111ceade71e9738c1f2a99f577e0540d1dc852a874740817967d1a9603",
+      "sessionToken": "Rne8JsgON7uGZGn-ASrr"
     }
   ],
   "dataById": {
     "111111111111111111": {
+      "result": {
+        "revenue": {},
+        "expense": {}
+      },
+      "budget": {
+        "revenue": {},
+        "expense": {}
+      },
+      "forecast": {
+        "revenue": {},
+        "expense": {}
+      }
+    },
+    "606045963775475394": {
       "result": {
         "revenue": {},
         "expense": {}
