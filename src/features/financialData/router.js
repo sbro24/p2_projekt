@@ -15,6 +15,10 @@ export async function router(req, res, data) {
         case '/api/mineData/script':
             FileResponse(res, 'financialData/mineData.js');
             break;
+
+        case '/api/mineData/style':
+            FileResponse(res, 'financialData/mineData.css');
+            break;
         
         case '/api/saveData':
             await SaveData(req, res, data)
