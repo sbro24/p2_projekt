@@ -5,9 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forstaa Prognoser - Financial Management</title>
-    <link rel="stylesheet" href="../../global/css/style.css">
+    <link rel="stylesheet" href="../css/forstaaPrognoser.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="../js/forstaaPrognoser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
 
 <body>
@@ -25,35 +26,49 @@
 
         <!-- Main Content Area -->
         <main class="content">
-            <section id="budget-vs-actual">
-                <h2>Sammenligning af budget og prognose</h2>
-                <p>
-                    Her kan du sammenligne dit eget budget med den prognose, vi har beregnet.
-                    Hvis der er store afvigelser skal du overveje at ændre i dit budget.
-                </p>
 
-                <table>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Detaljer</th>
-                        <th>Forskel (total)</th>
-                    </tr>
-                    <tr>
-                        <td>Omsætning</td>
-                        <td><button id="btnDetailsRevenue">Se detaljer</button></td>
-                        <td id="diffRevenueTotal"></td>
-                    </tr>
-                    <tr>
-                        <td>Omkostninger</td>
-                        <td><button id="btnDetailsCost">Se detaljer</button></td>
-                        <td id="diffExpensesTotal"></td>
-                    </tr>
-                </table>
-            </section>
+            <div id="box">
+                <div class="column">
+                    <section class="budget-vs-actual">
+                        <h2>Sammenligning af budget og prognose</h2>
+                        <p>
+                            Her kan du sammenligne dit eget budget med den prognose, vi har beregnet.
+                            Hvis der er store afvigelser skal du overveje at ændre i dit budget.
+                        </p>
+                    </section>
+
+                    <button id="readMore">Læs mere</button> <!-- Når knappen aktiveres, sendes brugeren til about.html -->
+                </div>
+
+                <div class="column two">   
+                    <section class="table-revenue">
+                        <h3> Indtægt </h3>
+                        <p> Her kan du visuelt se hvordan dine foreløbige data differentierer fra dine prognoser </p>
+                        
+                        <!-- Indsæt graf (chart.js?) -->
+                        <canvas id="chartRevenue"></canvas>
+
+                        <!-- Opdater tabel knap? som så henter nyeste data -->
+                        <button id="updateChartRevenue">Opdater tabel</button>
+                    </section>
+
+                    <section class="table-expenses">
+                        <h3> Udgifter </h3>
+                        <p> Her kan du visuelt se hvordan dine foreløbige data differentierer fra dine prognoser </p>
+
+                        <!-- Indsæt graf --> 
+                         
+                        
+                        <!-- Opdater tabel knap? som så henter nyeste data -->
+                        <button id="updateChartExpenses">Opdater tabel</button>
+                    </section>
+                </div>
+            </div>
+           
             
-            <section id="graphRevenueTotal" style="width: 400px; display: none">
+        <!--    <section id="graphRevenueTotal" style="width: 400px; display: none"> -->
                 <!-- Graphical representation (optional) -->
-                 <h3>Totaler for omsætning per måned</h3>
+        <!--        <h3>Totaler for omsætning per måned</h3>
                 <canvas id="budgetForecastChart" style="width: 100px; height: 50px;"></canvas>
             </section>
 
@@ -68,7 +83,7 @@
 
             <section id="saveChangesTableBudgetForecast" style="display: none">
                 <button type="submit" id="submitAlteredBudget">Gem tilpasset budget</button>
-            </section>
+            </section> -->
 
         </main>
     </div>
