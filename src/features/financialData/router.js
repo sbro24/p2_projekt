@@ -4,7 +4,7 @@ import { UpdateCompanyObject } from "../../lib/useDatabase/handle-data.js";
 
 export async function router(req, res, data) {
     switch (req.url) {
-        case '/mineData':
+        case '/mineData/':
             if (await CheckAuth(req, res)) {
                 FileResponse(res, 'financialData/mineData.html');
             } else {

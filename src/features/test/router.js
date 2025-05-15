@@ -3,11 +3,11 @@ import { DataResponse } from "../../app/router.js";
 
 export function router(req, res) {
     switch (req.url) {
-        case '/test':
+        case '/test/':
             console.log('test');
             DataResponse(res, data);
             break;
-        case '/test/data':
+        case '/test/data/':
             
             break;
     
