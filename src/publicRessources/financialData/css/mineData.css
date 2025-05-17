@@ -12,18 +12,34 @@ td[contenteditable="true"]:focus {
     outline: 2px solid #007acc;
     background-color: #fff;
 }
-.revenue-table {
+.results-revenue-table {
     width: auto;
     height: auto;
 }
 
-.expense-table {
+.results-fixed-expense-table {
     width: auto;
     height: auto;
 }
-.btnInsertYear {
-    margin-top: 20px;
-    margin-bottom: 20px;
+
+.results-variable-expense-table {
+    width: auto;
+    height: auto;
+}
+
+.budget-revenue-table {
+    width: auto;
+    height: auto;
+}
+
+.budget-fixed-expense-table {
+    width: auto;
+    height: auto;
+}
+
+.budget-variable-expense-table {
+    width: auto;
+    height: auto;
 }
 
 .btnInsertCategory {
