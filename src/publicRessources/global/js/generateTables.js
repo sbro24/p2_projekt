@@ -291,3 +291,20 @@ function addRow(table, undercategory, data) {
         cell.setAttribute('contenteditable', 'true'); // Make cells editable
     });
 }
+
+/**
+ * Deletes the last row of a table
+ * @param {HTMLTableElement} table - The table delete from
+ */
+function deleteLastRow(table) {
+    if (!table) {
+        return;
+    }
+    if (table.rows.length > 0) {
+        table.deleteRow(-1); // -1 deletes the last row
+    } else {
+        console.error("No rows to delete.");
+        alert("Fejl: Ingen rækker at slette.");
+    }  
+}
+

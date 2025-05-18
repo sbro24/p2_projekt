@@ -165,36 +165,38 @@ function BuildHTMLStructure() {
                     </table>
                 </form>
                 <button class="btnInsertCategory">Indsæt ny indtægt</button>
+                <button class="btnDeleteCategory">Slet sidste indtægt</button>
             </div>        
             <div>    
                 <h3>Faste Omkostninger</h3>             
                 <form>
-                    <table border="1" class="results-fixed-expense-table"> <thead>
-                            <tr>
+                    <table border="1" class="results-fixed-expense-table"> 
+                        <tbody>
                                 <th>Omkostning</th>
                                 <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
                                 <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
                             </tr> 
-                        </thead>
-                        <tbody></tbody>
+                        </tbody>
                     </table>
                 </form>
                 <button class="btnInsertCategory">Indsæt ny omkostning</button>
+                <button class="btnDeleteCategory">Slet sidste omkostning</button>
             </div>
             <div>
                 <h3>Variable Omkostninger</h3>             
                 <form>
-                    <table border="1" class="results-variable-expense-table"> <thead>
+                    <table border="1" class="results-variable-expense-table"> 
+                        <tbody>
                             <tr>
                                 <th>Omkostning</th>
                                 <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
                                 <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
                             </tr> 
-                        </thead>
-                        <tbody></tbody>
+                        </tbody>
                     </table>
                 </form>
                 <button class="btnInsertCategory">Indsæt ny omkostning</button>
+                <button class="btnDeleteCategory">Slet sidste omkostning</button>
             </div>
         </section>
             
@@ -203,47 +205,50 @@ function BuildHTMLStructure() {
             <div>
                 <h3>Omsætning</h3>      
                 <form>
-                    <table border="1" class="budget-revenue-table"> <thead>
+                    <table border="1" class="budget-revenue-table"> 
+                        <tbody>
                             <tr>
                                 <th>Indtægt</th>
                                 <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
                                 <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
                             </tr> 
-                        </thead>
-                        <tbody></tbody>
+                        </tbody>
                     </table>
                 </form>
                 <button class="btnInsertCategory">Indsæt ny indtægt</button>
+                <button class="btnDeleteCategory">Slet sidste indtægt</button>
             </div>        
             <div>    
                 <h3>Faste Omkostninger</h3>             
                 <form>
-                    <table border="1" class="budget-fixed-expense-table"> <thead>
+                    <table border="1" class="budget-fixed-expense-table"> 
+                        <tbody>
                             <tr>
                                 <th>Omkostning</th>
                                 <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
                                 <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
                             </tr> 
-                        </thead>
-                        <tbody></tbody>
+                        </tbody>
                     </table>
                 </form>
                 <button class="btnInsertCategory">Indsæt ny omkostning</button>
+                <button class="btnDeleteCategory">Slet sidste omkostning</button>
             </div>
             <div>
                 <h3>Variable Omkostninger</h3>             
                 <form>
-                    <table border="1" class="budget-variable-expense-table"> <thead>
+                    <table border="1" class="budget-variable-expense-table"> 
+                        <tbody>
                             <tr>
                                 <th>Omkostning</th>
                                 <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
                                 <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
                             </tr> 
-                        </thead>
-                        <tbody></tbody>
+                        </tbody>
                     </table>
                 </form>
                 <button class="btnInsertCategory">Indsæt ny omkostning</button>
+                <button class="btnDeleteCategory">Slet sidste omkostning</button>
             </div>
         </section>`
 
@@ -313,20 +318,24 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
     }
-    
-    const InsertCatbtn = document.getElementById("btnInsertCategory")
-    if (InsertCatbtn) {
-        InsertCatbtn.addEventListener("click", () => {
-            addRow()
-        })
-    }
 
     // Event listener for the dynamicContentContainer to handle all click events inside the container
     const dynamicContentContainer = document.getElementById("dynamicContentContainer")
     if (dynamicContentContainer) {
         dynamicContentContainer.addEventListener("click", (event) => {
-            if (event.target.classList.contains("btnInsertCategory")) {
+            const targetButton = event.target // Get the clicked button
+            let action = null
+            if (targetButton.classList.contains("btnInsertCategory")) {
+                action = "add" // Set action to add
+            } else if (targetButton.classList.contains("btnDeleteCategory")) {
+                action = "delete" // Set action to delete
+            }
+            
+            if (action) {    
                 let formElement = event.target.previousElementSibling  // Get the form element before the button
+                if (formElement && formElement.tagName !== "FORM") { // If the previous element is not a form (e.g. it's a button), get the next one
+                    formElement = formElement.previousElementSibling
+                }
                 const targetTable = formElement && formElement.tagName === "FORM" ? formElement.querySelector("table") : null // If a formElement is found, get the first <table> found
             
                 let tableName = "Ukendt tabel"
@@ -338,11 +347,29 @@ document.addEventListener("DOMContentLoaded", () => {
                     else if (targetTable.classList.contains("budget-revenue-table")) tableName = "Budget Omsætning"
                     else if (targetTable.classList.contains("budget-fixed-expense-table")) tableName = "Budget Faste Omkostninger"
                     else if (targetTable.classList.contains("budget-variable-expense-table")) tableName = "Budget Variable Omkostninger" 
+                    
+                    const tableBody = targetTable.querySelector("tbody")
+                    if (tableBody) {
+                        if (action === "add") {
+                            const newCategoryName = prompt("Indtast navn for den nye kategori:", "Ny kategori")
+                            
+                            if (newCategoryName && newCategoryName.trim() !== "") { // Check if the user entered a name
+                                const newRowData = Array(12).fill("") // Create a new row
+                                addRow(tableBody, newCategoryName.trim(), newRowData) // Add the new row to the table
+                            } else if (newCategoryName === null) {
+                                alert("Venligst indtast et navn for den nye kategori")
+                            }
+                        } else if (action === "delete") {
+                            if (confirm("Er du sikker på, at du vil slette den sidste kategori?")) {
+                                deleteLastRow(tableBody) // Delete the last row from the table
+                            }
+                        }
+                    }
                 }
-            }    
-        })
-    }   
-})
+            } 
+        }) 
+    }
+})        
 
 
 /* Old code, not used anymore
