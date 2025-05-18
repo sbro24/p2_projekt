@@ -154,14 +154,14 @@ function BuildHTMLStructure() {
             <div>
                 <h3>Omsætning</h3>      
                 <form>
-                    <table border="1" class="results-revenue-table"> <thead>
+                    <table border="1" class="results-revenue-table"> 
+                        <tbody>
                             <tr>
                                 <th>Indtægt</th>
                                 <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
                                 <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
                             </tr> 
-                        </thead>
-                        <tbody></tbody>
+                        </tbody>
                     </table>
                 </form>
                 <button class="btnInsertCategory">Indsæt ny indtægt</button>
@@ -263,11 +263,8 @@ function BuildHTMLStructure() {
 document.addEventListener("DOMContentLoaded", () => {
     BuildHTMLStructure() // build the HTML structure for all the years year
     const yearSelect = document.getElementById("yearSelect")
-    const btnManuelInput = document.getElementById("btnManuelInput")
-    const manuelInputSection = document.getElementById("manuelInputSection")
     const saveBtn = document.getElementById("saveButton")
-    const dynamicContentContainer = document.getElementById("dynamicContentContainer")
-    
+
 
     fetch('/api/user/data')
     .then(response => {
@@ -288,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (apiResponse && !apiResponse.dataById && (apiResponse.result || apiResponse.budget || apiResponse.forecast)) {
                 // Fallback: If dataById is missing, but other top-level keys (result, budget, forecast) exist, 
                 // assume the entire response is the data for a single user.
-                console.warn("API response does not have 'dataById'. Assuming response IS the company data for a single user.");
+                console.warn("API response does not have 'dataById'. Assuming response is the user's actual company data.");
                 userData = apiResponse;
         }
 
@@ -305,13 +302,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch(error => { // Handle any errors that occur during the fetch
         console.error("Error fetching or processing company data:", error)
     })
-
-    // Add event listener for the manual input button 
-    if (btnManuelInput && manuelInputSection) {
-        btnManuelInput.addEventListener('click', () => {
-            manuelInputSection.style.display = manuelInputSection.style.display === 'none' ? 'block' : 'none' // Toggle the display of the manual input section
-        })
-    }
     
     // Add event listener for the file input element 
     const fileInput = document.getElementById("fileInput")
@@ -323,7 +313,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
     }
+    
+    const InsertCatbtn = document.getElementById("btnInsertCategory")
+    if (InsertCatbtn) {
+        InsertCatbtn.addEventListener("click", () => {
+            addRow()
+        })
+    }
+
     // Event listener for the dynamicContentContainer to handle all click events inside the container
+    const dynamicContentContainer = document.getElementById("dynamicContentContainer")
     if (dynamicContentContainer) {
         dynamicContentContainer.addEventListener("click", (event) => {
             if (event.target.classList.contains("btnInsertCategory")) {
