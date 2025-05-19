@@ -1,6 +1,3 @@
-const txt_test = '../ImportExport/lololol.txt'
-const test_csv = '../../../../../../Downloads/case1-result-2022(in) (1).csv'
-
 const DELIMITER = ';'
 const NEWLINE = '\n';
 
