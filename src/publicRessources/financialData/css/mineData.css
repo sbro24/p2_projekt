@@ -1,0 +1,48 @@
+.year-data-content {
+    display: none; /* Initially hide all year-specific content */
+}
+.year-data-content.active {
+    display: block; /* Show active year's content */
+}
+/* You might also want a basic style for contenteditable cells if not already covered */
+td[contenteditable="true"] {
+    background-color: #ffffdd; /* A light yellow to indicate editable */
+}
+td[contenteditable="true"]:focus {
+    outline: 2px solid #007acc;
+    background-color: #fff;
+}
+.results-revenue-table {
+    width: auto;
+    height: auto;
+}
+
+.results-fixed-expense-table {
+    width: auto;
+    height: auto;
+}
+
+.results-variable-expense-table {
+    width: auto;
+    height: auto;
+}
+
+.budget-revenue-table {
+    width: auto;
+    height: auto;
+}
+
+.budget-fixed-expense-table {
+    width: auto;
+    height: auto;
+}
+
+.budget-variable-expense-table {
+    width: auto;
+    height: auto;
+}
+
+.btnInsertCategory {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

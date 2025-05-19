@@ -148,6 +148,90 @@ function ToTableForecast(company) {
     })
 }
 
+function toTableBudget(company, Year, revenueTable, variabelExpenseTable, fastExpenseTable) {
+
+    const DELIMITER = ";"
+
+    // Check that text and tables exist
+    if (!revenueTable || !variabelExpenseTable || !fastExpenseTable) {
+        console.error("No text or tables found!");
+        return;
+    }
+
+    // Clear existing table data while preserving headers
+    clearTableData(revenueTable);
+    clearTableData(variabelExpenseTable);
+    clearTableData(fastExpenseTable)
+    
+    console.log(company)
+
+    // Define table headers
+    var headers = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    // Add headers if they don't exist
+    if (revenueTable.rows.length === 0) {
+        addHeaders(revenueTable, headers);
+    }
+    
+    if (variabelExpenseTable.rows.length === 0) {
+        addHeaders(variabelExpenseTable, headers);
+    }
+    if (fastExpenseTable.rows.length === 0) {
+        addHeaders(fastExpenseTable, headers);
+    }
+    
+
+    Object.keys(company.budget.revenue).forEach(key => {
+        const revenueItem = company.budget.revenue[key];
+        var dataOmsætning = "1";
+        revenueItem.data.forEach(index => {
+            if (Number(index.year) === Number(Year)) {
+                Object.keys(index.months).forEach(month => {
+                    dataOmsætning += ";" + String(index.months[month])
+                })
+            }
+            console.log(dataOmsætning)
+            var cols = dataOmsætning.split(DELIMITER)
+            var data = cols.slice(1)
+            console.log(data)
+            addRow(revenueTable, revenueItem.name, data);
+        })
+    })
+
+    Object.keys(company.budget.expense).forEach(key => {
+        const variabelExpenseItem = company.budget.expense[key];
+        if (variabelExpenseItem.characteristics === "Variabel") {
+            var dataVariabelExpense = "1";
+            variabelExpenseItem.data.forEach(index => {
+                if (Number(index.year) === Number(Year)) {
+                    Object.keys(index.months).forEach(month => {
+                        dataVariabelExpense += ";" + String(index.months[month])
+                    })
+                }
+                console.log(dataVariabelExpense)
+                var cols = dataVariabelExpense.split(DELIMITER)
+                var data = cols.slice(1)
+                console.log(data)
+                addRow(variabelExpenseTable, variabelExpenseItem.name, data);
+            })
+        } else {
+            var dataVariabelExpense = "1";
+            variabelExpenseItem.data.forEach(index => {
+                if (Number(index.year) === Number(Year)) {
+                    Object.keys(index.months).forEach(month => {
+                        dataVariabelExpense += ";" + String(index.months[month])
+                    })
+                }
+                console.log(dataVariabelExpense)
+                var cols = dataVariabelExpense.split(DELIMITER)
+                var data = cols.slice(1)
+                console.log(data)
+                addRow(fastExpenseTable, variabelExpenseItem.name, data);
+            })
+        }
+    })
+}
 
 /**
  * Clears table data while preserving headers
@@ -196,3 +280,20 @@ function addRow(table, undercategory, data) {
         cell.setAttribute('contenteditable', 'true'); // Make cells editable
     });
 }
+
+/**
+ * Deletes the last row of a table
+ * @param {HTMLTableElement} table - The table delete from
+ */
+function deleteLastRow(table) {
+    if (!table) {
+        return;
+    }
+    if (table.rows.length > 0) {
+        table.deleteRow(-1); // -1 deletes the last row
+    } else {
+        console.error("No rows to delete.");
+        alert("Fejl: Ingen rækker at slette.");
+    }  
+}
+
