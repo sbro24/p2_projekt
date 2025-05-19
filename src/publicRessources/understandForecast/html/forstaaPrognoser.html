@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forstaa Prognoser - Financial Management</title>
     <link rel="stylesheet" href="../css/forstaaPrognoser.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-    <script src="../js/forstaaPrognoser.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
 
@@ -19,7 +17,8 @@
     </header>
 
     <!-- Navigation -->
-    <script src="../../global/js/navbar.js"></script>
+    <!-- <script src="../../global/js/navbar.js"></script> -->
+    <script src="/api/global/navbar"></script>
 
     <!-- Main Layout -->
     <div class="container">
@@ -37,7 +36,13 @@
                         </p>
                     </section>
 
-                    <button id="readMore">Læs mere</button> <!-- Når knappen aktiveres, sendes brugeren til about.html -->
+                    <button id="readMore">Læs mere</button>
+                    <!-- Smid koden fra følgende script element ind i forstaaPrognoser.js -->
+                    <script> 
+                        document.getElementById("readMore").onclick = function () {
+                            window.location.href = "../../global/html/about.html";
+                        };
+                    </script>
                 </div>
 
                 <div class="column two">   
@@ -57,33 +62,13 @@
                         <p> Her kan du visuelt se hvordan dine foreløbige data differentierer fra dine prognoser </p>
 
                         <!-- Indsæt graf --> 
-                         
+                        <canvas id="chartExpenses"></canvas>
                         
                         <!-- Opdater tabel knap? som så henter nyeste data -->
                         <button id="updateChartExpenses">Opdater tabel</button>
                     </section>
                 </div>
             </div>
-           
-            
-        <!--    <section id="graphRevenueTotal" style="width: 400px; display: none"> -->
-                <!-- Graphical representation (optional) -->
-        <!--        <h3>Totaler for omsætning per måned</h3>
-                <canvas id="budgetForecastChart" style="width: 100px; height: 50px;"></canvas>
-            </section>
-
-            <section id="graphRevenueDifference" style="width: 400px; display: none">
-                <h3>Forskel imellem budget og prognose</h3>
-                <canvas id="diffBudgetForecastChart" style="width: 400px; height: 200px;"></canvas>                
-            </section>
-
-            <section id="sectionTableBudgetForecast" style="display:none">
-                <table id="tableBudgetForecast"></table>
-            </section>
-
-            <section id="saveChangesTableBudgetForecast" style="display: none">
-                <button type="submit" id="submitAlteredBudget">Gem tilpasset budget</button>
-            </section> -->
 
         </main>
     </div>
@@ -92,7 +77,9 @@
     <footer>
         <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
     </footer>
-    
+
+    <script src="../js/forstaaPrognoser.js"></script>
+
 </body>
 
 </html>
