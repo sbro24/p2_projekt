@@ -39,17 +39,16 @@ function toTableRevenue(company, Year, revenueTable, variabelExpenseTable, fastE
     Object.keys(company.result.revenue).forEach(key => {
         const revenueItem = company.result.revenue[key];
         var dataOmsætning = "1";
+        console.log(dataOmsætning)
         revenueItem.data.forEach(index => {
             if (Number(index.year) === Number(Year)) {
                 Object.keys(index.months).forEach(month => {
                     dataOmsætning += ";" + String(index.months[month])
                 })
-            }
-            console.log(dataOmsætning)
             var cols = dataOmsætning.split(DELIMITER)
             var data = cols.slice(1)
-            console.log(data)
             addRow(revenueTable, revenueItem.name, data);
+            }
         })
     })
 
@@ -62,12 +61,10 @@ function toTableRevenue(company, Year, revenueTable, variabelExpenseTable, fastE
                     Object.keys(index.months).forEach(month => {
                         dataVariabelExpense += ";" + String(index.months[month])
                     })
+                    var cols = dataVariabelExpense.split(DELIMITER)
+                    var data = cols.slice(1)
+                    addRow(variabelExpenseTable, variabelExpenseItem.name, data);
                 }
-                console.log(dataVariabelExpense)
-                var cols = dataVariabelExpense.split(DELIMITER)
-                var data = cols.slice(1)
-                console.log(data)
-                addRow(variabelExpenseTable, variabelExpenseItem.name, data);
             })
         } else {
             var dataVariabelExpense = "1";
@@ -76,12 +73,10 @@ function toTableRevenue(company, Year, revenueTable, variabelExpenseTable, fastE
                     Object.keys(index.months).forEach(month => {
                         dataVariabelExpense += ";" + String(index.months[month])
                     })
+                    var cols = dataVariabelExpense.split(DELIMITER)
+                    var data = cols.slice(1)
+                    addRow(fastExpenseTable, variabelExpenseItem.name, data);
                 }
-                console.log(dataVariabelExpense)
-                var cols = dataVariabelExpense.split(DELIMITER)
-                var data = cols.slice(1)
-                console.log(data)
-                addRow(fastExpenseTable, variabelExpenseItem.name, data);
             })
         }
     })
@@ -126,10 +121,8 @@ function ToTableForecast(company) {
         Object.keys(revenueItem.data[0].months).forEach(month => {
             dataOmsætning += ";" + String(index.months[month])
         })
-        console.log(dataOmsætning)
         var cols = dataOmsætning.split(DELIMITER)
         var data = cols.slice(1)
-        console.log(data)
         addRow(revenueTable, revenueItem.name, data);
     })
 
@@ -140,20 +133,16 @@ function ToTableForecast(company) {
             Object.keys(variabelExpenseItem.data[0].months).forEach(month => {
                 dataVariabelExpense += ";" + String(index.months[month])
             })
-            console.log(dataVariabelExpense)
             var cols = dataVariabelExpense.split(DELIMITER)
             var data = cols.slice(1)
-            console.log(data)
             addRow(variabelExpenseTable, variabelExpenseItem.name, data);
         } else {
             var dataVariabelExpense = "1";
             Object.keys(variabelExpenseItem.data[0].months).forEach(month => {
                 dataVariabelExpense += ";" + String(index.months[month])
             })
-            console.log(dataVariabelExpense)
             var cols = dataVariabelExpense.split(DELIMITER)
             var data = cols.slice(1)
-            console.log(data)
             addRow(fastExpenseTable, variabelExpenseItem.name, data);
         }
     })

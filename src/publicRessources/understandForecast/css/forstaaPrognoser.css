@@ -175,7 +175,7 @@ button:hover {
     margin-left: 42%;
 }
 
-#chartRevenue {
+#chartRevenue, #chartExpenses {
     width:100%;
     max-width:1500px;
 }
