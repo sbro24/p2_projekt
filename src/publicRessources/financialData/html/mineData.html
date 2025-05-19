@@ -20,6 +20,7 @@
     <section> 
     <label for="yearSelect">Vælg år:</label>
     <select id="yearSelect">
+        <option value="2025">2025</option>
         <option value="2024">2024</option>
         <option value="2023">2023</option>
         <option value="2022">2022</option>
@@ -27,107 +28,14 @@
         <option value="2020">2020</option>
     </select>     
 
-    <input type="file" id="file" accept=".csv" style="margin-left: 15 px;"/>
+    <label for="fileInput">Upload CSV-fil:</label>
+    <input type="file" id="fileInput" accept=".csv" style="margin-left: 10 px;"/>
 
-    <button id="btnManuelInput">Indtast manuelt</button>
-    <table id="table" border="1"></table>
+    <table id="csvPreviewTable" style="display:none;"></table>
     </section>
 
-    <section>
-        <h2 class="section-header">Mine resultater</h2>   
-
-        <h2>Omsætning</h2>      
-            <form>
-                <table border="1" class="revenue-table">
-                    <thead>
-                        <tr>
-                            <th>År</th>
-                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
-                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
-                        </tr> 
-                    </thead>
-                </table>
-            </form>
-        <button class="btnInsertCategory">Indsæt ny indtægt</button>
-                
-        <h2>Faste Omkostninger</h2>             
-            <form>
-                <table border="1" class="expense-table">
-                    <thead>
-                        <tr>
-                            <th>År</th>
-                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
-                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
-                        </tr> 
-                    </thead>
-                </table>
-            </form>
-        <button class="btnInsertCategory">Indsæt ny omkostning</button>
-
-        <h2>Variable Omkostninger</h2>             
-            <form>
-                <table border="1" class="expense-table">
-                    <thead>
-                        <tr>
-                            <th>År</th>
-                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
-                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
-                        </tr> 
-                    </thead>
-                </table>
-            </form>
-        <button class="btnInsertCategory">Indsæt ny omkostning</button>
-    </section>
-                
-    <section>
-        <h2 class="section-header">Min budget</h2>    
-        
-        <h2>Omsætning</h2>      
-            <form>
-                <table border="1" class="revenue-table">
-                    <thead>
-                        <tr>
-                            <th>År</th>
-                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
-                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
-                        </tr> 
-                    </thead>
-                </table>
-            </form>
-        <button class="btnInsertCategory">Indsæt ny indtægt</button>
-                
-        <h2>Faste Omkostninger</h2>             
-            <form>
-                <table border="1" class="expense-table">
-                    <thead>
-                        <tr>
-                            <th>År</th>
-                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
-                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
-                        </tr> 
-                    </thead>
-                </table>
-            </form>
-        <button class="btnInsertCategory">Indsæt ny omkostning</button>
-
-        <h2>Variable Omkostninger</h2>             
-            <form>
-                <table border="1" class="expense-table">
-                    <thead>
-                        <tr>
-                            <th>År</th>
-                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
-                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
-                        </tr> 
-                    </thead>
-                </table>
-            </form>
-        <button class="btnInsertCategory">Indsæt ny omkostning</button>
-    </section>
-
-    <section id="manuelInput" style="display: none">
-        <h2>Manuel indtastning</h2>
-    </section>
+    <div id="dynamicContentContainer">    
+        </div>    
 
     <section>    
         <button id="exportButton">Eksporter</button>
@@ -139,6 +47,7 @@
         <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
     </footer>
 
+    <script src="/api/global/gentabel"></script>
     <script src="/api/mineData/script"></script>
 
 </body>

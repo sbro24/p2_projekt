@@ -125,26 +125,6 @@ form {
       grid-gap: .8em;
 }
 
-.result-table {
-    width: auto;
-    height: auto;
-}
-
-.revenue-table {
-    width: auto;
-    height: auto;
-}
-
-.expense-table {
-    width: auto;
-    height: auto;
-}
-
-.budget-table {
-    width: auto;
-    height: auto;
-}
-
 button {
     background-color: #007bff;
     color: white;
@@ -169,12 +149,3 @@ button:active {
     transform: scale(1);
 }
 
-.btnInsertYear {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.btnInsertCategory {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
