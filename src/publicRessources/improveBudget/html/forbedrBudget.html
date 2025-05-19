@@ -20,16 +20,23 @@
     <script src="../../global/js/navbar.js"></script>
 
     <section>
-        <h2>Beregn din prognose</h2>
-        <p>Her kan du beregne din prognose baseret på de input du har givet om tidligere resultater.</p>
+        <h2>Sammenlign forescast med budget</h2>
+        <p>Her kan du både sammenligne og justere dit budget med det beregnet forecast</p>
     </section>
 
     <section>
-    <button id="calcForecastBtn">Beregn mit forecast</button>
+    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+
+    <button id="editResults">Justere mit resultat</button>
+    <button id="editBudget">Justere mit budget</button>
+    <button id="editForecast">Justere mit forecast</button>
     </section>
     
 
     <script src="../js/forbedrBudget.js"></script>
+    <script src="../"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
 
     <!-- Footer -->
     <footer>
