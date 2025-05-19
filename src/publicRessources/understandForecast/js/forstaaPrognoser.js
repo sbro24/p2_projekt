@@ -1,3 +1,21 @@
+// "Read more" button
+document.getElementById("readMore").onclick = function () {
+  window.location.href = "../../global/html/about.html";
+  window.location.href = "api/global/about.html";
+};
+                    
+// "Opdater tabel" button - Revenue
+document.getElementById("updateChartRevenue").onclick = function () {
+                                
+};
+
+// "Opdater tabel" button - Expenses
+document.getElementById("updateChartExpenses").onclick = function () {
+                                
+};
+
+
+// Charts
 const xValues = ['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
 
 // Chart Revenue
