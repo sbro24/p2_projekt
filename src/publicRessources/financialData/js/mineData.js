@@ -479,9 +479,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             
             const dataToSave = ExtractDataFromAllTables(yearSelect.value) // Extract data from the tables
-
+            
             if (!dataToSave) {
-                console.error("Failet to extract data from tables")
+                console.error("Failed to extract data from tables")
                 alert("Kunne ikke udtrække data fra tabellerne")
                 return
             }
