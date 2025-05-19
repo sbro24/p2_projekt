@@ -39,23 +39,6 @@ async function CSVImporter (text, company, type) {
     CSVObjectCreator(text, company, type) //Make objects with file contents and compare them to company data object
 }
 
-//Parses CSV file content into one long string of text, with each new column seperated 
-//by NEWLINE
-async function ParseCSV (file) {
-    // Check that the file is valid and FileReader API is supported
-    if (!file) {
-        console.error("File not available");
-        return;
-    }
-
-    //Read contents of file, return as one long string
-    try {
-        const data = await readFile(file, 'utf8');
-        return data;
-    } catch (err) {
-        console.error('Error reading CSV:', err);
-      }
-}
 
 //Transforms parsed CSV text into arrays, either being "Omsætning", "variable omkostninger"
 //or "Faste omkostninger"
@@ -282,5 +265,3 @@ function SplitRowsIntoCategories (r, year) {
 
     return salesObject
 }
-
-import { readFile } from 'fs/promises';
