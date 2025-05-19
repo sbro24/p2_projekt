@@ -23,11 +23,15 @@
   },
   "homepage": "https://github.com/sbro24/p2_projekt#readme",
   "devDependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
+    "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
     "jsdom": "^26.1.0",
     "nodemon": "^3.1.10"
   },
   "dependencies": {
-    "arima": "^0.2.5"
+    "arima": "^0.2.5",
+    "jest-environment-jsdom": "^29.7.0"
   }
 }
