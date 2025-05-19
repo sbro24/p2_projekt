@@ -4,7 +4,6 @@
 .year-data-content.active {
     display: block; /* Show active year's content */
 }
-/* You might also want a basic style for contenteditable cells if not already covered */
 td[contenteditable="true"] {
     background-color: #ffffdd; /* A light yellow to indicate editable */
 }
@@ -40,9 +39,4 @@ td[contenteditable="true"]:focus {
 .budget-variable-expense-table {
     width: auto;
     height: auto;
-}
-
-.btnInsertCategory {
-    margin-top: 20px;
-    margin-bottom: 20px;
 }

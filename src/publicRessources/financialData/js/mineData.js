@@ -513,11 +513,21 @@ function getTableData(tableId, Year) {
     return underCategories;
 };
 
+function ProcessFile(selectedFile, uploadType) {
+    if (!selectedFile) {
+        console.error("No CSV file selected")
+        alert("Ingen CSV fil indlæst")
+        return
+    }
+}
+
 // Load the HTML structure when the page is loaded
 document.addEventListener("DOMContentLoaded", () => {
     BuildHTMLStructure() // build the HTML structure for all the years year
     const yearSelect = document.getElementById("yearSelect")
     const fileInput = document.getElementById("uploadForm")
+    const uploadResultsBtn = document.getElementById("uploadResultsBtn")
+    const uploadBudgetBtn = document.getElementById("uploadBudgetBtn")
     const dynamicContentContainer = document.getElementById("dynamicContentContainer")
     const saveBtn = document.getElementById("saveButton")
     const exportBtn = document.getElementById("exportButton")
@@ -569,10 +579,10 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     })
     
+    let fileContent = null
     // Add event listener for the file input element 
-    
     if (fileInput) {
-        fileInput.addEventListener("submit", (event) => {
+        fileInput.addEventListener("change", (event) => {
         event.preventDefault();
 
         const file = document.querySelector("input[type=file]").files[0];
@@ -581,16 +591,34 @@ document.addEventListener("DOMContentLoaded", () => {
         // Read the file
         const reader = new FileReader();
         reader.onload = () => {
-            content = reader.result;
+            fileContent = reader.result;
             
-            CSVObjectCreator(content, companyData, "result")
-            console.log(companyData)
         };
         reader.onerror = () => {
             showMessage("Error reading the file. Please try again.", "error");
         };
         reader.readAsText(file);
-    });
+        });
+    }
+
+    // Add event listener for the upload results button
+    if (uploadResultsBtn) {
+        uploadResultsBtn.addEventListener("click", (event) => {
+            event.preventDefault()
+            if (fileContent) {
+                CSVObjectCreator(fileContent, companyData, "result")
+            }
+        })
+    }
+    // Add event listener for the upload budget button
+    if (uploadBudgetBtn) {
+        uploadBudgetBtn.addEventListener("click", (event) => {
+            console.log("Budget button clicked")
+            event.preventDefault()
+            if (fileContent) {
+                CSVObjectCreator(fileContent, companyData, "budget")
+            }
+        })
     }
 
     // Event listener for the dynamicContentContainer to handle all click events inside the container

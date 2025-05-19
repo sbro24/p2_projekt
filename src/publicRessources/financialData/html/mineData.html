@@ -30,16 +30,19 @@
     </select>     
     
     <form id="uploadForm">
-        <input type="file" id="file" accept=".csv" style="margin-left: 15 px;"/><br>
-        <input type="submit" value="Upload"/>
+        <label for="file">Choose CSV file:</label><br>
+        <input type="file" id="file" name="csvfile" accept=".csv"/><br>
+
+        <div class="button-group">   
+            <input type="submit" id="uploadResultsBtn" value="Upload Results"/>
+            <input type="submit" id="uploadBudgetBtn" value="Upload Budget"/>
+        </div>    
     </form>
 
     </section>
 
     <div id="dynamicContentContainer">    
         </div>    
-
-    
 
     <section>    
         <button id="exportButton">Eksporter</button>
