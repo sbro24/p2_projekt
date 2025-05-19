@@ -11,6 +11,18 @@ export async function router(req, res, data) {
             }
             break;
 
+        case '/api/improveBudget/script/':
+            FileResponse(res, 'improveBudget/forbedrBudget.js');
+            break;
+
+        case '/api/improveBudget/style/':
+            FileResponse(res, 'financialData/mineData.css');
+            break;
+
+        case '/api/improveBudget/genTabel/':
+            FileResponse(res, 'global/generateTables.js');
+            break;
+
         default:
             break;
     }

@@ -16,6 +16,7 @@
 
         <!-- Navigation -->
     <script src="/api/global/navbar"></script>
+    <script src="/api/mineData/upload"></script>
 
     <section> 
     <label for="yearSelect">Vælg år:</label>
@@ -30,6 +31,10 @@
 
     <label for="fileInput">Upload CSV-fil:</label>
     <input type="file" id="fileInput" accept=".csv" style="margin-left: 10 px;"/>
+    <form id="uploadForm">
+        <input type="file" id="file" accept=".csv" style="margin-left: 15 px;"/><br>
+        <input type="submit" value="Upload"/>
+    </form>
 
     <table id="csvPreviewTable" style="display:none;"></table>
     </section>
