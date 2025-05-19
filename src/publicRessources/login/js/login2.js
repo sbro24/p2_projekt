@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         .then(response => response.json())
         .then(data => {
             if (data === 'success') {
-                window.location.href = '/minSide'; // Redirect to home page on success
+                window.location.href = '/profil'; // Redirect to home page on success
             } else {
                 alert('Login failed: ' + data); // Show error message
             }
