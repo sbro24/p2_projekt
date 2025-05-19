@@ -1,8 +1,7 @@
 const DELIMITER = ';'
 const NEWLINE = '\n';
-let Year = "2023";
 
-function ExportToCSV(company, Year) {
+function ExportToCSV(company, Year, filename) {
     var rows = []; //Initiate rows array
     //Initiate headers array with the given year and every month
     var headers = [Year, "Januar", "Februar", "Marts", "April", "May", "Juni", 
@@ -16,37 +15,35 @@ function ExportToCSV(company, Year) {
 
     ExtractOmkostningData (company, Year, rows) //Run ExtractOmkostningData function with specific year
 
-    const hest = { name: "Cool Company" }; //CSV file name
-
-    DownloadCSVToDisk(rows, hest) //Run "DownloadCSVToDisk" function
+    DownloadCSVToDisk(rows, filename) //Run "DownloadCSVToDisk" function
 };
 
-import { writeFile } from 'fs/promises';
-import path from 'path';
-
-
-async function DownloadCSVToDisk(rows, lompany) {
+async function DownloadCSVToDisk(rows, filename) {
     const NEWLINE = '\n';
 
     //csvContent = each overcategory and its undercategories joined together by NEWLINE
     //This means csvContent is now one long string
     const csvContent = rows.join(NEWLINE);
 
-    //
-    const filename = lompany?.name
-        ? `${lompany.name.replace(/[^a-z0-9]/gi, '_')}_data.csv`
-        : 'financial_data.csv';
+    // Sanitize and ensure .csv extension
+    let safeFilename = filename || 'financial_data';
+    safeFilename = safeFilename.replace(/[^a-z0-9_\-]/gi, '_'); // optional: remove unsafe chars
 
-    const outputDir = 'C:/Users/keanv/Downloads'; //Folder to store new csv file
-    const filePath = path.join(outputDir, filename); //filepath contains folder and name of csv file
-
-    //Write csv into filepath using the long string from csvContent
-    try {
-        await writeFile(filePath, csvContent, 'utf8');
-        console.log(`CSV file saved to: ${filePath}`);
-    } catch (err) {
-        console.error('Error saving CSV:', err);
+    if (!safeFilename.toLowerCase().endsWith('.csv')) {
+        safeFilename += '.csv';
     }
+
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
 }
 
 function ExtractOmsætningData (company, Year, rows) {
@@ -106,5 +103,3 @@ function ExtractOmkostningData (company, Year, rows) {
     rows.push(rowDataFast.join(NEWLINE)) //join "rowDataFast" index' with newline and push to "rows"
     rows[rows.length-1] = rows[rows.length-1] + ";\n"
 }
-
-LogResult(GetFinancialDataById("111111111111111111"))
