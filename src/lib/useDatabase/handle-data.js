@@ -132,16 +132,16 @@ export async function UpdateSessionToken(companyId, newSessionToken) {
 
         if (companySessionTokenToUpdate) {
             companySessionTokenToUpdate.sessionToken = newSessionToken;
-            console.log(`The token for company ${companyId} has been updated to ${newSessionToken}`);
+            Log(`The token for company ${companyId} has been updated to ${newSessionToken}`);
         } else {
-            console.log("Company name is not in the database");
+            Log(Error(`Company with id ${companyId} is not in the database`));
         }
 
         //async writing to database
         await JsonWriteFile(filePathDatabase, data);
 
     } catch (err) {
-        console.error("Not able to update session token:", err);
+        Log(Error(err));
         return null;
     }
 }
