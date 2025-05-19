@@ -16,6 +16,7 @@ export async function router(req, res, data) {
         case '/api/mineData/script/':
             FileResponse(res, 'financialData/mineData.js');
             break;
+
         case '/api/mineData/upload/':
             FileResponse(res, 'financialData/upload.js');
             break;
@@ -23,9 +24,9 @@ export async function router(req, res, data) {
         case '/api/mineData/style/':
             FileResponse(res, 'financialData/mineData.css');
             break;
-        case '/api/mineData/upload':
-            
-            break
+        case '/api/mineData/csvparser/':    
+            FileResponse(res, 'financialData/CSVParser.js');
+            break;
 
         case '/api/saveData/':
             await SaveData(req, res, data)

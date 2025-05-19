@@ -366,7 +366,7 @@ function ExtractDataFromAllTables(year) {
 document.addEventListener("DOMContentLoaded", () => {
     BuildHTMLStructure() // build the HTML structure for all the years year
     const yearSelect = document.getElementById("yearSelect")
-    const fileInput = document.getElementById("fileInput")
+    const fileInput = document.getElementById("uploadForm")
     const dynamicContentContainer = document.getElementById("dynamicContentContainer")
     const saveBtn = document.getElementById("saveButton")
 
@@ -411,12 +411,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // Add event listener for the file input element 
     
     if (fileInput) {
-        fileInput.addEventListener("change", (event) => {
-            const file = event.target.files[0] // Get the selected file
-            if (file) {
-                console.log("File selected:", file.name)
-            }
-        })
+        fileInput.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const file = document.querySelector("input[type=file]").files[0];
+        console.log(file.type);
+   
+        // Read the file
+        const reader = new FileReader();
+        reader.onload = () => {
+            content = reader.result;
+            
+            CSVObjectCreator(content, companyData, "budget")
+            console.log(companyData)
+        };
+        reader.onerror = () => {
+            showMessage("Error reading the file. Please try again.", "error");
+        };
+        reader.readAsText(file);
+    });
     }
 
     // Event listener for the dynamicContentContainer to handle all click events inside the container
