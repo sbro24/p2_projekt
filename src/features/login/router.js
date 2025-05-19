@@ -6,7 +6,7 @@ export async function router(req, res, data) {
     switch (req.url) {
         case '/login/':
             if (await CheckAuth(req, res)) {
-                FileResponse(res, 'userData/minSide.html');
+                FileResponse(res, 'profile/profil.html');
             } else {
                 FileResponse(res, 'login/login.html');
             }

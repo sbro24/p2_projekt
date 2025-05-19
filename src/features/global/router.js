@@ -34,6 +34,14 @@ export async function router(req, res, data) {
             } else {
                 FileResponse(res, 'login/needLogin.html');
             }
+            break;
+        case '/api/calcForecast/':
+            if (!await CheckAuth(req, res)) {
+                FileResponse(res, 'login/needLogin.html');
+                return
+            }
+            DataResponse(res, 'startedCalulation');
+            break;
         default:
             break;
     }
