@@ -1,48 +1,330 @@
 <!DOCTYPE html>
 <html lang="da">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forbedr Budget - Financial Management</title>
+    <title>Financial Management - Budget</title>
+    <link rel="stylesheet" href="/api/global/style">
+    <link rel="stylesheet" href="/api/improveBudget/style">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="../../global/css/style.css">
+    <style>
+  
+    </style>
 </head>
-
 <body>
+
     <!-- Header -->
+
     <header>
         <h1>Financial Management</h1>
         <p>Administrer dit budget effektivt</p>
     </header>
+    <!-- Navigation bar-->
 
-    <!-- Navigation -->
-    <script src="../../global/js/navbar.js"></script>
+    <script src="/api/global/navbar"></script>
 
-    <section>
-        <h2>Sammenlign forescast med budget</h2>
-        <p>Her kan du både sammenligne og justere dit budget med det beregnet forecast</p>
-    </section>
+    <!-- <script>
+        // Fake data generator
+        function generateFakeData() {
+            const years = [2020, 2021, 2022, 2023, 2024, 2025];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'];
+            
+            // Generate random monthly data
+            const generateMonthlyData = () => {
+                return months.map(() => Math.floor(Math.random() * 90000) + 10000);
+            };
+            
+            return {
+                budget: {
+                    revenue: {
+                        monthly: generateMonthlyData()
+                    },
+                    expenses: {
+                        monthly: generateMonthlyData().map(x => x * 0.7)
+                    }
+                },
+                forecast: {
+                    revenue: {
+                        monthly: generateMonthlyData()
+                    },
+                    expenses: {
+                        monthly: generateMonthlyData().map(x => x * 0.7)
+                    }
+                },
+                results: years.map(year => ({
+                    year,
+                    revenue: generateMonthlyData(),
+                    expenses: generateMonthlyData().map(x => x * 0.7)
+                }))
+            };
+        }
+        
+        // Initialize charts and tables
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = generateFakeData();
+            
+            // 1. Initialize Comparison Chart (2025 Budget vs Forecast)
+            const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+            new Chart(comparisonCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+                    datasets: [
+                        {
+                            label: 'Budget 2025',
+                            data: data.budget.revenue.monthly,
+                            borderColor: '#4e73df',
+                            backgroundColor: 'rgba(78, 115, 223, 0.05)',
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Forecast 2025',
+                            data: data.forecast.revenue.monthly,
+                            borderColor: '#1cc88a',
+                            backgroundColor: 'rgba(28, 200, 138, 0.05)',
+                            tension: 0.1
+                        },
+                    
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Monthly Comparison 2025'
+                        }
+                    }
+                }
+            });
+            
+            // 2. Initialize Historical Chart
+            const historicalCtx = document.getElementById('displayChart').getContext('2d');
+            new Chart(historicalCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
+                    datasets: [{
+                        label: 'Yearly Revenue',
+                        data: data.results.map(r => r.revenue.reduce((a,b) => a + b, 0)),
+                        backgroundColor: '#36b9cc'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Yearly Revenue Development'
+                        }
+                    }
+                }
+            });
+            
+            // 3. Fill all tables with data
+            function fillTable(tableId, monthlyData) {
+                const table = document.querySelector(`#${tableId} tbody`);
+                table.innerHTML = `<tr>
+                    <td>2025</td>
+                    ${monthlyData.map(val => `<td>${val.toLocaleString()}</td>`).join('')}
+                </tr>`;
+            }
+            
+            fillTable('budgetRevenue', data.budget.revenue.monthly);
+            fillTable('budgetExpenses', data.budget.expenses.monthly);
+            fillTable('forecastRevenue', data.forecast.revenue.monthly);
+            fillTable('forecastExpenses', data.forecast.expenses.monthly);
+            
+            // Fill historical results
+            const resultsTable = document.querySelector('#resultsRevenue tbody');
+            resultsTable.innerHTML = data.results.map(r => `
+                <tr>
+                    <td>${r.year}</td>
+                    ${r.revenue.map(val => `<td>${val.toLocaleString()}</td>`).join('')}
+                </tr>
+            `).join('');
+            
+            const expensesTable = document.querySelector('#resultsExpenses tbody');
+            expensesTable.innerHTML = data.results.map(r => `
+                <tr>
+                    <td>${r.year}</td>
+                    ${r.expenses.map(val => `<td>${val.toLocaleString()}</td>`).join('')}
+                </tr>
+            `).join('');
+            
+            // Toggle sections functionality
+            window.toggleSection = function(sectionId) {
+                const section = document.getElementById(`${sectionId}Table`);
+                section.style.display = section.style.display === 'none' ? 'block' : 'none';
+            };
+        });
+        
+        // Simple navbar functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const nav = document.createElement('nav');
+            nav.innerHTML = `
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/forbedrBudget/">Budget</a></li>
+                    <li><a href="/logout">Log out</a></li>
+                </ul>
+            `;
+            document.body.insertBefore(nav, document.body.firstChild);
+        });
+        </script> -->
 
-    <section>
-    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
-
-    <button id="editResults">Justere mit resultat</button>
-    <button id="editBudget">Justere mit budget</button>
-    <button id="editForecast">Justere mit forecast</button>
-    </section>
     
 
-    <script src="../js/forbedrBudget.js"></script>
-    <script src="../"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
+    <div class="container">
+        <main class="content">
+
+            <!-- Graphs  -->
+
+            <section>
+                <h2 class="section-header">Oversigt</h2>
+                <div class="graph-container">
+                    <div class="chart">
+                        <h3>Årlig Sammenligning i perioden 2025</h3>
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                    <div class="chart">
+                        <h3>Månedlig Udvikling i perioden 2020-2025</h3>
+                        <canvas id="displayChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tables -->
+
+            <section>
+                <h2 class="section-header">Data</h2>
+                
+                <!-- Budget Table -->
+
+                <div class="data-section">
+                    <button class="section-toggle" onclick="toggleSection('budget')">
+                        Budget 2025 <span>▼</span>
+                    </button>
+                    <div class="section-content" id="budgetTable">
+                        <div class="table-group">
+                            <h3>Omsætning</h3>
+                            <table class="revenue-table">
+                                <thead>
+                                    <tr>
+                                        <th>År</th>
+                                        <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                        <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="budgetRevenue"></tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="table-group">
+                            <h3>Omkostninger</h3>
+                            <table class="expense-table">
+                                <thead>
+                                    <tr>
+                                        <th>År</th>
+                                        <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                        <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="budgetExpenses"></tbody>
+                            </table>
+                            <button class="updateBudget">Opdater Budget</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Forecast Table -->
+
+                <div class="data-section">
+                    <button class="section-toggle" onclick="toggleSection('forecast')">
+                        Forecast 2025 <span>▼</span>
+                    </button>
+                    <div class="section-content" id="forecastTable">
+                        <div class="table-group">
+                            <h3>Omsætning</h3>
+                            <table class="revenue-table">
+                                <thead>
+                                    <tr>
+                                        <th>År</th>
+                                        <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                        <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="forecastRevenue"></tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="table-group">
+                            <h3>Omkostninger</h3>
+                            <table class="expense-table">
+                                <thead>
+                                    <tr>
+                                        <th>År</th>
+                                        <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                        <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="forecastExpenses"></tbody>
+                            </table>
+                            <button class="updateForecast">Opdater Forecast</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results Table -->
+                <div class="data-section">
+                    <button class="section-toggle" onclick="toggleSection('results')">
+                        Resultater 2020-2024 <span>▼</span>
+                    </button>
+                    <div class="section-content" id="actualResultsTable">
+                        <div class="table-group">
+                            <h3>Omsætning</h3>
+                            <table class="revenue-table">
+                                <thead>
+                                    <tr>
+                                        <th>År</th>
+                                        <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                        <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="resultsRevenue"></tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="table-group">
+                            <h3>Omkostninger</h3>
+                            <table class="expense-table">
+                                <thead>
+                                    <tr>
+                                        <th>År</th>
+                                        <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th>
+                                        <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="resultsExpenses"></tbody>
+                            </table>
+                            <button class="updateActualResults">Opdater Aktuelle Resultater</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+   
 
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
     </footer>
-    
-</body>
 
+    <!-- JS Script -->
+
+    <script src="/api/improveBudget/script/"></script>
+    <script src="/api/improveBudget/genTabel/"></script>
+</body>
 </html>
