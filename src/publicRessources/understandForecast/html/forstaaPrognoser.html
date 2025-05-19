@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forstaa Prognoser - Financial Management</title>
-    <link rel="stylesheet" href="../css/forstaaPrognoser.css">
+    <link rel="stylesheet" href="/api/global/style">
+    <link rel="stylesheet" href="/api/forstaaPrognoser/style"> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
 
@@ -37,12 +38,6 @@
                     </section>
 
                     <button id="readMore">Læs mere</button>
-                    <!-- Smid koden fra følgende script element ind i forstaaPrognoser.js -->
-                    <script> 
-                        document.getElementById("readMore").onclick = function () {
-                            window.location.href = "../../global/html/about.html";
-                        };
-                    </script>
                 </div>
 
                 <div class="column two">   
@@ -50,10 +45,10 @@
                         <h3> Indtægt </h3>
                         <p> Her kan du visuelt se hvordan dine foreløbige data differentierer fra dine prognoser </p>
                         
-                        <!-- Indsæt graf (chart.js?) -->
+                        <!-- Indsæt graf -->
                         <canvas id="chartRevenue"></canvas>
 
-                        <!-- Opdater tabel knap? som så henter nyeste data -->
+                        <!-- Opdater tabel knap - henter nyeste data -->
                         <button id="updateChartRevenue">Opdater tabel</button>
                     </section>
 
@@ -64,7 +59,7 @@
                         <!-- Indsæt graf --> 
                         <canvas id="chartExpenses"></canvas>
                         
-                        <!-- Opdater tabel knap? som så henter nyeste data -->
+                        <!-- Opdater tabel knap - henter nyeste data -->
                         <button id="updateChartExpenses">Opdater tabel</button>
                     </section>
                 </div>
@@ -78,7 +73,7 @@
         <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
     </footer>
 
-    <script src="../js/forstaaPrognoser.js"></script>
+    <script src="/api/forstaaPrognoser/script"></script>
 
 </body>
 
