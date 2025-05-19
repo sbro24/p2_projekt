@@ -148,11 +148,11 @@ function OvercategoryRunner1 (overCategory, company, Year) {
     console.log(company.result.revenue)
 }
 
-function SumUndercategories (company, Year, name){
+function SumUndercategories (company, Year, type){
 
-    if (name === "omsætning") {
+    if (type === "omsætning") {
         return OvercategoryFinder("revenue", company, Year)
-    } else if (name === "omkostning") {
+    } else if (type === "omkostning") {
         return OvercategoryFinder("expense", company, Year)
     }
 
@@ -233,5 +233,3 @@ function OvercategoryRunner (overCategory, company, Year) {
     metrics[`${overCategory} sum`].data.push(omsætningYear);
     return metrics[`${overCategory} sum`]
 }
-
-LogResult(GetFinancialDataById("111111111111111111"), "2023", "omsætning")
