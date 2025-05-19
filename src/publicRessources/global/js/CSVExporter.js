@@ -1,7 +1,7 @@
 const DELIMITER = ';'
 const NEWLINE = '\n';
 
-function ExportToCSV(company, Year, filename) {
+function ExportToCSV(company, filename, Year) {
     var rows = []; //Initiate rows array
     //Initiate headers array with the given year and every month
     var headers = [Year, "Januar", "Februar", "Marts", "April", "May", "Juni", 
@@ -103,3 +103,6 @@ function ExtractOmkostningData (company, Year, rows) {
     rows.push(rowDataFast.join(NEWLINE)) //join "rowDataFast" index' with newline and push to "rows"
     rows[rows.length-1] = rows[rows.length-1] + ";\n"
 }
+
+
+console.log("loaded")

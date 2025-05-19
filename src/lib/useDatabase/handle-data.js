@@ -169,10 +169,11 @@ export async function UpdateCompanyObject(companyObject) {
             Log(Error("Could not read data from database"));
         }
 
-        const id = Object.keys(companyObject)[0];
+        const id = companyObject[Object.keys(companyObject)[0]];
+        console.log(id)
 
         //Find a rename the company    
-        data.dataById[id] = companyObject[id];
+        data.dataById[id] = companyObject.data;
 
         //async writing to database
         await JsonWriteFile(filePathDatabase, data);

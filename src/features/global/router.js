@@ -7,6 +7,9 @@ export async function router(req, res, data) {
         case '/api/global/style/':
             FileResponse(res, 'global/style.css');
             break;
+        case '/api/global/export/':
+            FileResponse(res, 'global/CSVExporter.js');
+            break;
         case '/api/global/navbar/':
             FileResponse(res, 'global/navbar.js');
             break;
