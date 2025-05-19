@@ -1,7 +1,10 @@
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const monthMapping = {"january": "Jan", "february": "Feb", "march": "Mar", "april": "Apr", "may": "May", "june": "Jun",
                       "july": "Jul", "august": "Aug", "september": "Sep", "october": "Oct", "november": "Nov", "december": "Dec"};
+const monthMappingForStorage = {"Jan": "January", "Feb": "February", "Mar": "March", "Apr": "April", "May": "May", "Jun": "June",
+                                "Jul": "July", "Aug": "August", "Sep": "September", "Oct": "October", "Nov": "November", "Dec": "December"};                      
 let companyData = null;
+let userId = null;
 
 /**
  * Transforms the months from the data.json to match generateTables.js
@@ -263,11 +266,108 @@ function BuildHTMLStructure() {
          }
     })
 }
-    
+ 
+/**
+ * Extracts data from a single HTML table
+ * @param {tableElement - The HTML table to extract data from}  
+ * @param {currentYear - the current year selected in the dropdown, for which data is being extracted}  
+ * @param {characteristics - the characteristic of the item (Variabel or Fast)} 
+ * @returns {items - An object where keys are category names and values are arrays of month data}
+ */
+function ExtractDataFromSingleTable(tableElement, currentYear, characteristics) {
+    const items = {}
+    const rows = tableElement.querySelectorAll("tbody tr") // Get all rows in the table body
+
+    rows.forEach(row => {
+        const cells =row.cells
+        if (cells.length < 13) return // Expecting  name column + 12 months
+
+        const categoryName = cells[0].textContent.trim() // Get the category name from the first cell
+        if (!categoryName) return // Skip if no name is found
+
+        const monthData = {}
+        for (let i = 0; i < 12; i++) { // Loop through the next 12 cells for month data
+            const monthName = months[i]
+            const storageMonthName = monthMappingForStorage[monthName]
+            let cellValue = 0
+            const inputElement = cells[i + 1].querySelector('input[type="number"], input[type="text"]') // Get the input element in the cell
+
+            if (inputElement) {
+                cellValue = parseFloat(inputElement.value) // Get the value from the input element, and parse it to a number
+            }
+            monthData[storageMonthName] = cellValue // Store the month data in the object
+        }
+        items[categoryName] = { // Store the category name and month data in the items object
+            name: categoryName,
+            characteristics: characteristics,
+            data: [{
+                year: String[currentYear],
+                months: monthData
+            }]
+        }    
+    })
+    return items
+}
+
+/**
+ * Function to process a single table for extraction, and merge it into newUserData
+ * @param {activeYearDiv - The container div for current year}
+ * @param {newUserData - Object where the extracted data will be stored}  
+ * @param {year - the current year selected in the dropdown} 
+ * @param {tableName - CSS class name of the table to be processed} 
+ * @param {section - results or budget section (or forecast)}
+ * @param {type - The type of financial data (revenue, expense)}
+ * @param {characteristics - the characteristic of the tiem (Variabel or Fast)} 
+ */
+function ProcessTableForExtraction(activeYearDiv, newUserData, year, tableName, section, type, characteristics) {
+    const tableElement = activeYearDiv.querySelector(tableName)
+    if (tableElement) {
+        const items = ExctractDataFromSingleTable(tableElement, year, characteristics) // Extract data from the table
+        if (type === "revenue") {
+            newUserData[section].revenue = { ...newUserData[section].revenue, ...items } // Merge the extracted data into newUserData's revenue section
+        } else if (type === "expense") {
+            newUserData[section].expense = { ...newUserData[section].expense, ...items } // Merge the extracted data into newUserData's expense section
+        }
+    } else {
+        console.warn(`Table with class ${tableName} not found in ${section} section for year ${year}`)
+    }
+}
+
+/**
+ * Extracts data from all tables currently visible for the selected year
+ *  @param {year - the current year selected in the dropdown, for which data is being extracted}
+ *  @returns {newUserData - An object where the extracted data will be stored}
+*/
+function ExtractDataFromAllTables(year) {
+    const activeYearDiv = document.getElementById(`data-${year}`) // Get the div for the current year
+    if (!activeYearDiv) {
+        console.error("Cannot find active year div for year:", year)
+        return null
+    }
+
+    const newUserData = {
+        result: { revenue: {}, expense: {} },
+        budget: { revenue: {}, expense: {} }
+    }
+
+    // Extract data from the result tables
+    processTableForExtraction(activeYearDiv, newUserData, year, ".results-revenue-table", "result", "revenue", "Variabel")
+    processTableForExtraction(activeYearDiv, newUserData, year, ".results-fixed-expense-table", "result", "expense", "Fast")
+    processTableForExtraction(activeYearDiv, newUserData, year, ".results-variable-expense-table", "result", "expense", "Variabel")
+    // Extract data from the budget tables
+    processTableForExtraction(activeYearDiv, newUserData, year, ".budget-revenue-table", "budget", "revenue", "Variabel")
+    processTableForExtraction(activeYearDiv, newUserData, year, ".budget-fixed-expense-table", "budget", "expense", "Fast")
+    processTableForExtraction(activeYearDiv, newUserData, year, ".budget-variable-expense-table", "budget", "expense", "Variabel")
+
+    return newUserData
+}
+
 // Load the HTML structure when the page is loaded
 document.addEventListener("DOMContentLoaded", () => {
     BuildHTMLStructure() // build the HTML structure for all the years year
     const yearSelect = document.getElementById("yearSelect")
+    const fileInput = document.getElementById("fileInput")
+    const dynamicContentContainer = document.getElementById("dynamicContentContainer")
     const saveBtn = document.getElementById("saveButton")
 
 
@@ -281,12 +381,12 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(apiResponse => {
         console.log("Fetched API response:", apiResponse)
 
-        let userId = null
         let userData = null
         // Check if the API response contains dataById and if it has any IDs 
         if (apiResponse && apiResponse.dataById && Object.keys(apiResponse.dataById).length > 0) {
             userId = Object.keys(apiResponse.dataById)[0] // Get the current user ID
             userData = apiResponse.dataById[userId] // Get the data for that user ID
+            console.log("User id:", userId)
         } else if (apiResponse && !apiResponse.dataById && (apiResponse.result || apiResponse.budget || apiResponse.forecast)) {
                 // Fallback: If dataById is missing, but other top-level keys (result, budget, forecast) exist, 
                 // assume the entire response is the data for a single user.
@@ -309,7 +409,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     
     // Add event listener for the file input element 
-    const fileInput = document.getElementById("fileInput")
+    
     if (fileInput) {
         fileInput.addEventListener("change", (event) => {
             const file = event.target.files[0] // Get the selected file
@@ -320,7 +420,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Event listener for the dynamicContentContainer to handle all click events inside the container
-    const dynamicContentContainer = document.getElementById("dynamicContentContainer")
     if (dynamicContentContainer) {
         dynamicContentContainer.addEventListener("click", (event) => {
             const targetButton = event.target // Get the clicked button
@@ -369,37 +468,49 @@ document.addEventListener("DOMContentLoaded", () => {
             } 
         }) 
     }
+    if (saveBtn) {
+        saveBtn.addEventListener("click", () => {
+            console.log("Save button clicked")
+
+            if (!userId) {
+                console.error("User ID is not set. Cannot save data.")
+                alert("Bruger ID er ikke sat. Venligst log ind igen.")
+                return
+            }
+            
+            const dataToSave = ExtractDataFromAllTables(yearSelect.value) // Extract data from the tables
+
+            if (!dataToSave) {
+                console.error("Failet to extract data from tables")
+                alert("Kunne ikke udtrække data fra tabellerne")
+                return
+            }
+            console.log("Saving company data:", userId, dataToSave)
+
+            const payload = {
+                userId: userId,
+                data: dataToSave
+            }
+
+            fetch('/api/saveData', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload) // Send the company data as JSON
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`)
+                }
+                return response.json()
+            })    
+            .then(saveResponse => {
+                console.log("Server response from save:", saveResponse);
+                alert("Data gemt!");
+            })
+            .catch(error => {
+                console.error("Error saving data:", error);
+                alert(`Fejl ved gemning af data.${error.message}`);
+            });
+        })
+    }
 })        
-
-
-/* Old code, not used anymore
-document.addEventListener("DOMContentLoaded", (event) => {
-    var revenueTable = document.getElementById('revenue-table'); // Revenue table element
-    //var variabelExpenseTable = document.getElementById('variabel-expense-table'); // Expenses table element
-    //var fastExpenseTable = document.getElementById('fast-expense-table'); // Expenses table element
-    
-    saveBtn.addEventListener("click", () => {
-        console.log("Button clicked");
-        fetch('/api/user/data')
-        .then(response => response.json())
-        .then(data => toTableRevenue(data, '2022', revenueTable, variabelExpenseTable, fastExpenseTable))
-        
-    
-        //fetch('/api/saveData', {
-        //    method: 'POST',
-        //    headers: { 'Content-Type': 'application/json' },
-        //    body: JSON.stringify(object)
-        //})
-        //    .then(res => res.json())
-        //    .then(response => {
-        //        console.log("Server response:", response);
-        //        // You can update the DOM here if needed
-        //        console.log("fetch is made");
-        //    })
-        //    .catch(error => {
-        //        console.error("Error saving data:", error);
-        //    });
-    })
-});
-*/
-
