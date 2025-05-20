@@ -30,8 +30,13 @@
     </select>     
     
     <form id="uploadForm">
-        <input type="file" id="file" accept=".csv" style="margin-left: 15 px;"/><br>
-        <input type="submit" value="Upload"/>
+        <label for="file">Choose CSV file:</label><br>
+        <input type="file" id="file" name="csvfile" accept=".csv"/><br>
+
+        <div class="button-group">   
+            <input type="submit" id="uploadResultsBtn" value="Upload Results"/>
+            <input type="submit" id="uploadBudgetBtn" value="Upload Budget"/>
+        </div>    
     </form>
 
     </section>
@@ -48,12 +53,13 @@
     <footer>
         <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
     </footer>
+    
 
     <script src="/api/global/gentabel"></script>
     <script src="/api/mineData/upload"></script>
     <script src="/api/mineData/csvparser"></script>
-    <script src="/api/mineData/script"></script>
-    
+    <script src="/api/global/export"></script>
+    <script src="/api/mineData/script"></script>    
 
 </body>
 </html>

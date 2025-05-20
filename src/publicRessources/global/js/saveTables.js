@@ -34,11 +34,11 @@ function EditResultData(company, Year) {
 /**
      * Updates the company object with current table data
      */
-function updateCompanyDataFromTables(company, Year) {
+function updateCompanyDataFromTables(company, Year, revenuetable, variabelexpensetable, fastexpensetable,) {
 
-    var revenueUndercategories = getTableData('revenue-table', Year);
-    var variabelExpenseUndercategories = getTableData('variabel-Expense-table', Year);
-    var fastExpenseUndercategories = getTableData('fast-Expense-table', Year);
+    var revenueUndercategories = getTableData(revenuetable, Year);
+    var variabelExpenseUndercategories = getTableData(variabelexpensetable, Year);
+    var fastExpenseUndercategories = getTableData(fastexpensetable, Year);
     
     //Take each new under-category object and compare it to the existing company data object
     revenueUndercategories.forEach(category => {
@@ -124,7 +124,7 @@ function getTableData(tableId, Year) {
     var underCategories = []
 
     const table = document.getElementById(tableId);
-    const rows = table.querySelectorAll('tr');
+    const rows = table.querySelectorAll('tr'); 
     const data = [];
     
     // Skip header row (index 0)
