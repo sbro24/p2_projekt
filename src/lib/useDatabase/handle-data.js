@@ -170,7 +170,7 @@ export async function UpdateCompanyObject(companyObject) {
         }
 
         const id = companyObject[Object.keys(companyObject)[0]];
-        console.log(id)
+        Log(`Updating company object with id ${id}`);
 
         //Find a rename the company    
         data.dataById[id] = companyObject.data;
@@ -235,19 +235,32 @@ async function LogResult(inputFunction) {
 }
 
 
-export async function getMetric() {
-    let companyObject = await GetCompanyObject("Test af add company")
+export async function ConvertResultsToArray(id) {
+    let companyData = await GetFinancialDataById(id)
 
-    let financialMetricArray = [];
+    let financialDataObject = {revenue: {}, expense: {}};
 
-    const financialMetricForecast = companyObject["result"]["revenue"]["sales"].data;
+    const companyRevenue = companyData.result.revenue;
+    const companyExpense = companyData.result.expense;
 
-    financialMetricForecast.forEach(yearData => {
-        // Append the months of each year to the financialMetricArray
-        financialMetricArray.push(...Object.values(yearData.months)); //uses the spread operator to push them into the array as indiviual elements
-    });
+    console.log(companyRevenue)
 
-    return financialMetricArray;
+    for (const itemNum in companyRevenue) {
+        let item = companyRevenue[itemNum]
+        item.data.forEach(year => {
+            console.log(year);
+        })
+    }
+
+    //companyRevenue.forEach( => {
+    //    let sortYear = []
+    //    for (const year in item.data) {
+    //        sortYear.push(year.year)
+    //    }
+    //    console.log(sortYear)
+    //});
+
+    return financialDataObject;
 }
 
 //functions and object for testing

@@ -1,6 +1,6 @@
 import { DataResponse, FileResponse } from "../../app/router.js";
-import { CheckAuth } from "../../lib/cookies/sessionToken.js";
-import { UpdateCompanyObject } from "../../lib/useDatabase/handle-data.js";
+import { CheckAuth, GetSessionToken } from "../../lib/cookies/sessionToken.js";
+import { ConvertResultsToArray, GetCompanyProfileByToken, UpdateCompanyObject } from "../../lib/useDatabase/handle-data.js";
 
 export async function router(req, res, data) {
     switch (req.url) {
@@ -29,9 +29,18 @@ export async function router(req, res, data) {
             break;
 
         case '/api/saveData/':
+             if (!await CheckAuth(req, res)) {
+                console.log('not logged in')
+                DataResponse(res, 'not logged in');
+                return;
+            }
             const parsed = JSON.parse(data);
             await UpdateCompanyObject(parsed);
+
+            const token = GetSessionToken(req);
+            let company = await GetCompanyProfileByToken(token)
             DataResponse(res, { status: 'saved', entry: parsed });
+            console.log(await ConvertResultsToArray(company.id));
             break
 
         default:
