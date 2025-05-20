@@ -1,4 +1,4 @@
-import { FileResponse } from "../../app/router.js";
+import { DataResponse, FileResponse } from "../../app/router.js";
 import { CheckAuth } from "../../lib/cookies/sessionToken.js";
 import { UpdateCompanyObject } from "../../lib/useDatabase/handle-data.js";
 
@@ -29,19 +29,12 @@ export async function router(req, res, data) {
             break;
 
         case '/api/saveData/':
-            await SaveData(req, res, data)
+            const parsed = JSON.parse(data);
+            await UpdateCompanyObject(parsed);
+            DataResponse(res, { status: 'saved', entry: parsed });
             break
 
         default:
             break;
     }
-}
-
-async function SaveData(req, res, data) {
-    const parsed = JSON.parse(data);
-    await UpdateCompanyObject(parsed);
-
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({ status: 'saved', entry: parsed }));
 }

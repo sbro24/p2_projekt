@@ -234,6 +234,22 @@ async function LogResult(inputFunction) {
     console.log("result:", result);
 }
 
+
+export async function getMetric() {
+    let companyObject = await GetCompanyObject("Test af add company")
+
+    let financialMetricArray = [];
+
+    const financialMetricForecast = companyObject["result"]["revenue"]["sales"].data;
+
+    financialMetricForecast.forEach(yearData => {
+        // Append the months of each year to the financialMetricArray
+        financialMetricArray.push(...Object.values(yearData.months)); //uses the spread operator to push them into the array as indiviual elements
+    });
+
+    return financialMetricArray;
+}
+
 //functions and object for testing
 
 //LogResult(GetCompaniesArray());
