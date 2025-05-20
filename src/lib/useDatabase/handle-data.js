@@ -247,9 +247,12 @@ export async function ConvertResultsToArray(id) {
 
     for (const itemNum in companyRevenue) {
         let item = companyRevenue[itemNum]
+        let itemRevenueArray = [];
         item.data.forEach(year => {
-            console.log(year);
+            for (const monthNum in year.months) itemRevenueArray.push(year.months[monthNum])
         })
+        console.log(item.name)
+        console.log(itemRevenueArray);
     }
 
     //companyRevenue.forEach( => {
