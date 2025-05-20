@@ -125,25 +125,7 @@ form {
       grid-gap: .8em;
 }
 
-.result-table {
-    width: auto;
-    height: auto;
-}
 
-.revenue-table {
-    width: auto;
-    height: auto;
-}
-
-.expense-table {
-    width: auto;
-    height: auto;
-}
-
-.budget-table {
-    width: auto;
-    height: auto;
-}
 
 button {
     background-color: #007bff;

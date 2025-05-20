@@ -1,93 +1,6 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: 60% 40%;
-    gap: 20px;
-}
-.header {
-    grid-column: 1 / -1;
-}
-.graph-container {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-.chart {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-.right-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.differences-table {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-.advice-box {
-    background: #f8f9fa;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-.data-tables {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.accordion {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-.accordion-header {
-    padding: 15px 20px;
-    background: #2c3e50;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-}
-.accordion-content {
-    padding: 20px;
-    display: none;
-}
-.accordion.active .accordion-content {
-    display: block;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-th, td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-th {
-    background-color: #f2f2f2;
-}
-[contenteditable="true"] {
-    background-color: #fffacd;
-}
-button {
-    padding: 10px 15px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-}
+/* Local CSS - improveBudget/style */
+
+/* Chart Containers */
 .graph-container {
     display: flex;
     flex-wrap: wrap;
@@ -104,11 +17,13 @@ button {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* Data Sections */
 .data-section {
     margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
+    background: white;
 }
 
 .section-toggle {
@@ -125,18 +40,103 @@ button {
 }
 
 .section-content {
-    display: none;
     padding: 15px;
 }
 
+.section-content.hidden {
+    display: none;
+}
+
+/* Tables */
 .table-group {
     margin-bottom: 20px;
 }
-.section-content {
-display: block; 
-transition: none; 
+
+/* Chart canvas containers */
+.chart-container {
+    position: relative;
+    height: 300px;
+    margin-bottom: 30px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.section-content.hidden {
-display: none;
+/* Error message styling */
+.error-message {
+    color: #d32f2f;
+    padding: 10px;
+    background: #ffebee;
+    border-radius: 4px;
+    margin: 10px 0;
 }
+
+/* Add this to your CSS */
+.results-section, .budget-section {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    margin-bottom: 30px;
+}
+
+/* Table container styling */
+.results-section > div, .budget-section > div {
+    margin-bottom: 30px;
+    min-width: 1200px; /* Minimum width to contain all columns */
+}
+
+/* Table styling */
+.results-revenue-table,
+.results-fixed-expense-table,
+.results-variable-expense-table,
+.budget-revenue-table,
+.budget-fixed-expense-table,
+.budget-variable-expense-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* This helps with column width control */
+}
+
+/* Table header and cell styling */
+.results-revenue-table th,
+.results-fixed-expense-table th,
+.results-variable-expense-table th,
+.budget-revenue-table th,
+.budget-fixed-expense-table th,
+.budget-variable-expense-table th,
+.results-revenue-table td,
+.results-fixed-expense-table td,
+.results-variable-expense-table td,
+.budget-revenue-table td,
+.budget-fixed-expense-table td,
+.budget-variable-expense-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+    min-width: 60px; /* Minimum column width */
+    max-width: 100px; /* Maximum column width */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Make the first column (category name) wider */
+.results-revenue-table th:first-child,
+.results-fixed-expense-table th:first-child,
+.results-variable-expense-table th:first-child,
+.budget-revenue-table th:first-child,
+.budget-fixed-expense-table th:first-child,
+.budget-variable-expense-table th:first-child,
+.results-revenue-table td:first-child,
+.results-fixed-expense-table td:first-child,
+.results-variable-expense-table td:first-child,
+.budget-revenue-table td:first-child,
+.budget-fixed-expense-table td:first-child,
+.budget-variable-expense-table td:first-child {
+    min-width: 150px;
+    max-width: 200px;
+    text-align: left;
+    white-space: normal;
+}
+
