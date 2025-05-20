@@ -1,13 +1,13 @@
-const DELIMITER = ';'
-const NEWLINE = '\n';
+const DELIMITER2 = ';'
+const NEWLINE2 = '\n';
 
 function ExportToCSV(company, filename, Year) {
     var rows = []; //Initiate rows array
     //Initiate headers array with the given year and every month
     var headers = [Year, "Januar", "Februar", "Marts", "April", "May", "Juni", 
-                  "Juli", "August", "September", "October", "November", "December", NEWLINE];
+                  "Juli", "August", "September", "October", "November", "December", NEWLINE2];
 
-    rows.push(headers.join(DELIMITER)); // Add headers
+    rows.push(headers.join(DELIMITER2)); // Add headers
 
     ExtractOmsætningData (company, Year, rows) //Run ExtractOmsætningData function with specific year
 
@@ -19,11 +19,11 @@ function ExportToCSV(company, filename, Year) {
 };
 
 async function DownloadCSVToDisk(rows, filename) {
-    const NEWLINE = '\n';
 
     //csvContent = each overcategory and its undercategories joined together by NEWLINE
     //This means csvContent is now one long string
-    const csvContent = rows.join(NEWLINE);
+    const csvContent = rows.join(NEWLINE2);
+    console.log(csvContent)
 
     // Sanitize and ensure .csv extension
     let safeFilename = filename || 'financial_data';
@@ -35,6 +35,7 @@ async function DownloadCSVToDisk(rows, filename) {
 
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    console.log(blob)
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
 
@@ -60,7 +61,7 @@ function ExtractOmsætningData (company, Year, rows) {
                 Object.values(metric.data[l].months).forEach(r => {
                     rowData.push(r)
                 })
-                rows.push(rowData.join(DELIMITER));
+                rows.push(rowData.join(DELIMITER2));
             }
         }
     });
@@ -83,24 +84,24 @@ function ExtractOmkostningData (company, Year, rows) {
                     Object.values(metric.data[k].months).forEach(r => {
                         rowData.push(r)
                     })
-                 rowDataVariabel.push(rowData.join(DELIMITER))
+                 rowDataVariabel.push(rowData.join(DELIMITER2))
              } else {
                 rowData.push(metric.name)
                 Object.values(metric.data[k].months).forEach(r => {
                     rowData.push(r)
                 })
-                rowDataFast.push(rowData.join(DELIMITER))
+                rowDataFast.push(rowData.join(DELIMITER2))
               }
             }
         }
     });
 
     rows.push("Variable omkostninger:") //Push overcategory name
-    rows.push(rowDataVariabel.join(NEWLINE)) //join "rowDataVariabel" index' with newline and push to "rows"
+    rows.push(rowDataVariabel.join(NEWLINE2)) //join "rowDataVariabel" index' with newline and push to "rows"
     rows[rows.length-1] = rows[rows.length-1] + ";\n"
 
     rows.push("Faste omkostninger:") //push overcategory name
-    rows.push(rowDataFast.join(NEWLINE)) //join "rowDataFast" index' with newline and push to "rows"
+    rows.push(rowDataFast.join(NEWLINE2)) //join "rowDataFast" index' with newline and push to "rows"
     rows[rows.length-1] = rows[rows.length-1] + ";\n"
 }
 
