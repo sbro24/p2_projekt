@@ -530,7 +530,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const uploadBudgetBtn = document.getElementById("uploadBudgetBtn")
     const dynamicContentContainer = document.getElementById("dynamicContentContainer")
     const saveBtn = document.getElementById("saveButton")
-    const exportBtn = document.getElementById("exportButton")
+    const exportButton = document.getElementById('exportButton');
+    const popupMenu = document.getElementById('popupMenu');
+    const exportResultButton = document.getElementById('exportResult');
+    const exportBudgetButton = document.getElementById('exportBudget');
 
     fetch('/api/user/profile')
     .then(profile => {
@@ -718,12 +721,54 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         })
     }
+
+    // Toggle the popup visibility when the export button is clicked
+    exportButton.addEventListener('click', function () {
+    // Toggle the display of the popup
+    const isVisible = popupMenu.style.display === 'block';
+    popupMenu.style.display = isVisible ? 'none' : 'block';
+
+    // Position the popup above the button
+    const buttonRect = exportButton.getBoundingClientRect(); // Get button's position
+    popupMenu.style.top = buttonRect.top + window.scrollY - popupMenu.offsetHeight + 'px'; // Position the popup above the button
+    popupMenu.style.left = buttonRect.left + 'px'; // Align with the button's left edge
+    });
+
+// Hide the popup if clicked outside
+    document.addEventListener('click', function (event) {
+        if (!exportButton.contains(event.target) && !popupMenu.contains(event.target)) {
+            popupMenu.style.display = 'none';
+        }
+    });
+
+// Handle Export Result click
+    exportResultButton.addEventListener('click', function () {
+        alert('Exporting Result...');
+    // You can call your export function here
+        const dataToSave = ExtractDataFromAllTables(yearSelect.value)
+        console.log(dataToSave)
+        ExportToCSV(companyData, "filename", yearSelect.value, "result")
+        popupMenu.style.display = 'none'; // Hide the menu after selection
+    });
+
+// Handle Export Budget click
+    exportBudgetButton.addEventListener('click', function () {
+        alert('Exporting Budget...');
+    // You can call your export function here
+        const dataToSave = ExtractDataFromAllTables(yearSelect.value)
+        console.log(dataToSave)
+        ExportToCSV(companyData, "filename", yearSelect.value, "budget")
+        popupMenu.style.display = 'none'; // Hide the menu after selection
+    });
+
+/*
     if (exportBtn) {
         exportBtn.addEventListener("click", () => {
             const dataToSave = ExtractDataFromAllTables(yearSelect.value)
             console.log(dataToSave)
-            ExportToCSV(companyData, "filename", yearSelect.value)
+            ExportToCSV(companyData, "filename", yearSelect.value, "budget")
         })
     }
+        */
 })   
 
