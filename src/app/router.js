@@ -48,7 +48,7 @@ async function GetResponse(req, res, data) {
         .then(execute => execute.router(req, res, data))
         .catch(err => Log(err));
     }
-    await Wait(100);
+    await Wait(200);
     if (!res.writableFinished) ErrorResponse(res, Error(`${req.url} not found`), 404);
 }
 
@@ -120,8 +120,7 @@ export function FileResponse(res, filePath, cookies = []) {
       if (err) {
         ErrorResponse(res, err, 404)
       } else {
-        let headersObject = {};
-        
+
         Log(`${res.req.method} @ "${res.req.url}" => "${path.join(ressourceFolder, extension, filePath)}"`);
         res.statusCode = 200;
         res.setHeader('Set-Cookie', cookies);
