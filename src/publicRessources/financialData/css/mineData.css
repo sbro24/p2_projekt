@@ -87,7 +87,7 @@ body {
 /* Styling for the Export Options button */
 #exportButton {
     padding: 10px 20px;
-    background-color: #008CBA; /* Blue background */
+    background-color: #007bff;  /* Blue background */
     color: white;
     border: none;
     cursor: pointer;
