@@ -743,7 +743,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Handle Export Result click
     exportResultButton.addEventListener('click', function () {
-        alert('Exporting Result...');
     // You can call your export function here
         const dataToSave = ExtractDataFromAllTables(yearSelect.value)
         console.log(dataToSave)
@@ -753,7 +752,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Handle Export Budget click
     exportBudgetButton.addEventListener('click', function () {
-        alert('Exporting Budget...');
     // You can call your export function here
         const dataToSave = ExtractDataFromAllTables(yearSelect.value)
         console.log(dataToSave)

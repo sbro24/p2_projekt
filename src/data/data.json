@@ -4,38 +4,50 @@
       "id": "111111111111111111",
       "name": "username",
       "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
-      "sessionToken": "2ORdM7lr7MI7u0aB3OQf"
+      "sessionToken": "5I08fOZKsHevM-GvXDtv"
     }
   ],
   "dataById": {
     "111111111111111111": {
       "result": {
         "revenue": {
-          "Abekat": {
-            "name": "Abekat",
-            "data": [
-              {
-                "year": "2023",
-                "months": {
-                  "january": 0,
-                  "february": 0,
-                  "march": 0,
-                  "april": 0,
-                  "may": 0,
-                  "june": 0,
-                  "july": 0,
-                  "august": 0,
-                  "september": 0,
-                  "october": 0,
-                  "november": 0,
-                  "december": 0
-                }
-              }
-            ]
-          },
           "salesItemOne": {
             "name": "salesItemOne",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 16214.39,
+                  "february": 14856.93,
+                  "march": 16533.33,
+                  "april": 14479.39,
+                  "may": 14906.26,
+                  "june": 16303.87,
+                  "july": 14837.41,
+                  "august": 17069.76,
+                  "september": 14757.08,
+                  "october": 16170.71,
+                  "november": 15996.31,
+                  "december": 16668.58
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 15088.2,
+                  "february": 14906.54,
+                  "march": 16279.98,
+                  "april": 16102.26,
+                  "may": 16790.69,
+                  "june": 17809.66,
+                  "july": 16155.75,
+                  "august": 16387.12,
+                  "september": 16051.74,
+                  "october": 15785.31,
+                  "november": 17468.07,
+                  "december": 15595.31
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -52,6 +64,40 @@
                   "november": 16693.69,
                   "december": 18511.71
                 }
+              },
+              {
+                "year": "2023",
+                "months": {
+                  "january": 18057.14,
+                  "february": 16785.03,
+                  "march": 19023.66,
+                  "april": 19588.15,
+                  "may": 20208.35,
+                  "june": 18784.36,
+                  "july": 18502.32,
+                  "august": 19722.55,
+                  "september": 16816.31,
+                  "october": 19008.68,
+                  "november": 16650.84,
+                  "december": 17395.55
+                }
+              },
+              {
+                "year": "2024",
+                "months": {
+                  "january": 15838.27,
+                  "february": 20260.48,
+                  "march": 14731.11,
+                  "april": 12226.22,
+                  "may": 12850.82,
+                  "june": 13884.72,
+                  "july": 14360.78,
+                  "august": 13837.25,
+                  "september": 13167.88,
+                  "october": 13875.93,
+                  "november": 12950.49,
+                  "december": 14209.36
+                }
               }
             ],
             "characteristics": "Variabel"
@@ -59,6 +105,40 @@
           "salesItemThree": {
             "name": "salesItemThree",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 2599,
+                  "february": 2409.48,
+                  "march": 2410.55,
+                  "april": 2586.44,
+                  "may": 2218.95,
+                  "june": 2659.6,
+                  "july": 2236.21,
+                  "august": 2736.01,
+                  "september": 2919.76,
+                  "october": 2152.07,
+                  "november": 2052.76,
+                  "december": 2458.98
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 2859.81,
+                  "february": 2717.46,
+                  "march": 2093.22,
+                  "april": 2758.08,
+                  "may": 2140.58,
+                  "june": 2234.54,
+                  "july": 2864.49,
+                  "august": 2821.62,
+                  "september": 2844.35,
+                  "october": 2879.02,
+                  "november": 2755.58,
+                  "december": 2211.4
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -75,6 +155,40 @@
                   "november": 2993.73,
                   "december": 2165.85
                 }
+              },
+              {
+                "year": "2023",
+                "months": {
+                  "january": 2802.06,
+                  "february": 2991.54,
+                  "march": 2212.1,
+                  "april": 2123.98,
+                  "may": 2415.53,
+                  "june": 2460.7,
+                  "july": 2560.79,
+                  "august": 2986.53,
+                  "september": 2745.78,
+                  "october": 2297.89,
+                  "november": 2567.8,
+                  "december": 2416.36
+                }
+              },
+              {
+                "year": "2024",
+                "months": {
+                  "january": 2707.18,
+                  "february": 2994.77,
+                  "march": 2779.95,
+                  "april": 2963.29,
+                  "may": 2185.7,
+                  "june": 2376.1,
+                  "july": 2260.28,
+                  "august": 2022.05,
+                  "september": 2658.9,
+                  "october": 2955.07,
+                  "november": 2702.86,
+                  "december": 2809.16
+                }
               }
             ],
             "characteristics": "Variabel"
@@ -82,6 +196,40 @@
           "salesItemTwo": {
             "name": "salesItemTwo",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 2242.47,
+                  "february": 2038.29,
+                  "march": 2195.51,
+                  "april": 2186.65,
+                  "may": 2217.69,
+                  "june": 2011.06,
+                  "july": 3105.93,
+                  "august": 2777.65,
+                  "september": 2166.16,
+                  "october": 2828.31,
+                  "november": 2336.44,
+                  "december": 3009.81
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 2618.55,
+                  "february": 1896.94,
+                  "march": 2260.54,
+                  "april": 2051.89,
+                  "may": 2241.16,
+                  "june": 2839.86,
+                  "july": 1751.25,
+                  "august": 2027.1,
+                  "september": 2820.21,
+                  "october": 2116.9,
+                  "november": 3484.01,
+                  "december": 3770.55
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -98,28 +246,39 @@
                   "november": 9040.92,
                   "december": 7941.73
                 }
-              }
-            ],
-            "characteristics": "Variabel"
-          },
-          "revenue sum": {
-            "name": "revenue sum",
-            "data": [
+              },
               {
-                "year": "2022",
+                "year": "2023",
                 "months": {
-                  "january": 0,
-                  "february": 1,
-                  "march": 2,
-                  "april": 3,
-                  "may": 4,
-                  "june": 5,
-                  "july": 6,
-                  "august": 7,
-                  "september": 8,
-                  "october": 9,
-                  "november": 10,
-                  "december": 11
+                  "january": 13119.67,
+                  "february": 14054.16,
+                  "march": 14463.67,
+                  "april": 13524.43,
+                  "may": 12017.08,
+                  "june": 12967.58,
+                  "july": 15570.54,
+                  "august": 15801.56,
+                  "september": 18240.68,
+                  "october": 15872.26,
+                  "november": 18891.17,
+                  "december": 15617.53
+                }
+              },
+              {
+                "year": "2024",
+                "months": {
+                  "january": 25225.76,
+                  "february": 18252.93,
+                  "march": 26096.15,
+                  "april": 21104.15,
+                  "may": 21334.42,
+                  "june": 27777.8,
+                  "july": 20291.7,
+                  "august": 24069.72,
+                  "september": 16734.47,
+                  "october": 23210.92,
+                  "november": 17339.73,
+                  "december": 15027.46
                 }
               }
             ],
@@ -130,6 +289,40 @@
           "Advertising": {
             "name": "Advertising",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 0,
+                  "february": 204.83,
+                  "march": 195.13,
+                  "april": 221.95,
+                  "may": 206.09,
+                  "june": 231.01,
+                  "july": 234.29,
+                  "august": 206.81,
+                  "september": 220.68,
+                  "october": 216.49,
+                  "november": 210.79,
+                  "december": 224.92
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 205.38,
+                  "february": 236.15,
+                  "march": 236.74,
+                  "april": 244.38,
+                  "may": 227.3,
+                  "june": 245.64,
+                  "july": 213.97,
+                  "august": 251.42,
+                  "september": 222.21,
+                  "october": 221.08,
+                  "november": 238.51,
+                  "december": 247.35
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -146,6 +339,40 @@
                   "november": 300.53,
                   "december": 324.67
                 }
+              },
+              {
+                "year": "2023",
+                "months": {
+                  "january": 352.02,
+                  "february": 341.63,
+                  "march": 391.73,
+                  "april": 360.67,
+                  "may": 376.77,
+                  "june": 385.25,
+                  "july": 379.83,
+                  "august": 398.19,
+                  "september": 368.52,
+                  "october": 451.86,
+                  "november": 388.2,
+                  "december": 413.28
+                }
+              },
+              {
+                "year": "2024",
+                "months": {
+                  "january": 449.55,
+                  "february": 508.44,
+                  "march": 517.26,
+                  "april": 375.65,
+                  "may": 423.21,
+                  "june": 484.88,
+                  "july": 389.72,
+                  "august": 369.07,
+                  "september": 501.63,
+                  "october": 376.56,
+                  "november": 397.28,
+                  "december": 435.9
+                }
               }
             ],
             "characteristics": "Variabel"
@@ -153,6 +380,40 @@
           "Cost prize - item one": {
             "name": "Cost prize - item one",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 4793.28,
+                  "february": 4458.62,
+                  "march": 4907.12,
+                  "april": 4258.52,
+                  "may": 4390.59,
+                  "june": 4769.02,
+                  "july": 4432.15,
+                  "august": 5042.69,
+                  "september": 4418.83,
+                  "october": 4849.21,
+                  "november": 4884.22,
+                  "december": 4992.52
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 4514.26,
+                  "february": 4491.03,
+                  "march": 4904.12,
+                  "april": 4826.01,
+                  "may": 5132.95,
+                  "june": 5423.05,
+                  "july": 4759.68,
+                  "august": 4999.16,
+                  "september": 4918.12,
+                  "october": 4651.85,
+                  "november": 5123.45,
+                  "december": 4737.73
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -169,6 +430,40 @@
                   "november": 5097.17,
                   "december": 5505.46
                 }
+              },
+              {
+                "year": "2023",
+                "months": {
+                  "january": 5403.07,
+                  "february": 5068.93,
+                  "march": 5815.43,
+                  "april": 5945.34,
+                  "may": 6060.66,
+                  "june": 5539.28,
+                  "july": 5570.9,
+                  "august": 5961.17,
+                  "september": 5107.77,
+                  "october": 5770.69,
+                  "november": 4912.47,
+                  "december": 5211.19
+                }
+              },
+              {
+                "year": "2024",
+                "months": {
+                  "january": 4773.67,
+                  "february": 6164.91,
+                  "march": 4321.64,
+                  "april": 3685.02,
+                  "may": 3915.17,
+                  "june": 4224.87,
+                  "july": 4370.77,
+                  "august": 4249.14,
+                  "september": 3992.44,
+                  "october": 4120.21,
+                  "november": 3940.19,
+                  "december": 4179.52
+                }
               }
             ],
             "characteristics": "Variabel"
@@ -176,6 +471,40 @@
           "Cost prize - item three": {
             "name": "Cost prize - item three",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 782.36,
+                  "february": 711.77,
+                  "march": 719.89,
+                  "april": 763.14,
+                  "may": 673.98,
+                  "june": 789.04,
+                  "july": 673.76,
+                  "august": 828.62,
+                  "september": 875.62,
+                  "october": 648.41,
+                  "november": 617.52,
+                  "december": 747.71
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 874.89,
+                  "february": 817.72,
+                  "march": 634.86,
+                  "april": 828.86,
+                  "may": 648.03,
+                  "june": 665.64,
+                  "july": 866.45,
+                  "august": 863.22,
+                  "september": 869.29,
+                  "october": 862.22,
+                  "november": 831.9,
+                  "december": 648.52
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -192,6 +521,40 @@
                   "november": 889.98,
                   "december": 653.05
                 }
+              },
+              {
+                "year": "2023",
+                "months": {
+                  "january": 826.52,
+                  "february": 909.44,
+                  "march": 671.89,
+                  "april": 642.78,
+                  "may": 709.24,
+                  "june": 741.93,
+                  "july": 773.04,
+                  "august": 904.47,
+                  "september": 817.1,
+                  "october": 702.05,
+                  "november": 767.4,
+                  "december": 727.1
+                }
+              },
+              {
+                "year": "2024",
+                "months": {
+                  "january": 814.51,
+                  "february": 903.96,
+                  "march": 839.51,
+                  "april": 870.92,
+                  "may": 671.24,
+                  "june": 722.67,
+                  "july": 686.1,
+                  "august": 612.39,
+                  "september": 802.21,
+                  "october": 892.62,
+                  "november": 793.68,
+                  "december": 822.96
+                }
               }
             ],
             "characteristics": "Variabel"
@@ -199,6 +562,40 @@
           "Cost prize - item two": {
             "name": "Cost prize - item two",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 667.56,
+                  "february": 609.22,
+                  "march": 663.43,
+                  "april": 652.39,
+                  "may": 660.2,
+                  "june": 611.2,
+                  "july": 930.69,
+                  "august": 815.62,
+                  "september": 662.19,
+                  "october": 840.34,
+                  "november": 685.17,
+                  "december": 894.04
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 784.49,
+                  "february": 569.51,
+                  "march": 673.33,
+                  "april": 622.23,
+                  "may": 658.93,
+                  "june": 847.06,
+                  "july": 537.43,
+                  "august": 606.28,
+                  "september": 867.06,
+                  "october": 627.03,
+                  "november": 1030.18,
+                  "december": 1116.51
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -215,6 +612,40 @@
                   "november": 2735.9,
                   "december": 2390.25
                 }
+              },
+              {
+                "year": "2023",
+                "months": {
+                  "january": 3918.23,
+                  "february": 4263.69,
+                  "march": 4366.77,
+                  "april": 4000.3,
+                  "may": 3524.85,
+                  "june": 3818.57,
+                  "july": 4780.53,
+                  "august": 4839.73,
+                  "september": 5456.48,
+                  "october": 4875.17,
+                  "november": 5708.06,
+                  "december": 4631.71
+                }
+              },
+              {
+                "year": "2024",
+                "months": {
+                  "january": 7542.99,
+                  "february": 5392.66,
+                  "march": 7824.04,
+                  "april": 6349.48,
+                  "may": 6421.35,
+                  "june": 8315.46,
+                  "july": 6161.59,
+                  "august": 7227,
+                  "september": 4990.51,
+                  "october": 7093.95,
+                  "november": 5165.21,
+                  "december": 4514.77
+                }
               }
             ],
             "characteristics": "Variabel"
@@ -222,6 +653,40 @@
           "Packaging": {
             "name": "Packaging",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 219.2,
+                  "february": 205.8,
+                  "march": 200.05,
+                  "april": 225.34,
+                  "may": 205.84,
+                  "june": 225.37,
+                  "july": 226.89,
+                  "august": 208.7,
+                  "september": 222.15,
+                  "october": 215.98,
+                  "november": 207.9,
+                  "december": 225.45
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 210.3,
+                  "february": 233.64,
+                  "march": 232.17,
+                  "april": 244.17,
+                  "may": 225.71,
+                  "june": 250.57,
+                  "july": 224.7,
+                  "august": 248.06,
+                  "september": 224.69,
+                  "october": 218.12,
+                  "november": 244.82,
+                  "december": 253.56
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -238,6 +703,40 @@
                   "november": 308.2,
                   "december": 327.05
                 }
+              },
+              {
+                "year": "2023",
+                "months": {
+                  "january": 356.56,
+                  "february": 341.27,
+                  "march": 380.32,
+                  "april": 363.17,
+                  "may": 363.71,
+                  "june": 379.86,
+                  "july": 391.84,
+                  "august": 403.05,
+                  "september": 386.33,
+                  "october": 432,
+                  "november": 385.35,
+                  "december": 402.87
+                }
+              },
+              {
+                "year": "2024",
+                "months": {
+                  "january": 453.62,
+                  "february": 509.49,
+                  "march": 513.44,
+                  "april": 395.26,
+                  "may": 439.81,
+                  "june": 469.29,
+                  "july": 393.79,
+                  "august": 369.25,
+                  "september": 504.06,
+                  "october": 373.49,
+                  "november": 388.58,
+                  "december": 453.43
+                }
               }
             ],
             "characteristics": "Variabel"
@@ -245,6 +744,40 @@
           "Shipping": {
             "name": "Shipping",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 857.1,
+                  "february": 818.99,
+                  "march": 787.1,
+                  "april": 867.65,
+                  "may": 783.73,
+                  "june": 945.05,
+                  "july": 896.32,
+                  "august": 805.27,
+                  "september": 899.5,
+                  "october": 890.15,
+                  "november": 837.28,
+                  "december": 848.59
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 872.79,
+                  "february": 968.57,
+                  "march": 923.54,
+                  "april": 915.89,
+                  "may": 920.02,
+                  "june": 976.63,
+                  "july": 878.05,
+                  "august": 969.48,
+                  "september": 909.06,
+                  "october": 925.69,
+                  "november": 1006.05,
+                  "december": 999.1
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -261,6 +794,40 @@
                   "november": 1198.86,
                   "december": 1322.83
                 }
+              },
+              {
+                "year": "2023",
+                "months": {
+                  "january": 1404.97,
+                  "february": 1343.26,
+                  "march": 1599.62,
+                  "april": 1470.72,
+                  "may": 1495.72,
+                  "june": 1546.35,
+                  "july": 1561.98,
+                  "august": 1509.02,
+                  "september": 1484.38,
+                  "october": 1743.36,
+                  "november": 1582.71,
+                  "december": 1563.98
+                }
+              },
+              {
+                "year": "2024",
+                "months": {
+                  "january": 1753.21,
+                  "february": 1944.1,
+                  "march": 2107.57,
+                  "april": 1476,
+                  "may": 1803.45,
+                  "june": 1963.71,
+                  "july": 1545.99,
+                  "august": 1566.78,
+                  "september": 1912.66,
+                  "october": 1506.27,
+                  "november": 1607.82,
+                  "december": 1740.71
+                }
               }
             ],
             "characteristics": "Variabel"
@@ -268,6 +835,40 @@
           "Transaction Fees": {
             "name": "Transaction Fees",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 376.39,
+                  "february": 348.89,
+                  "march": 327.22,
+                  "april": 366.5,
+                  "may": 342.51,
+                  "june": 381.86,
+                  "july": 388.27,
+                  "august": 340.32,
+                  "september": 365.2,
+                  "october": 374.65,
+                  "november": 355.22,
+                  "december": 373.6
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 350.7,
+                  "february": 393.3,
+                  "march": 386.31,
+                  "april": 395.54,
+                  "may": 387.16,
+                  "june": 412.85,
+                  "july": 359.24,
+                  "august": 417.29,
+                  "september": 383.5,
+                  "october": 376.05,
+                  "november": 401.07,
+                  "december": 423.75
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -284,51 +885,39 @@
                   "november": 516.41,
                   "december": 551.79
                 }
-              }
-            ],
-            "characteristics": "Variabel"
-          },
-          "Variable expenses sum": {
-            "name": "Variable expenses sum",
-            "data": [
+              },
               {
-                "year": "2022",
+                "year": "2023",
                 "months": {
-                  "january": 0,
-                  "february": 0,
-                  "march": 0,
-                  "april": 0,
-                  "may": 0,
-                  "june": 0,
-                  "july": 0,
-                  "august": 0,
-                  "september": 0,
-                  "october": 0,
-                  "november": 0,
-                  "december": 0
+                  "january": 589.73,
+                  "february": 557.85,
+                  "march": 636.84,
+                  "april": 603.73,
+                  "may": 618.67,
+                  "june": 646.96,
+                  "july": 659.27,
+                  "august": 657,
+                  "september": 641.62,
+                  "october": 734.08,
+                  "november": 656.85,
+                  "december": 675.8
                 }
-              }
-            ],
-            "characteristics": "Variabel"
-          },
-          "Daekningsbidrag": {
-            "name": "Daekningsbidrag",
-            "data": [
+              },
               {
-                "year": "2022",
+                "year": "2024",
                 "months": {
-                  "january": 0,
-                  "february": 0,
-                  "march": 0,
-                  "april": 0,
-                  "may": 0,
-                  "june": 0,
-                  "july": 0,
-                  "august": 0,
-                  "september": 0,
-                  "october": 0,
-                  "november": 0,
-                  "december": 0
+                  "january": 766.63,
+                  "february": 816.25,
+                  "march": 832.34,
+                  "april": 637.63,
+                  "may": 728.07,
+                  "june": 807.69,
+                  "july": 662.67,
+                  "august": 627.4,
+                  "september": 837.09,
+                  "october": 632.78,
+                  "november": 673.13,
+                  "december": 736.63
                 }
               }
             ],
@@ -337,6 +926,40 @@
           "Funktionaerloen (inkl. ATP m.m.)": {
             "name": "Funktionaerloen (inkl. ATP m.m.)",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 4000,
+                  "february": 4000,
+                  "march": 4000,
+                  "april": 4000,
+                  "may": 4000,
+                  "june": 4000,
+                  "july": 4000,
+                  "august": 4000,
+                  "september": 4000,
+                  "october": 4000,
+                  "november": 4000,
+                  "december": 4000
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 4000,
+                  "february": 4000,
+                  "march": 4000,
+                  "april": 4000,
+                  "may": 4000,
+                  "june": 4000,
+                  "july": 4000,
+                  "august": 4000,
+                  "september": 4000,
+                  "october": 4000,
+                  "november": 4000,
+                  "december": 4000
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -353,6 +976,40 @@
                   "november": 6000,
                   "december": 6000
                 }
+              },
+              {
+                "year": "2023",
+                "months": {
+                  "january": 6000,
+                  "february": 6000,
+                  "march": 6000,
+                  "april": 6000,
+                  "may": 6000,
+                  "june": 6000,
+                  "july": 6000,
+                  "august": 6000,
+                  "september": 6000,
+                  "october": 6000,
+                  "november": 6000,
+                  "december": 6000
+                }
+              },
+              {
+                "year": "2024",
+                "months": {
+                  "january": 6000,
+                  "february": 6000,
+                  "march": 6000,
+                  "april": 6000,
+                  "may": 6000,
+                  "june": 6000,
+                  "july": 6000,
+                  "august": 6000,
+                  "september": 6000,
+                  "october": 6000,
+                  "november": 6000,
+                  "december": 6000
+                }
               }
             ],
             "characteristics": "Fast"
@@ -360,6 +1017,40 @@
           "El, vand og varme": {
             "name": "El, vand og varme",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 10607.77,
+                  "february": 9998.49,
+                  "march": 10458.58,
+                  "april": 10674.75,
+                  "may": 9972.93,
+                  "june": 10585.34,
+                  "july": 10350.38,
+                  "august": 9989.68,
+                  "september": 10316.68,
+                  "october": 10354.18,
+                  "november": 10030.99,
+                  "december": 10648.33
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 10390.06,
+                  "february": 10689.9,
+                  "march": 10217.14,
+                  "april": 10857.97,
+                  "may": 10653.04,
+                  "june": 10556.22,
+                  "july": 10249.5,
+                  "august": 10632.37,
+                  "september": 10220.1,
+                  "october": 10047.07,
+                  "november": 10617.04,
+                  "december": 9979.43
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -376,6 +1067,40 @@
                   "november": 10937.99,
                   "december": 10420.14
                 }
+              },
+              {
+                "year": "2023",
+                "months": {
+                  "january": 10892.86,
+                  "february": 10342.17,
+                  "march": 10711.41,
+                  "april": 10865.28,
+                  "may": 10968.97,
+                  "june": 10017.14,
+                  "july": 9970.03,
+                  "august": 10802.57,
+                  "september": 10160.28,
+                  "october": 10175.34,
+                  "november": 10315.74,
+                  "december": 10614.76
+                }
+              },
+              {
+                "year": "2024",
+                "months": {
+                  "january": 10513.64,
+                  "february": 10243.19,
+                  "march": 10216.28,
+                  "april": 10868.53,
+                  "may": 10389.93,
+                  "june": 10763.16,
+                  "july": 10896.41,
+                  "august": 10960.37,
+                  "september": 10528.29,
+                  "october": 10019.73,
+                  "november": 10812.24,
+                  "december": 10266.61
+                }
               }
             ],
             "characteristics": "Fast"
@@ -383,6 +1108,40 @@
           "Lokaleleje": {
             "name": "Lokaleleje",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 1234,
+                  "february": 1176,
+                  "march": 1188,
+                  "april": 1220,
+                  "may": 1192,
+                  "june": 1215,
+                  "july": 1182,
+                  "august": 1203,
+                  "september": 1195,
+                  "october": 1209,
+                  "november": 1187,
+                  "december": 1210
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 1240,
+                  "february": 1276,
+                  "march": 1253,
+                  "april": 1248,
+                  "may": 1269,
+                  "june": 1280,
+                  "july": 1245,
+                  "august": 1272,
+                  "september": 1257,
+                  "october": 1239,
+                  "november": 1246,
+                  "december": 1275
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -399,6 +1158,40 @@
                   "november": 1318,
                   "december": 1334
                 }
+              },
+              {
+                "year": "2023",
+                "months": {
+                  "january": 1402,
+                  "february": 1376,
+                  "march": 1410,
+                  "april": 1368,
+                  "may": 1383,
+                  "june": 1405,
+                  "july": 1372,
+                  "august": 1396,
+                  "september": 1413,
+                  "october": 1365,
+                  "november": 1408,
+                  "december": 1378
+                }
+              },
+              {
+                "year": "2024",
+                "months": {
+                  "january": 1470,
+                  "february": 1443,
+                  "march": 1467,
+                  "april": 1476,
+                  "may": 1451,
+                  "june": 1436,
+                  "july": 1483,
+                  "august": 1472,
+                  "september": 1447,
+                  "october": 1454,
+                  "november": 1439,
+                  "december": 1468
+                }
               }
             ],
             "characteristics": "Fast"
@@ -406,6 +1199,40 @@
           "Reperation og vedligeholdelse af lokaler": {
             "name": "Reperation og vedligeholdelse af lokaler",
             "data": [
+              {
+                "year": "2020",
+                "months": {
+                  "january": 408,
+                  "february": 394,
+                  "march": 397,
+                  "april": 402,
+                  "may": 398,
+                  "june": 405,
+                  "july": 396,
+                  "august": 400,
+                  "september": 395,
+                  "october": 402,
+                  "november": 407,
+                  "december": 399
+                }
+              },
+              {
+                "year": "2021",
+                "months": {
+                  "january": 428,
+                  "february": 413,
+                  "march": 419,
+                  "april": 426,
+                  "may": 422,
+                  "june": 418,
+                  "july": 423,
+                  "august": 427,
+                  "september": 416,
+                  "october": 425,
+                  "november": 420,
+                  "december": 430
+                }
+              },
               {
                 "year": "2022",
                 "months": {
@@ -422,51 +1249,39 @@
                   "november": 455,
                   "december": 459
                 }
-              }
-            ],
-            "characteristics": "Fast"
-          },
-          "Faste expenses sum": {
-            "name": "Faste expenses sum",
-            "data": [
+              },
               {
-                "year": "2022",
+                "year": "2023",
                 "months": {
-                  "january": 0,
-                  "february": 0,
-                  "march": 0,
-                  "april": 0,
-                  "may": 0,
-                  "june": 0,
-                  "july": 0,
-                  "august": 0,
-                  "september": 0,
-                  "october": 0,
-                  "november": 0,
-                  "december": 0
+                  "january": 489,
+                  "february": 502,
+                  "march": 497,
+                  "april": 500,
+                  "may": 492,
+                  "june": 504,
+                  "july": 496,
+                  "august": 493,
+                  "september": 490,
+                  "october": 503,
+                  "november": 498,
+                  "december": 501
                 }
-              }
-            ],
-            "characteristics": "Fast"
-          },
-          "Nettooverskud": {
-            "name": "Nettooverskud",
-            "data": [
+              },
               {
-                "year": "2022",
+                "year": "2024",
                 "months": {
-                  "january": 0,
-                  "february": 0,
-                  "march": 0,
-                  "april": 0,
-                  "may": 0,
-                  "june": 0,
-                  "july": 0,
-                  "august": 0,
-                  "september": 0,
-                  "october": 0,
-                  "november": 0,
-                  "december": 0
+                  "january": 548,
+                  "february": 537,
+                  "march": 543,
+                  "april": 550,
+                  "may": 539,
+                  "june": 552,
+                  "july": 546,
+                  "august": 549,
+                  "september": 544,
+                  "october": 538,
+                  "november": 542,
+                  "december": 547
                 }
               }
             ],
@@ -475,8 +1290,378 @@
         }
       },
       "budget": {
-        "revenue": {},
-        "expense": {}
+        "revenue": {
+          "salesItemOne": {
+            "name": "salesItemOne",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 14000,
+                  "february": 14000,
+                  "march": 14000,
+                  "april": 14000,
+                  "may": 14000,
+                  "june": 14000,
+                  "july": 14000,
+                  "august": 14000,
+                  "september": 14000,
+                  "october": 14000,
+                  "november": 14000,
+                  "december": 14000
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "salesItemThree": {
+            "name": "salesItemThree",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 2500,
+                  "february": 2500,
+                  "march": 2500,
+                  "april": 2500,
+                  "may": 2500,
+                  "june": 2500,
+                  "july": 2500,
+                  "august": 2500,
+                  "september": 2500,
+                  "october": 2500,
+                  "november": 2500,
+                  "december": 2500
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "salesItemTwo": {
+            "name": "salesItemTwo",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 19000,
+                  "february": 18500,
+                  "march": 18000,
+                  "april": 17500,
+                  "may": 17000,
+                  "june": 16500,
+                  "july": 16000,
+                  "august": 15500,
+                  "september": 15000,
+                  "october": 14500,
+                  "november": 14000,
+                  "december": 13500
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "salesItemFour": {
+            "name": "salesItemFour",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 0,
+                  "february": 0,
+                  "march": 1000,
+                  "april": 2000,
+                  "may": 3000,
+                  "june": 4000,
+                  "july": 5000,
+                  "august": 6000,
+                  "september": 7000,
+                  "october": 8000,
+                  "november": 9000,
+                  "december": 10000
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          }
+        },
+        "expense": {
+          "Advertising": {
+            "name": "Advertising",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 450,
+                  "february": 450,
+                  "march": 450,
+                  "april": 450,
+                  "may": 450,
+                  "june": 450,
+                  "july": 450,
+                  "august": 450,
+                  "september": 450,
+                  "october": 450,
+                  "november": 450,
+                  "december": 450
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Cost prize - item one": {
+            "name": "Cost prize - item one",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 4200,
+                  "february": 4200,
+                  "march": 4200,
+                  "april": 4200,
+                  "may": 4200,
+                  "june": 4200,
+                  "july": 4200,
+                  "august": 4200,
+                  "september": 4200,
+                  "october": 4200,
+                  "november": 4200,
+                  "december": 4200
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Cost prize - item three": {
+            "name": "Cost prize - item three",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 750,
+                  "february": 750,
+                  "march": 750,
+                  "april": 750,
+                  "may": 750,
+                  "june": 750,
+                  "july": 750,
+                  "august": 750,
+                  "september": 750,
+                  "october": 750,
+                  "november": 750,
+                  "december": 750
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Cost prize - item two": {
+            "name": "Cost prize - item two",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 5700,
+                  "february": 5550,
+                  "march": 5400,
+                  "april": 5250,
+                  "may": 5100,
+                  "june": 4950,
+                  "july": 4800,
+                  "august": 4650,
+                  "september": 4500,
+                  "october": 4350,
+                  "november": 4200,
+                  "december": 4050
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Packaging": {
+            "name": "Packaging",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 450,
+                  "february": 450,
+                  "march": 450,
+                  "april": 450,
+                  "may": 450,
+                  "june": 450,
+                  "july": 450,
+                  "august": 450,
+                  "september": 450,
+                  "october": 450,
+                  "november": 450,
+                  "december": 450
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Shipping": {
+            "name": "Shipping",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 1800,
+                  "february": 1800,
+                  "march": 1800,
+                  "april": 1800,
+                  "may": 1800,
+                  "june": 1800,
+                  "july": 1800,
+                  "august": 1800,
+                  "september": 1800,
+                  "october": 1800,
+                  "november": 1800,
+                  "december": 1800
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Transaction Fees": {
+            "name": "Transaction Fees",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 750,
+                  "february": 750,
+                  "march": 750,
+                  "april": 750,
+                  "may": 750,
+                  "june": 750,
+                  "july": 750,
+                  "august": 750,
+                  "september": 750,
+                  "october": 750,
+                  "november": 750,
+                  "december": 750
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Cost prize - item four": {
+            "name": "Cost prize - item four",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 0,
+                  "february": 0,
+                  "march": 500,
+                  "april": 1000,
+                  "may": 1500,
+                  "june": 2000,
+                  "july": 2500,
+                  "august": 3000,
+                  "september": 3500,
+                  "october": 4000,
+                  "november": 4500,
+                  "december": 5000
+                }
+              }
+            ],
+            "characteristics": "Variabel"
+          },
+          "Funktionaerloen (inkl. ATP m.m.)": {
+            "name": "Funktionaerloen (inkl. ATP m.m.)",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 6000,
+                  "february": 6000,
+                  "march": 6000,
+                  "april": 6000,
+                  "may": 6000,
+                  "june": 6000,
+                  "july": 6000,
+                  "august": 6000,
+                  "september": 6000,
+                  "october": 6000,
+                  "november": 6000,
+                  "december": 6000
+                }
+              }
+            ],
+            "characteristics": "Fast"
+          },
+          "El, vand og varme": {
+            "name": "El, vand og varme",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 1500,
+                  "february": 1500,
+                  "march": 1500,
+                  "april": 1500,
+                  "may": 1500,
+                  "june": 1500,
+                  "july": 1500,
+                  "august": 1500,
+                  "september": 1500,
+                  "october": 1500,
+                  "november": 1500,
+                  "december": 1500
+                }
+              }
+            ],
+            "characteristics": "Fast"
+          },
+          "Lokaleleje": {
+            "name": "Lokaleleje",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 600,
+                  "february": 600,
+                  "march": 600,
+                  "april": 600,
+                  "may": 600,
+                  "june": 600,
+                  "july": 600,
+                  "august": 600,
+                  "september": 600,
+                  "october": 600,
+                  "november": 600,
+                  "december": 600
+                }
+              }
+            ],
+            "characteristics": "Fast"
+          },
+          "Reperation og vedligeholdelse af lokaler": {
+            "name": "Reperation og vedligeholdelse af lokaler",
+            "data": [
+              {
+                "year": "2025",
+                "months": {
+                  "january": 450,
+                  "february": 450,
+                  "march": 450,
+                  "april": 450,
+                  "may": 450,
+                  "june": 450,
+                  "july": 450,
+                  "august": 450,
+                  "september": 450,
+                  "october": 450,
+                  "november": 450,
+                  "december": 450
+                }
+              }
+            ],
+            "characteristics": "Fast"
+          }
+        }
       },
       "forecast": {
         "revenue": {},
