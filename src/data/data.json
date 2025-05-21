@@ -49,7 +49,6 @@
                 }
               },
               {
-                "year": "2022",
                 "months": {
                   "january": 16875.29,
                   "february": 17377.89,
@@ -140,7 +139,6 @@
                 }
               },
               {
-                "year": "2022",
                 "months": {
                   "january": 2000.17,
                   "february": 2946.75,
@@ -324,7 +322,6 @@
                 }
               },
               {
-                "year": "2022",
                 "months": {
                   "january": 249.53,
                   "february": 250.7,
@@ -920,11 +917,9 @@
                   "december": 736.63
                 }
               }
-            ],
-            "characteristics": "Variabel"
+            ]
           },
-          "Funktionaerloen (inkl. ATP m.m.)": {
-            "name": "Funktionaerloen (inkl. ATP m.m.)",
+          "Service Contracts": {
             "data": [
               {
                 "year": "2020",

@@ -1,41 +1,178 @@
 <!DOCTYPE html>
 <html lang="da">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forbedr Budget - Financial Management</title>
+    <title>Financial Management - Budget</title>
+    <link rel="stylesheet" href="/api/global/style">
+    <link rel="stylesheet" href="/api/improveBudget/style">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="../../global/css/style.css">
+ 
 </head>
-
 <body>
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="loading-indicator">
+        Loading dashboard data...
+    </div>
+
+    <!-- Error Display -->
+    <div id="informationText"></div>
+
     <!-- Header -->
     <header>
         <h1>Financial Management</h1>
         <p>Administrer dit budget effektivt</p>
     </header>
 
-    <!-- Navigation -->
-    <script src="../../global/js/navbar.js"></script>
+    <!-- Navigation bar-->
+    <script src="/api/global/navbar"></script>
 
-    <section>
-        <h2>Beregn din prognose</h2>
-        <p>Her kan du beregne din prognose baseret på de input du har givet om tidligere resultater.</p>
-    </section>
+    <div class="container">
+        <main class="content">
+            <!-- Dashboard Layout -->
+            <div class="dashboard">
+                <!-- Left Panel with Charts -->
+                <div style="width: 100%">
+                    <section>
+                        <h2 class="section-header">Oversigt</h2>
+                        <div class="chart-container">
+                            <h3>2025 Budget vs Forecast vs Resultater</h3>
+                            <canvas id="comparisonChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Top 5 Budget vs Forecast Afvigelser</h3>
+                            <canvas id="displayChart"></canvas>
+                        </div>
+                    </section>
 
-    <section>
-    <button id="calcForecastBtn">Beregn mit forecast</button>
-    </section>
-    
-
-    <script src="../js/forbedrBudget.js"></script>
+                    <!-- Tables Section -->
+                    <section class="results-section">
+                        <h2 class="section-header">Mit Budget</h2> 
+                        <div>
+                            <h3>Omsætning</h3>      
+                            <form>
+                                <table border="1" class="results-revenue-table"> 
+                                    <thead>
+                                        <tr>
+                                            <th>Indtægt</th>
+                                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                            <th>Total</th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </form>
+                            <button class="btnInsertCategory">Indsæt ny indtægt</button>
+                            <button class="btnDeleteCategory">Slet sidste indtægt</button>
+                        </div>        
+                        <div>    
+                            <h3>Faste Omkostninger</h3>             
+                            <form>
+                                <table border="1" class="results-fixed-expense-table"> 
+                                    <thead>
+                                        <tr>
+                                            <th>Omkostning</th>
+                                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                            <th>Total</th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </form>
+                            <button class="btnInsertCategory">Indsæt ny omkostning</button>
+                            <button class="btnDeleteCategory">Slet sidste omkostning</button>
+                        </div>
+                        <div>
+                            <h3>Variable Omkostninger</h3>             
+                            <form>
+                                <table border="1" class="results-variable-expense-table"> 
+                                    <thead>
+                                        <tr>
+                                            <th>Omkostning</th>
+                                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                            <th>Total</th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </form>
+                            <button class="btnInsertCategory">Indsæt ny omkostning</button>
+                            <button class="btnDeleteCategory">Slet sidste omkostning</button>
+                        </div>
+                    </section>
+                        
+                    <section class="budget-section">
+                        <h2 class="section-header">Mit forecast</h2>    
+                        <div>
+                            <h3>Omsætning</h3>      
+                            <form>
+                                <table border="1" class="budget-revenue-table"> 
+                                    <thead>
+                                        <tr>
+                                            <th>Indtægt</th>
+                                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                            <th>Total</th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </form>
+                            <button class="btnInsertCategory">Indsæt ny indtægt</button>
+                            <button class="btnDeleteCategory">Slet sidste indtægt</button>
+                        </div>        
+                        <div>    
+                            <h3>Faste Omkostninger</h3>             
+                            <form>
+                                <table border="1" class="budget-fixed-expense-table"> 
+                                    <thead>
+                                        <tr>
+                                            <th>Omkostning</th>
+                                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                            <th>Total</th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </form>
+                            <button class="btnInsertCategory">Indsæt ny omkostning</button>
+                            <button class="btnDeleteCategory">Slet sidste omkostning</button>
+                        </div>
+                        <div>
+                            <h3>Variable Omkostninger</h3>             
+                            <form>
+                                <table border="1" class="budget-variable-expense-table"> 
+                                    <thead>
+                                        <tr>
+                                            <th>Omkostning</th>
+                                            <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
+                                            <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
+                                            <th>Total</th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </form>
+                            <button class="btnInsertCategory">Indsæt ny omkostning</button>
+                            <button class="btnDeleteCategory">Slet sidste omkostning</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
 
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
     </footer>
-    
-</body>
 
+    <!-- Main Dashboard Script -->
+    <script src="/api/global/gentabel"></script>
+    <script src="/api/improveBudget/script/"></script>
+</body>
 </html>
