@@ -41,6 +41,8 @@ export async function router(req, res, data) {
                 return
             }
             DataResponse(res, 'startedCalulation');
+        case '/about/':
+            FileResponse(res, 'global/about.html');
             break;
         default:
             break;
