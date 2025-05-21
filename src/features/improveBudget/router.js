@@ -16,7 +16,7 @@ export async function router(req, res, data) {
             break;
 
         case '/api/improveBudget/style/':
-            FileResponse(res, 'improveBudget/mineData.css');
+            FileResponse(res, 'improveBudget/forbedrBudget.css');
             break;
 
         case '/api/improveBudget/genTabel/':
