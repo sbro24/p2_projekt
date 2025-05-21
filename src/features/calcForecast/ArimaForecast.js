@@ -11,6 +11,8 @@ export {
 };
 
 import ARIMA from 'arima' // Import the ARIMA library
+import { GetFinancialDataById, UpdateCompanyObject } from '../../lib/useDatabase/handle-data.js';
+import { FinancialMetric, FinancialYear } from '../../lib/useDatabase/constructors.js';
 //import {jsonReadFile} from 'src/lib/useDatabase/handle-json.js'
 //const jsonFilePath = 'src/data/data.json' // Path to the JSON file
 
@@ -226,7 +228,7 @@ function SelectOrder(data) {
     @returns {predictionArray = The array of metric predictions}
  */
 function RunForecast(data) {
-    const predictionArray = [/*Get from server/JSON*/ ] // Initialize the prediction array
+    const predictionArray = [] // Initialize the prediction array
     
     const forecast = SelectOrder(data/* get data from router */)
     let bestModel = forecast.getBestModel() // Get the best model
@@ -235,6 +237,73 @@ function RunForecast(data) {
 
     return predictionArray // Return the array of metric predictions
 
+}
+
+export async function InitializeForecast(id) {
+    let companyData = await GetFinancialDataById(id)
+
+    let financialDataObject = {revenue: {}, expense: {}};
+
+    const companyRevenue = companyData.result.revenue;
+    const companyExpense = companyData.result.expense;
+
+    const CombineYears = (item) => {
+        let array = [];
+        item.data.forEach(year => {
+            for (const monthNum in year.months) array.push(year.months[monthNum])
+        })
+        return array;
+    }
+
+    for (const itemNum in companyRevenue) {
+        let item = companyRevenue[itemNum];
+        financialDataObject.revenue[item.name] = CombineYears(item);
+    }
+
+    for (const itemNum in companyExpense) {
+        let item = companyExpense[itemNum];
+        financialDataObject.expense[item.name] = CombineYears(item);
+    }
+
+    companyData.forecast = { revenue: {}, expense: {} }
+    
+    for (const category in financialDataObject.revenue) {
+        let year = '2025'
+        let forecastRevenue = companyData.forecast.revenue;
+        let item = financialDataObject.revenue[category];
+        forecastRevenue[category] = new FinancialMetric(category);
+        forecastRevenue[category].data = [new FinancialYear(year)];
+
+        console.log(forecastRevenue[category]);
+        let forecast = RunForecast(item);
+        let i = 0;
+        for (const month in forecastRevenue[category].data[0].months) {
+            forecastRevenue[category].data[0].months[month] = forecast[0][i];
+            i++
+        }
+    }
+
+    for (const category in financialDataObject.expense) {
+        let year = '2025'
+        let forecastExpense = companyData.forecast.expense;
+        let item = financialDataObject.expense[category];
+        forecastExpense[category] = new FinancialMetric(category);
+        forecastExpense[category].data = [new FinancialYear(year)];
+
+        console.log(forecastExpense[category]);
+        let forecast = RunForecast(item);
+        let i = 0;
+        for (const month in forecastExpense[category].data[0].months) {
+            forecastExpense[category].data[0].months[month] = forecast[0][i];
+            i++
+        }
+    }
+
+    let result = {
+        userId: id,
+        data: companyData
+    } 
+    UpdateCompanyObject(result);
 }
 
 //console.log(RunForecast(data.dataCompany)) // Log the result to the console

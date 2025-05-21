@@ -234,38 +234,6 @@ async function LogResult(inputFunction) {
     console.log("result:", result);
 }
 
-
-export async function ConvertResultsToArray(id) {
-    let companyData = await GetFinancialDataById(id)
-
-    let financialDataObject = {revenue: {}, expense: {}};
-
-    const companyRevenue = companyData.result.revenue;
-    const companyExpense = companyData.result.expense;
-
-    console.log(companyRevenue)
-
-    for (const itemNum in companyRevenue) {
-        let item = companyRevenue[itemNum]
-        let itemRevenueArray = [];
-        item.data.forEach(year => {
-            for (const monthNum in year.months) itemRevenueArray.push(year.months[monthNum])
-        })
-        console.log(item.name)
-        console.log(itemRevenueArray);
-    }
-
-    //companyRevenue.forEach( => {
-    //    let sortYear = []
-    //    for (const year in item.data) {
-    //        sortYear.push(year.year)
-    //    }
-    //    console.log(sortYear)
-    //});
-
-    return financialDataObject;
-}
-
 //functions and object for testing
 
 //LogResult(GetCompaniesArray());
