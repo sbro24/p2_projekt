@@ -1,6 +1,7 @@
 import { DataResponse, FileResponse } from "../../app/router.js";
 import { CheckAuth, GetSessionToken } from "../../lib/cookies/sessionToken.js";
-import { ConvertResultsToArray, GetCompanyProfileByToken, UpdateCompanyObject } from "../../lib/useDatabase/handle-data.js";
+import { GetCompanyProfileByToken, UpdateCompanyObject } from "../../lib/useDatabase/handle-data.js";
+import { InitializeForecast } from "../calcForecast/ArimaForecast.js";
 
 export async function router(req, res, data) {
     switch (req.url) {
@@ -40,7 +41,7 @@ export async function router(req, res, data) {
             const token = GetSessionToken(req);
             let company = await GetCompanyProfileByToken(token)
             DataResponse(res, { status: 'saved', entry: parsed });
-            console.log(await ConvertResultsToArray(company.id));
+            await InitializeForecast(company.id);
             break
 
         default:
