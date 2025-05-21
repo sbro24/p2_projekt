@@ -19,13 +19,6 @@ export async function router(req, res, data) {
             FileResponse(res, 'improveBudget/forbedrBudget.css');
             break;
 
-          case '/api/saveData/':
-             if (!await CheckAuth(req, res)) {
-                console.log('not logged in')
-                DataResponse(res, 'not logged in');
-                return;
-            }
-
         case '/api/improveBudget/genTabel/':
             FileResponse(res, 'global/generateTables.js');
             break;
