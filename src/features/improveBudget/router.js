@@ -19,10 +19,6 @@ export async function router(req, res, data) {
             FileResponse(res, 'improveBudget/forbedrBudget.css');
             break;
 
-        case '/api/improveBudget/genTabel/':
-            FileResponse(res, 'global/generateTables.js');
-            break;
-
         default:
             break;
     }
