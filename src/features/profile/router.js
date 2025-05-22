@@ -10,6 +10,9 @@ export async function router(req, res, data) {
                 FileResponse(res, 'login/needLogin.html');
             }
             break;
+        case '/api/profil/script/':
+            FileResponse(res, 'profile/profil.js');
+            break;
         default:
             break;
     }

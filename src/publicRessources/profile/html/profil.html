@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Min Side - Financial Management</title>
     <link rel="stylesheet" href="/api/global/style">
-    <!-- <script src="assets/js/key-metrics.js" defer></script> -->
 </head>
 
 <body>
@@ -19,45 +18,37 @@
     <!-- Navigation -->
     <script src="/api/global/navbar"></script>
     <!-- <script src="../assets/js/key-metrics.js" defer></script> -->
+    <script src="/api/profil/script"></script>
 
     <!-- Main Content -->
     <main class="container">
-        <section class="metrics">
-            <div class="card">
-                <h2>Indtægt</h2>
-                <p id="revenue">$0</p>
-            </div>
-            <div class="card">
-                <h2>Udgifter</h2>
-                <p id="expenses">$0</p>
-            </div>
-            <div class="card">
-                <h2>Profit</h2>
-                <p id="profit">$0</p>
-            </div>
-            <div class="card">
-                <h2>Pengestrøm</h2>
-                <p id="cash-flow">$0</p>
-            </div>
-        </section>
+       <div>
+            <h2>Min Profil</h2>
+            <p>Her kan du se dine personlige oplysninger og administrere din konto.</p>
+        </div>
 
-        <!-- Chart Section -->
-        <section class="chart-container">
-            <h2>Finansiel Præstation</h2>
-            <canvas id="financialChart"></canvas>
-        </section>
+        <!-- User Information -->
+        <div class="user-info">
+            <h3>Brugeroplysninger</h3>
+            <p>
+                <button onclick="UpdateUsername()">Skift Brugernavn</button> <strong>Brugernavn:</strong> <a id="username"></a>  
+            </p>
+            <p>
+                <button onclick="UpdatePassword()">Skift Adgangskode</button> <strong>Adgangskode:</strong> ***
+            </p>
+        </div>
+
+        <!-- Account Management -->
+        <div class="account-management">
+            <h3>Kontoindstillinger</h3>
+            <button onclick="UpdatePassword()">Slet Konto</button>
+        </div>
     </main>
 
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
     </footer>
-
-
-    <!-- Chart.js Library -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- <script src="assets/js/navigation.js" defer></script> -->
-    <!-- <script src="assets/js/key-metrics.js" defer></script> -->
 </body>
 
 </html>

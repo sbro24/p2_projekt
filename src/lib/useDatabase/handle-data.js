@@ -1,6 +1,7 @@
 import { Company, CompanyData } from "./constructors.js";
 import { promises as fs } from 'fs';
 
+import crypto from 'crypto';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Log } from "../logging/log.js";
@@ -99,27 +100,55 @@ export async function AddNewCompany(id, name, password, sessionToken) {
 }
 
 export async function UpdateCompanyName(companyId, toName) {
-    try {
-        //async reading of database
-        const data = await JsonReadFile(filePathDatabase);
-
-        //Find a rename the company    
-        const companyToRename = data.companies.find(company => company.id === companyId);
-
-        if (companyToRename) {
-            companyToRename.name = toName;
-            console.log(`Renamed company '${companyId}' to '${toName}'`);
-        } else {
-            console.log("Company name is not in the database");
+    return new Promise(async (resolve) => {
+        try {
+            //async reading of database
+            const data = await JsonReadFile(filePathDatabase);
+    
+            //Find a rename the company    
+            const companyToRename = data.companies.find(company => company.id === companyId);
+    
+            if (companyToRename) {
+                companyToRename.name = toName;
+                Log(`Renamed company '${companyId}' to '${toName}'`);
+            } else {
+                Log("Company name is not in the database");
+            }
+    
+            //async writing to database
+            await JsonWriteFile(filePathDatabase, data);
+            return resolve(null);
+        } catch (err) {
+            console.error("Not able to update company name:", err);
+            return resolve(null);
         }
+    });
+}
 
-        //async writing to database
-        await JsonWriteFile(filePathDatabase, data);
-
-    } catch (err) {
-        console.error("Not able to update company name:", err);
-        return null;
-    }
+export async function UpdateCompanyPassword(companyId, toPassword) {
+    return new Promise(async (resolve) => {
+        try {
+            //async reading of database
+            const data = await JsonReadFile(filePathDatabase);
+    
+            //Find a rename the company    
+            const companyToRename = data.companies.find(company => company.id === companyId);
+    
+            if (companyToRename) {
+                companyToRename.password = crypto.createHash('sha256').update(toPassword).digest('hex');
+                Log(`Updated password for '${companyId}'`);
+            } else {
+                Log("Company name is not in the database");
+            }
+    
+            //async writing to database
+            await JsonWriteFile(filePathDatabase, data);
+            return resolve(null);
+        } catch (err) {
+            console.error("Not able to update company password:", err);
+            return resolve(null);
+        }
+    });
 }
 
 export async function UpdateSessionToken(companyId, newSessionToken) {
@@ -227,6 +256,26 @@ export async function JsonWriteFile(filePath, data) {
         console.error("Error writing JSON to file:", err);
         throw err;
     }
+}
+
+export async function DeleteCompany(id) {
+    return new Promise(async (resolve) => {
+        try {
+            let data = await JsonReadFile(filePathDatabase);
+            
+            const companies = data.companies.filter(company => company.id !== id);
+            const dataById = Object.fromEntries(
+                Object.entries(data.dataById).filter(([key]) => key !== id)
+            );
+            data = { companies, dataById };
+            
+            await JsonWriteFile(filePathDatabase, data);
+            resolve(null)
+        } catch (err) {
+            Log(err);
+            resolve(null);
+        }
+    });
 }
 
 async function LogResult(inputFunction) {

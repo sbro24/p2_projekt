@@ -5,11 +5,12 @@ import { RandomIntFromInterval } from "../../lib/maths/random.js";
 import { AddNewCompany, GetCompanyies } from "../../lib/useDatabase/handle-data.js";
 import { GenSessionToken } from "../../lib/cookies/sessionToken.js";
 import { ValidateObjectStructureStrict } from "../../lib/dataValidation/validateObject.js";
+import { Log } from "../../lib/logging/log.js";
 
 const dbPath = process.cwd() + '/src/data/data.json';
 
 
-function DoesCompanynameExist(name) {
+export function DoesCompanynameExist(name) {
         return new Promise((resolve) => {
             GetCompanyies()
             .then(companies => {
@@ -19,7 +20,7 @@ function DoesCompanynameExist(name) {
                 resolve(false);
             })
             .catch(err => {
-                console.error("Could not get companies array from database", err);
+                Log(err);
                 resolve(true);
             });
         });
