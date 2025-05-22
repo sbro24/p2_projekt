@@ -274,13 +274,14 @@ export async function InitializeForecast(id) {
         forecastRevenue[category] = new FinancialMetric(category);
         forecastRevenue[category].data = [new FinancialYear(year)];
 
-        console.log(forecastRevenue[category]);
         let forecast = RunForecast(item);
         let i = 0;
         for (const month in forecastRevenue[category].data[0].months) {
             forecastRevenue[category].data[0].months[month] = forecast[0][i];
             i++
         }
+        //financialDataObject.revenue[category].characteristics = forecastRevenue[category].characteristics
+
     }
 
     for (const category in financialDataObject.expense) {
@@ -290,14 +291,14 @@ export async function InitializeForecast(id) {
         forecastExpense[category] = new FinancialMetric(category);
         forecastExpense[category].data = [new FinancialYear(year)];
 
-        console.log(forecastExpense[category]);
         let forecast = RunForecast(item);
         let i = 0;
         for (const month in forecastExpense[category].data[0].months) {
             forecastExpense[category].data[0].months[month] = forecast[0][i];
             i++
         }
-    }
+        //financialDataObject.expense[category].characteristics = forecastExpense[category].characteristics
+    }   
 
     let result = {
         userId: id,

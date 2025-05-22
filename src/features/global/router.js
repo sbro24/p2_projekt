@@ -1,6 +1,8 @@
 import { FileResponse, DataResponse } from "../../app/router.js";
-import { GetCompanyProfileByToken, GetFinancialDataById } from "../../lib/useDatabase/handle-data.js";
+import { GetCompanyProfileByToken, GetFinancialDataById, UpdateCompanyName, UpdateCompanyObject } from "../../lib/useDatabase/handle-data.js";
 import { CheckAuth, GetSessionToken } from "../../lib/cookies/sessionToken.js";
+import { ValidateUsername } from "../../lib/dataValidation/validateObject.js";
+import { DoesCompanynameExist } from "../register/register.js";
 
 export async function router(req, res, data) {
     switch (req.url) {
@@ -21,6 +23,20 @@ export async function router(req, res, data) {
                 const token = GetSessionToken(req);
                 let company = await GetCompanyProfileByToken(token)
                 DataResponse(res, company);
+            } else {
+                FileResponse(res, 'login/needLogin.html');
+            }
+            break;
+        case '/api/user/update/username/':
+            if (await CheckAuth(req, res)) {
+                if (!ValidateUsername(data) || await DoesCompanynameExist(data)) {
+                    DataResponse(res, { status: 'failed', entry: data });
+                    return
+                }
+                const token = GetSessionToken(req);
+                let company = await GetCompanyProfileByToken(token)
+                await UpdateCompanyName(company.id, data);
+                DataResponse(res, { status: 'saved', entry: data });
             } else {
                 FileResponse(res, 'login/needLogin.html');
             }

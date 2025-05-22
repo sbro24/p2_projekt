@@ -99,27 +99,29 @@ export async function AddNewCompany(id, name, password, sessionToken) {
 }
 
 export async function UpdateCompanyName(companyId, toName) {
-    try {
-        //async reading of database
-        const data = await JsonReadFile(filePathDatabase);
-
-        //Find a rename the company    
-        const companyToRename = data.companies.find(company => company.id === companyId);
-
-        if (companyToRename) {
-            companyToRename.name = toName;
-            console.log(`Renamed company '${companyId}' to '${toName}'`);
-        } else {
-            console.log("Company name is not in the database");
+    return new Promise(async (resolve) => {
+        try {
+            //async reading of database
+            const data = await JsonReadFile(filePathDatabase);
+    
+            //Find a rename the company    
+            const companyToRename = data.companies.find(company => company.id === companyId);
+    
+            if (companyToRename) {
+                companyToRename.name = toName;
+                Log(`Renamed company '${companyId}' to '${toName}'`);
+            } else {
+                Log("Company name is not in the database");
+            }
+    
+            //async writing to database
+            await JsonWriteFile(filePathDatabase, data);
+            return resolve(null);
+        } catch (err) {
+            console.error("Not able to update company name:", err);
+            return resolve(null);
         }
-
-        //async writing to database
-        await JsonWriteFile(filePathDatabase, data);
-
-    } catch (err) {
-        console.error("Not able to update company name:", err);
-        return null;
-    }
+    });
 }
 
 export async function UpdateSessionToken(companyId, newSessionToken) {
