@@ -4,7 +4,7 @@
       "id": "111111111111111111",
       "name": "username",
       "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
-      "sessionToken": "cHF788WhPuPf-rNQozP_"
+      "sessionToken": "BpdWkL-tceyzMG0Xi-Cm"
     }
   ],
   "dataById": {
@@ -49,6 +49,7 @@
                 }
               },
               {
+                "year": "2022",
                 "months": {
                   "january": 16875.29,
                   "february": 17377.89,
@@ -139,6 +140,7 @@
                 }
               },
               {
+                "year": "2022",
                 "months": {
                   "january": 2000.17,
                   "february": 2946.75,
@@ -322,6 +324,7 @@
                 }
               },
               {
+                "year": "2022",
                 "months": {
                   "january": 249.53,
                   "february": 250.7,
@@ -917,9 +920,11 @@
                   "december": 736.63
                 }
               }
-            ]
+            ],
+            "characteristics": "Variabel"
           },
-          "Service Contracts": {
+          "Rent": {
+            "name": "Rent",
             "data": [
               {
                 "year": "2020",
@@ -1009,8 +1014,8 @@
             ],
             "characteristics": "Fast"
           },
-          "El, vand og varme": {
-            "name": "El, vand og varme",
+          "Salaries": {
+            "name": "Salaries",
             "data": [
               {
                 "year": "2020",
@@ -1100,8 +1105,8 @@
             ],
             "characteristics": "Fast"
           },
-          "Lokaleleje": {
-            "name": "Lokaleleje",
+          "Subscriptions": {
+            "name": "Subscriptions",
             "data": [
               {
                 "year": "2020",
@@ -1191,8 +1196,8 @@
             ],
             "characteristics": "Fast"
           },
-          "Reperation og vedligeholdelse af lokaler": {
-            "name": "Reperation og vedligeholdelse af lokaler",
+          "Web Hosting": {
+            "name": "Web Hosting",
             "data": [
               {
                 "year": "2020",
@@ -1564,8 +1569,8 @@
             ],
             "characteristics": "Variabel"
           },
-          "Funktionaerloen (inkl. ATP m.m.)": {
-            "name": "Funktionaerloen (inkl. ATP m.m.)",
+          "Rent": {
+            "name": "Rent",
             "data": [
               {
                 "year": "2025",
@@ -1587,8 +1592,8 @@
             ],
             "characteristics": "Fast"
           },
-          "El, vand og varme": {
-            "name": "El, vand og varme",
+          "Subscriptions": {
+            "name": "Subscriptions",
             "data": [
               {
                 "year": "2025",
@@ -1610,8 +1615,8 @@
             ],
             "characteristics": "Fast"
           },
-          "Lokaleleje": {
-            "name": "Lokaleleje",
+          "Web Hosting": {
+            "name": "Web Hosting",
             "data": [
               {
                 "year": "2025",
@@ -1633,24 +1638,24 @@
             ],
             "characteristics": "Fast"
           },
-          "Reperation og vedligeholdelse af lokaler": {
-            "name": "Reperation og vedligeholdelse af lokaler",
+          "Salaries": {
+            "name": "Salaries",
             "data": [
               {
                 "year": "2025",
                 "months": {
-                  "january": 450,
-                  "february": 450,
-                  "march": 450,
-                  "april": 450,
-                  "may": 450,
-                  "june": 450,
-                  "july": 450,
-                  "august": 450,
-                  "september": 450,
-                  "october": 450,
-                  "november": 450,
-                  "december": 450
+                  "january": 10000,
+                  "february": 10000,
+                  "march": 10000,
+                  "april": 10000,
+                  "may": 10000,
+                  "june": 10000,
+                  "july": 10000,
+                  "august": 10000,
+                  "september": 10000,
+                  "october": 10000,
+                  "november": 10000,
+                  "december": 10000
                 }
               }
             ],
@@ -1882,8 +1887,8 @@
               }
             ]
           },
-          "Funktionaerloen (inkl. ATP m.m.)": {
-            "name": "Funktionaerloen (inkl. ATP m.m.)",
+          "Rent": {
+            "name": "Rent",
             "data": [
               {
                 "year": "2025",
@@ -1904,8 +1909,8 @@
               }
             ]
           },
-          "El, vand og varme": {
-            "name": "El, vand og varme",
+          "Salaries": {
+            "name": "Salaries",
             "data": [
               {
                 "year": "2025",
@@ -1926,8 +1931,8 @@
               }
             ]
           },
-          "Lokaleleje": {
-            "name": "Lokaleleje",
+          "Subscriptions": {
+            "name": "Subscriptions",
             "data": [
               {
                 "year": "2025",
@@ -1948,8 +1953,8 @@
               }
             ]
           },
-          "Reperation og vedligeholdelse af lokaler": {
-            "name": "Reperation og vedligeholdelse af lokaler",
+          "Web Hosting": {
+            "name": "Web Hosting",
             "data": [
               {
                 "year": "2025",
