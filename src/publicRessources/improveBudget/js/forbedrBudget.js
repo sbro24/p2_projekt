@@ -7,7 +7,6 @@
 // Under the tabel a textbox with valuable information to the user
 // On the bottom of the page there should be two dropdown bars each containing their own tabel: budget and forecast.
 // The tables should be editable and when the user presses save the database hould be updated and the new forecast should be dispplayed
-console.log("Script loaded - starting initialization");
 
 // Month configuration
 const monthMappingForStorage = {
@@ -236,43 +235,6 @@ function TransformAndFilterItemForYear(rawItem, selectedYear) {
 }
 
 /**
- * Extracts and filters data for a specific section (e.g., revenue or expense) for a given year.
- */
-function getYearlySectionData(rawSection, selectedYear) {
-    const yearlyData = {};
-    if (!rawSection || typeof rawSection !== 'object') {
-        return yearlyData;
-    }
-
-    for (const key in rawSection) {
-        let characteristics = "Undefined";
-
-        if (rawSection === companyData.budget?.expense || rawSection === companyData.forecast?.expense) {
-            if (key === "Funktionaerloen (inkl. ATP m.m.)" || key === "El, vand og varme" || key === "Lokaleleje" || key === "Reperation og vedligeholdelse af lokaler") {
-                characteristics = "Fast";
-            } else {
-                characteristics = "Variabel";
-            }
-        } else if (rawSection === companyData.budget?.revenue || rawSection === companyData.forecast?.revenue) {
-            characteristics = "Revenue";
-        } else if (rawSection[key].characteristics) {
-             characteristics = rawSection[key].characteristics;
-        }
-
-        const transformedItem = TransformAndFilterItemForYear({
-            name: key,
-            characteristics: characteristics,
-            data: rawSection[key].data
-        }, selectedYear);
-
-        if (transformedItem.data.length > 0) {
-            yearlyData[key] = transformedItem;
-        }
-    }
-    return yearlyData;
-}
-
-/**
  * Clears table data while preserving headers.
  */
 function clearTableData(table) {
@@ -286,108 +248,6 @@ function clearTableData(table) {
             table.deleteRow(1);
         }
     }
-}
-
-/**
- * Adds headers to a table.
- */
-function addHeaders(table, headers) {
-    let thead = table.querySelector('thead');
-    if (!thead) {
-        thead = table.createTHead();
-    }
-    if (thead.rows.length === 0) {
-        let headerRow = thead.insertRow();
-
-        const nameTh = document.createElement('th');
-        nameTh.textContent = table.classList.contains('budget-revenue-table') || table.classList.contains('forecast-revenue-table') ? 'Indtægt' : 'Omkostning';
-        headerRow.appendChild(nameTh);
-
-        headers.forEach(function (h) {
-            var th = document.createElement('th');
-            th.textContent = h;
-            headerRow.appendChild(th);
-        });
-    }
-}
-
-/**
- * Adds a data row to a table.
- */
-function addRow(table, undercategory, monthlyData, editable = false) {
-    console.log(`addRow: Adding row for category '${undercategory}'. Monthly data received:`, monthlyData);
-    var newRow = table.insertRow();
-
-    var undercategoryCell = newRow.insertCell();
-    undercategoryCell.textContent = undercategory;
-
-    let total = 0;
-    months.forEach(monthKey => {
-        var cell = newRow.insertCell();
-        const value = monthlyData[monthKey] !== undefined ? Number(monthlyData[monthKey]) : 0;
-        total += value;
-
-        if (editable) {
-            const input = document.createElement('input');
-            input.type = 'number';
-            input.value = value;
-            input.dataset.month = monthKey;
-            input.dataset.category = undercategory;
-            cell.innerHTML = '';
-            cell.appendChild(input);
-        } else {
-            cell.textContent = value.toLocaleString('da-DK') + ' kr';
-        }
-    });
-
-    var totalCell = newRow.insertCell();
-    totalCell.textContent = total.toLocaleString('da-DK') + ' kr';
-    console.log(`addRow: Row added for '${undercategory}' with initial total ${total}.`);
-}
-
-/**
- * Populates a set of tables (revenue, variable expense, fixed expense) for a specific financial section (budget or forecast).
- */
-function populateTableSection(sectionData, Year, revenueTable, variabelExpenseTable, fastExpenseTable, editable = false) {
-    const headers = ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun",
-                    "Jul", "Aug", "Sep", "Okt", "Nov", "Dec", "Total"];
-
-    if (!revenueTable || !variabelExpenseTable || !fastExpenseTable) {
-        console.error("populateTableSection: One or more tables are missing! Check your HTML selectors.");
-        return;
-    }
-
-    clearTableData(revenueTable);
-    clearTableData(variabelExpenseTable);
-    clearTableData(fastExpenseTable);
-
-    addHeaders(revenueTable, headers);
-    addHeaders(variabelExpenseTable, headers);
-    addHeaders(fastExpenseTable, headers);
-
-    // --- Revenue ---
-    Object.keys(sectionData.revenue).forEach(key => {
-        const revenueItem = sectionData.revenue[key];
-        const yearData = Array.isArray(revenueItem.data) ? revenueItem.data.find(d => String(d.year) === String(Year)) : null;
-
-        if (yearData && yearData.months) {
-            addRow(revenueTable, revenueItem.name, yearData.months, editable);
-        }
-    });
-
-    // --- Expenses (Variabel & Fast) ---
-    Object.keys(sectionData.expense).forEach(key => {
-        const expenseItem = sectionData.expense[key];
-        const yearData = Array.isArray(expenseItem.data) ? expenseItem.data.find(d => String(d.year) === String(Year)) : null;
-
-        if (yearData && yearData.months) {
-            if (expenseItem.characteristics === "Variabel") {
-                addRow(variabelExpenseTable, expenseItem.name, yearData.months, editable);
-            } else if (expenseItem.characteristics === "Fast") {
-                addRow(fastExpenseTable, expenseItem.name, yearData.months, editable);
-            }
-        }
-    });
 }
 
 
@@ -515,6 +375,8 @@ async function saveBudgetChanges() {
         const newBudgetRevenueData = getTableData(budgetRevenueTable, staticYear);
         const newBudgetFixedExpenseData = getTableData(budgetFixedExpenseTable, staticYear);
         const newBudgetVariableExpenseData = getTableData(budgetVariableExpenseTable, staticYear);
+
+        console.log("ABE ABE ABE ABE", newBudgetRevenueData)
 
         const forecastRevenueTable = document.querySelector('.forecast-revenue-table');
         const forecastFixedExpenseTable = document.querySelector('.forecast-fixed-expense-table');
@@ -686,53 +548,9 @@ function setupTableControls() {
 // ----------------------------
 
 /**
- * Initializes the tables by populating them with data.
- */
-function initializeTables() {
-    if (!companyData){
-        return;
-    }
-
-    try {
-        const budgetRevenueTable = document.querySelector('.budget-revenue-table');
-        const budgetFixedExpenseTable = document.querySelector('.budget-fixed-expense-table');
-        const budgetVariableExpenseTable = document.querySelector('.budget-variable-expense-table');
-
-        const forecastRevenueTable = document.querySelector('.forecast-revenue-table');
-        const forecastFixedExpenseTable = document.querySelector('.forecast-fixed-expense-table');
-        const forecastVariableExpenseTable = document.querySelector('.forecast-variable-expense-table');
-
-        const budgetRevenueData = getYearlySectionData(companyData.budget?.revenue, staticYear);
-        const budgetExpenseData = getYearlySectionData(companyData.budget?.expense, staticYear);
-        populateTableSection(
-            { revenue: budgetRevenueData, expense: budgetExpenseData },
-            staticYear,
-            budgetRevenueTable,
-            budgetVariableExpenseTable,
-            budgetFixedExpenseTable,
-            true // Editable
-        );
-
-        const forecastRevenueData = getYearlySectionData(companyData.forecast?.revenue, staticYear);
-        const forecastExpenseData = getYearlySectionData(companyData.forecast?.expense, staticYear);
-        populateTableSection(
-            { revenue: forecastRevenueData, expense: forecastExpenseData },
-            staticYear,
-            forecastRevenueTable,
-            forecastVariableExpenseTable,
-            forecastFixedExpenseTable,
-            true // Changed to true to make forecast tables editable
-        );
-
-    } catch (error) {
-        console.error("initializeTables: Table initialization error:", error);
-    }
-}
-
-/**
  * Main function to initialize the dashboard, fetching data and setting up UI.
  */
-async function initializeDashboard() {
+async function initializeDashboard(budgetRevenueTable, budgetFixedExpenseTable, budgetVariableExpenseTable, forecastRevenueTable, forecastFixedExpenseTable, forecastVariableExpenseTable) {
     try {
         const loader = document.getElementById('loadingIndicator');
         if (loader) loader.style.display = 'block';
@@ -868,7 +686,13 @@ async function initializeDashboard() {
             }
         });
 
-        initializeTables();
+        console.log(companyData)
+
+        //initializeTables();
+        if (companyData) {
+                UpdateDisplayedYear(budgetRevenueTable, budgetFixedExpenseTable, budgetVariableExpenseTable, forecastRevenueTable, forecastFixedExpenseTable, forecastVariableExpenseTable)
+        }
+
         setupTableControls();
 
     } catch (error) {
@@ -888,6 +712,97 @@ async function initializeDashboard() {
     }
 }
 
+function UpdateDisplayedYear(budgetRevenueTable, budgetFixedExpenseTable, budgetVariableExpenseTable, forecastRevenueTable, forecastFixedExpenseTable, forecastVariableExpenseTable) {
+    const selectedYear = "2025"
+
+    const dataForCurrentYear = PrepareDataForTable(companyData, selectedYear) // Prepare the data for the selected year
+    if (!dataForCurrentYear) { // Check if data is prepared successfully
+        console.error("Failed to prepare data for display for year:", selectedYear)
+        return
+    }
+        // Call the functions from generateTables to populate the result tables
+        if (forecastRevenueTable && forecastFixedExpenseTable && forecastVariableExpenseTable) {
+        ToTableForecast(dataForCurrentYear, selectedYear, forecastRevenueTable, forecastFixedExpenseTable, forecastVariableExpenseTable)
+        } else {
+            console.error("No results tables found!");
+        }
+
+        // Call the functions from generateTables to populate the budget tables
+        if (budgetRevenueTable && budgetFixedExpenseTable && budgetVariableExpenseTable) {
+            toTableBudget(dataForCurrentYear, selectedYear, budgetRevenueTable, budgetVariableExpenseTable, budgetFixedExpenseTable, "forbedr")
+        } else {
+            console.error("No budget tables found!");
+        }
+}
+
+function PrepareDataForTable(rawData, selectedYear) {
+    if (!rawData) {
+        console.error("No data provided");
+        return null;
+    }
+    const dataForTable = {
+        forecast: { revenue: {}, expense: {} },
+        budget: { revenue: {}, expense: {} }
+    }
+    // Nested function to process a category
+    const processCategoryForTable = (category,targetCategory) => {
+        if (category) {
+            for (const key in category) {
+                targetCategory[key] = TransformAndFilterItemForYear(category[key], selectedYear) // Transform and filter the categories for the selected year
+            }
+        }
+    }
+    // Process revenue and expense categories for both result and budget
+    processCategoryForTable(rawData.forecast.revenue, dataForTable.forecast.revenue)
+    processCategoryForTable(rawData.forecast.expense, dataForTable.forecast.expense)
+    processCategoryForTable(rawData.budget.revenue, dataForTable.budget.revenue)
+    processCategoryForTable(rawData.budget.expense, dataForTable.budget.expense)
+
+    return dataForTable
+}
+
+function addRow1(table, undercategory, data) {
+    var newRow = table.insertRow(); // Create new row
+
+    // Add year column
+    var undercategoryCell = newRow.insertCell();
+    undercategoryCell.textContent = undercategory;
+    console.log(data)
+
+    // Add monthly data columns
+    data.forEach(function (d) {
+        var cell = newRow.insertCell();
+        cell.textContent = d.trim();
+        cell.setAttribute('contenteditable', 'true'); // Make cells editable
+    });
+
+    const Total = calculateCategoryDataTotal(data);
+
+    var totalCell = newRow.insertCell();
+    totalCell.textContent = Total.toLocaleString('da-DK') + ' kr';
+}
+
+function calculateCategoryDataTotal (data) {
+
+    let sum = 0
+
+    data.forEach (index => {
+        sum = sum + Number(index);
+    })
+
+    return sum;
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
-    initializeDashboard();
+    const budgetRevenueTable = document.querySelector('.budget-revenue-table');
+    const budgetFixedExpenseTable = document.querySelector('.budget-fixed-expense-table');
+    const budgetVariableExpenseTable = document.querySelector('.budget-variable-expense-table');
+
+    const forecastRevenueTable = document.querySelector('.forecast-revenue-table');
+    const forecastFixedExpenseTable = document.querySelector('.forecast-fixed-expense-table');
+    const forecastVariableExpenseTable = document.querySelector('.forecast-variable-expense-table');
+
+    initializeDashboard(budgetRevenueTable, budgetFixedExpenseTable, budgetVariableExpenseTable, forecastRevenueTable, forecastFixedExpenseTable, forecastVariableExpenseTable);
+
 });
