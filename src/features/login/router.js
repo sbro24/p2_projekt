@@ -26,7 +26,7 @@ export async function router(req, res, data) {
             FileResponse(res, 'login/login.css');
             break;
         case '/api/login/script/':
-            FileResponse(res, 'login/login2.js');
+            FileResponse(res, 'login/login.js');
             break;
         case '/api/login/submit/':
             Login(JSON.parse(data))
