@@ -40,6 +40,7 @@ export async function router(req, res, data) {
 
             const token = GetSessionToken(req);
             let company = await GetCompanyProfileByToken(token)
+            console.log(parsed)
             DataResponse(res, { status: 'saved', entry: parsed });
             await InitializeForecast(company.id);
             break

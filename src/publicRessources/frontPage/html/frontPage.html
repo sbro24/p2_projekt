@@ -4,42 +4,81 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Management - Web Application</title>
+    <title>Financial Management - Din personlige økonomi</title>
     <link rel="stylesheet" href="/api/global/style">
-    <!-- <script src="assets/js/navigation.js"></script> -->
 </head>
 
 <body>
     <!-- Header -->
     <header>
         <h1>Financial Management</h1>
-        <p>Administrer dit budget effektivt</p>
+        <p>Administrer dit budget effektivt og opnå finansiel kontrol</p>
     </header>
     
     <!-- Navigation -->
     <script src="/api/global/navbar"></script>
-    
 
     <!-- Main Layout -->
     <div class="container">
-
         <!-- Main Content Area -->
         <main class="content">
             <section>
                 <h2>Velkommen til Dit Finansielle Overblik</h2>
-                <p>Log ind eller opret en ny bruger for at komme igang.</p>
-                <a href="/login">Log ind</a>
-                <a href="/register">Opret ny bruger</a>
+                <p>På denne platform kan du forbedre dit finansielle overblik og planlæggelse, hvor du kan få lavet finansielle prognoser baseret på dine tidligere resultater.</p>
+                <p>Log ind eller opret en ny bruger for at komme i gang.</p>
+                
+                <div class="button-group">
+                    <a href="/login"><button>Log ind</button></a>
+                    <a href="/register"><button>Opret ny bruger</button></a>
+                </div>
             </section>
+
+            <section>
+                <h2>Vores sider</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Side</th>
+                            <th>Beskrivelse</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="profil">Profil</a></td>
+                            <td>Her kan du ændre dine personlige informationer, så som virksomhedsnavn og kodeord.</td>
+                        </tr>
+                        <tr>
+                            <td><a href="mineData">Mine data</a></td>
+                            <td>På denne side kan du se din finansielle data, inklusive resultater og budget. Her kan du indlæse ny data fra CSV filer, eller indtaste den manuelt. Eventuelt kan du gemme den, eller også eksportere den i CSV filer.</td>
+                        </tr>
+                        <tr>
+                            <td><a href="forbedrBudget">Forbedr mit budget</td>
+                            <td>På denne side får du et overblik af dit budget og finalsielle forecast. Siden indeholder grafer, som visuelt beskriver din budget sammenlignet med din forecast, f.eks med at vise de 5 største afvigelser mellem budget og forecast. På denne side kan du også tilpasse din budget, og gemme den.</td>
+                        </tr>
+                        <tr>
+                            <td><a href="forstaaPrognoser">Forstå mine prognoser</a></td>
+                            <td>Her får du forklaringer af dine prognoser.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h2>Sådan går du i gang</h2>
+                    <p>Hvis det er første gang du bruger hjemmesiden, skal du begynde med at opretten en bruger. Når du har oprettet din bruger, går du over til <a href="mineData">Mine data</a> siden</p>
+                    <p>På <a href="mineData">Mine data</a> siden skal du tilføje data til tabellerne, enten ved at indlæse den fra CSV filer eller manuelt. Når du er færdig med at tilføje data, trykker du på save knappen, og siden bliver forecast beregnet</p>
+                    <p>Nu skal du flytte dig til <a href="forbedrBudget">Forbedr mit budget</a> siden. Her kan du se din budget for det nyeste år, samt din forecast. Du kan se grafer af budget og forecast, og tilpasse din budget manuelt baseret på dem, og gemme det.
         </main>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | <a href="privacy.html">Privatlivspolitik</a></p>
+        <p>&copy; 2025 Financial Management. Alle rettigheder forbeholdes. | 
+           <a href="privacy.html">Privatlivspolitik</a> | 
+           <a href="terms.html">Betingelser</a> | 
+           <a href="contact.html">Kontakt os</a>
+        </p>
     </footer>
-
-    
 </body>
 
 </html>
