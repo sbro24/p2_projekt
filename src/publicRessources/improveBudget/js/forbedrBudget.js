@@ -598,12 +598,6 @@ async function initializeDashboard(budgetRevenueTable, budgetFixedExpenseTable, 
                     borderWidth: 2
                 },
                 {
-                    label: 'Actual Revenue',
-                    data: extractAllMonthlyData(companyData.result?.revenue),
-                    borderColor: '#9C27B0',
-                    borderWidth: 2
-                },
-                {
                     label: 'Budget Expense',
                     data: extractAllMonthlyData(companyData.budget?.expense),
                     borderColor: '#4CAF50',
@@ -614,13 +608,6 @@ async function initializeDashboard(budgetRevenueTable, budgetFixedExpenseTable, 
                     label: 'Forecast Expense',
                     data: extractAllMonthlyData(companyData.forecast?.expense),
                     borderColor: '#2196F3',
-                    borderWidth: 2,
-                    borderDash: [5, 5]
-                },
-                {
-                    label: 'Actual Expense',
-                    data: extractAllMonthlyData(companyData.result?.expense),
-                    borderColor: '#9C27B0',
                     borderWidth: 2,
                     borderDash: [5, 5]
                 }
