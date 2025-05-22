@@ -1,7 +1,7 @@
 import { FileResponse, DataResponse } from "../../app/router.js";
-import { GetCompanyProfileByToken, GetFinancialDataById, UpdateCompanyName, UpdateCompanyObject } from "../../lib/useDatabase/handle-data.js";
+import { DeleteCompany, GetCompanyProfileByToken, GetFinancialDataById, UpdateCompanyName, UpdateCompanyObject, UpdateCompanyPassword } from "../../lib/useDatabase/handle-data.js";
 import { CheckAuth, GetSessionToken } from "../../lib/cookies/sessionToken.js";
-import { ValidateUsername } from "../../lib/dataValidation/validateObject.js";
+import { ValidatePassword, ValidateUsername } from "../../lib/dataValidation/validateObject.js";
 import { DoesCompanynameExist } from "../register/register.js";
 
 export async function router(req, res, data) {
@@ -37,6 +37,40 @@ export async function router(req, res, data) {
                 let company = await GetCompanyProfileByToken(token)
                 await UpdateCompanyName(company.id, data);
                 DataResponse(res, { status: 'saved', entry: data });
+            } else {
+                FileResponse(res, 'login/needLogin.html');
+            }
+            break;
+        case '/api/user/update/password/':
+            if (await CheckAuth(req, res)) {
+                if (!ValidatePassword(data)) {
+                    DataResponse(res, { status: 'failed', entry: data });
+                    return
+                }
+                const token = GetSessionToken(req);
+                let company = await GetCompanyProfileByToken(token)
+                await UpdateCompanyPassword(company.id, data);
+                DataResponse(res, { status: 'saved', entry: data });
+            } else {
+                FileResponse(res, 'login/needLogin.html');
+            }
+            break;
+        case '/api/user/delete/':
+            if (await CheckAuth(req, res)) {
+                if (!ValidateUsername(data)) {
+                    DataResponse(res, { status: 'failed', entry: data });
+                    return
+                }
+                const token = GetSessionToken(req);
+                let company = await GetCompanyProfileByToken(token)
+                if (company.name !== data) {
+                    DataResponse(res, { status: 'failed', entry: data });
+                    return
+                } else {
+                    await DeleteCompany(company.id);
+                    DataResponse(res, { status: 'deleted', entry: data });
+                }
+                
             } else {
                 FileResponse(res, 'login/needLogin.html');
             }

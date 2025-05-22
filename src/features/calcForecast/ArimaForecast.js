@@ -9,7 +9,6 @@ export {
     Model,
     Forecast
 };
-
 import ARIMA from 'arima' // Import the ARIMA library
 import { GetFinancialDataById, UpdateCompanyObject } from '../../lib/useDatabase/handle-data.js';
 import { FinancialMetric, FinancialYear } from '../../lib/useDatabase/constructors.js';

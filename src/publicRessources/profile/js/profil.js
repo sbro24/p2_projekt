@@ -1,10 +1,12 @@
-fetch('/api/user/profile/')
-.then(response => response.json())
-.then(data => document.getElementById('username').innerHTML = data.name)
-.catch(error => {
-    console.error('Error:', error)
-    document.getElementById('username').innerHTML = '';
-});
+async function GetUsername() {
+    return fetch('/api/user/profile/')
+    .then(response => response.json())
+    .then(data => { return data.name })
+    .catch(error => {
+        console.error('Error:', error)
+        return '';
+    });
+}
 
 function UpdateUsername() {
     const newUsername = window.prompt("Nyt Brugernavn");
@@ -15,7 +17,6 @@ function UpdateUsername() {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         if (data.status === 'saved') {
             document.getElementById('username').innerHTML = newUsername;
         } else {
@@ -26,7 +27,7 @@ function UpdateUsername() {
 }
 
 function UpdatePassword() {
-    const newPassword = window.prompt("Nyt Brugernavn");
+    const newPassword = window.prompt("Ny Adgangskode");
     fetch('/api/user/update/password', {
         method: 'POST',
         headers: { 'Content-Type': 'text/txt' },
@@ -34,12 +35,39 @@ function UpdatePassword() {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         if (data.status === 'saved') {
-            document.getElementById('username').innerHTML = newUsername;
+            alert('Adgangskode skiftet');
         } else {
-            alert('Brugernavnet kunne ikke ændres');
+            alert('Adgangskode kunne ikke ændres');
             console.error('failed:', data);
         }
     })
 }
+
+async function UpdatePassword() {
+    const username = await GetUsername();
+    const usernamePromt = window.prompt(`Skriv dit brugernavn "${username}" for at slætte din konto`);
+    if (usernamePromt === username) {
+        fetch('/api/user/delete/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/txt' },
+            body: username
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'deleted') {
+                alert('Konto slettet');
+                window.location.href = '/';
+            } else {
+                alert('Konto kunne ikke slettes');
+                console.error('failed:', data);
+            }
+        })
+    } else {
+        alert('Forkert brugernavn');
+    }
+    
+}
+
+GetUsername()
+.then(username => document.getElementById('username').innerHTML = username)
