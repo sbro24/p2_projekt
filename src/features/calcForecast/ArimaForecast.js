@@ -280,7 +280,7 @@ export async function InitializeForecast(id) {
             forecastRevenue[category].data[0].months[month] = forecast[0][i];
             i++
         }
-        //financialDataObject.revenue[category].characteristics = forecastRevenue[category].characteristics
+        forecastRevenue[category].characteristics = companyRevenue[category].characteristics
 
     }
 
@@ -297,7 +297,8 @@ export async function InitializeForecast(id) {
             forecastExpense[category].data[0].months[month] = forecast[0][i];
             i++
         }
-        //financialDataObject.expense[category].characteristics = forecastExpense[category].characteristics
+        forecastExpense[category].characteristics = companyExpense[category].characteristics
+        console.log(forecastExpense[category])
     }   
 
     let result = {
