@@ -29,6 +29,7 @@
 
             <div id="box">
                 <div class="column">
+                    <!-- Text box with general explanations -->
                     <section class="budget-vs-actual">
                         <h2>Sammenligning af budget og prognose</h2>
                         <p>
@@ -53,10 +54,12 @@
                             så kan du trykke på "Læs mere" knappen:
                         </p>
                     </section>
-
+                    
+                    <!-- "Læs mere" button -->
                     <button id="readMore">Læs mere</button>
                 </div>
 
+                <!-- initializing charts -->
                 <div class="column two">   
                     <section class="table-revenue">
                         <h3> Indtægt </h3>
@@ -65,8 +68,8 @@
                         <!-- Indsæt graf -->
                         <canvas id="chartRevenue"></canvas>
 
-                        <!-- Opdater tabel knap - henter nyeste data -->
-                        <button id="updateChartRevenue">Opdater tabel</button>
+                        <!-- Opdater tabel knap - henter nyeste data 
+                        <button id="updateChartRevenue">Opdater tabel</button>-->
                     </section>
 
                     <section class="table-expenses">
@@ -76,8 +79,8 @@
                         <!-- Indsæt graf --> 
                         <canvas id="chartExpenses"></canvas>
                         
-                        <!-- Opdater tabel knap - henter nyeste data -->
-                        <button id="updateChartExpenses">Opdater tabel</button>
+                        <!-- Opdater tabel knap - henter nyeste data 
+                        <button id="updateChartExpenses">Opdater tabel</button>-->
                     </section>
                 </div>
             </div>
@@ -91,6 +94,7 @@
     </footer>
 
     <script src="/api/forstaaPrognoser/script"></script>
+    <script src=""></script> <!-- hent fil med funktioner der tillader mig at hente data -->
 
 </body>
 
