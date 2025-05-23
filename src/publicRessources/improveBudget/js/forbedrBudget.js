@@ -473,10 +473,11 @@ function addRowToTable(table) {
     }
     console.log(`addRowToTable: New category name entered: ${newCategoryName}`);
 
-    const initialMonthlyData = {};
-    months.forEach(monthKey => {
-        initialMonthlyData[monthKey] = 0;
-    });
+    // const initialMonthlyData = {};
+    // months.forEach(monthKey => {
+    //     initialMonthlyData[monthKey] = 0;
+    // });
+    const initialMonthlyData = Array(12).fill("0");
 
     const isEditable = table.classList.contains('budget-revenue-table') ||
                        table.classList.contains('budget-fixed-expense-table') ||
