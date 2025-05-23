@@ -161,12 +161,12 @@ function SplitRowsIntoCategories (r, year) {
 
     if (!r) return null; // Skip empty rows
 
-    var cols = r.split(DELIMITER);
+    let cols = r.split(DELIMITER);
     if (cols.every(col => !col.trim())) return null;
     if (cols.length === 0) return null; // Skip if no columns
 
-    var type = cols[0]; // "sales" property in the object
-    var data = cols.slice(1).map(cell => {
+    let type = cols[0]; // "sales" property in the object
+    let data = cols.slice(1).map(cell => {
         let normalized = cell.replace(/\./g, '').replace(',', '.'); // Remove thousands separator, fix decimal
         return Number(normalized);
     });

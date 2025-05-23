@@ -358,6 +358,7 @@ function updateCompanySectionData(targetSection, newCategoryDataArray, selectedY
  * Handles the saving of budget changes from the editable tables.
  * Now also handles saving forecast data.
  */
+/*
 async function saveBudgetChanges() {
     console.log("saveBudgetChanges: Attempting to save budget and forecast changes...");
     const saveButton = document.getElementById('saveBudgetBtn');
@@ -452,7 +453,7 @@ async function saveBudgetChanges() {
         }, 5000);
     }
 }
-
+*/
 
 /**
  * Adds a new row to a specific table.
@@ -472,10 +473,11 @@ function addRowToTable(table) {
     }
     console.log(`addRowToTable: New category name entered: ${newCategoryName}`);
 
-    const initialMonthlyData = {};
-    months.forEach(monthKey => {
-        initialMonthlyData[monthKey] = 0;
-    });
+    // const initialMonthlyData = {};
+    // months.forEach(monthKey => {
+    //     initialMonthlyData[monthKey] = 0;
+    // });
+    const initialMonthlyData = Array(12).fill("0");
 
     const isEditable = table.classList.contains('budget-revenue-table') ||
                        table.classList.contains('budget-fixed-expense-table') ||
@@ -534,13 +536,13 @@ function setupTableControls() {
             }
         });
     });
-
+/*
     const saveButton = document.getElementById('saveBudgetBtn');
     if (saveButton) {
         saveButton.addEventListener('click', saveBudgetChanges);
     } else {
         console.error("setupTableControls: Save button not found.");
-    }
+    }*/
 }
 
 // ----------------------------
@@ -673,7 +675,6 @@ async function initializeDashboard(budgetRevenueTable, budgetFixedExpenseTable, 
             }
         });
 
-        console.log(companyData)
 
         //initializeTables();
         if (companyData) {
@@ -754,7 +755,6 @@ function addRow1(table, undercategory, data) {
     // Add year column
     var undercategoryCell = newRow.insertCell();
     undercategoryCell.textContent = undercategory;
-    console.log(data)
 
     // Add monthly data columns
     data.forEach(function (d) {
@@ -790,6 +790,66 @@ document.addEventListener('DOMContentLoaded', () => {
     const forecastFixedExpenseTable = document.querySelector('.forecast-fixed-expense-table');
     const forecastVariableExpenseTable = document.querySelector('.forecast-variable-expense-table');
 
+    const saveButton = document.getElementById('saveBudgetBtn');
+    
+
     initializeDashboard(budgetRevenueTable, budgetFixedExpenseTable, budgetVariableExpenseTable, forecastRevenueTable, forecastFixedExpenseTable, forecastVariableExpenseTable);
+
+    if (saveButton) {
+        saveButton.addEventListener("click", () => {
+            console.log("Save button clicked")
+            console.log("Table content at time of button click:", document.querySelector(".budget-revenue-table").innerHTML);
+
+            if (!userId) {
+                console.error("User ID is not set. Cannot save data.")
+                alert("Bruger ID er ikke sat. Venligst log ind igen.")
+                return
+            }
+            setTimeout(() => {
+            
+            let yearSelect = "2025"
+            updateCompanyDataFromTables(companyData, yearSelect, budgetRevenueTable, budgetVariableExpenseTable, budgetFixedExpenseTable, "budget") // Extract data from the tables
+            dataToSave = companyData
+            
+            if (!dataToSave) {
+                console.error("Failed to extract data from tables")
+                alert("Kunne ikke udtrække data fra tabellerne")
+                return
+            }
+            console.log("Saving company data:", userId, dataToSave)
+
+            const payload = {
+                userId: userId,
+                data: dataToSave
+            }
+
+            console.log(payload)
+            console.log(JSON.stringify(payload))
+            
+            fetch('/api/saveData', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload) // Send the company data as JSON
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`)
+                }
+                return response.json()
+            })    
+            .then(saveResponse => {
+                console.log("Server response from save:", saveResponse);
+                alert("Data gemt!");
+            })
+            .catch(error => {
+                console.error("Error saving data:", error);
+                alert(`Fejl ved gemning af data.${error.message}`);
+            });
+            
+        })
+    }, 100);
+    }
+
+
 
 });

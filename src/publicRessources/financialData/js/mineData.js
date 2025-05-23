@@ -136,7 +136,7 @@ function UpdateDisplayedYear() {
         const budgetVariableExpenseTable = activeYearDiv.querySelector('.budget-variable-expense-table') 
         // Call the functions from generateTables to populate the budget tables
         if (budgetRevenueTable && budgetFixedExpenseTable && budgetVariableExpenseTable) {
-            toTableBudget(dataForCurrentYear, selectedYear, budgetRevenueTable, budgetVariableExpenseTable, budgetFixedExpenseTable)
+            toTableBudget(dataForCurrentYear, selectedYear, budgetRevenueTable, budgetVariableExpenseTable, budgetFixedExpenseTable, "mine")
         } else {
             console.error("No budget tables found!");
         }
@@ -158,12 +158,14 @@ function BuildHTMLStructure() {
                 <h3>Omsætning</h3>      
                 <form>
                     <table border="1" class="results-revenue-table"> 
-                        <tbody>
+                        <thead>
                             <tr>
                                 <th>Indtægt</th>
                                 <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
                                 <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
                             </tr> 
+                        </thead>
+                        <tbody>
                         </tbody>
                     </table>
                 </form>
@@ -174,11 +176,13 @@ function BuildHTMLStructure() {
                 <h3>Faste Omkostninger</h3>             
                 <form>
                     <table border="1" class="results-fixed-expense-table"> 
-                        <tbody>
+                        <thead>
                                 <th>Omkostning</th>
                                 <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
                                 <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
                             </tr> 
+                        </thead>
+                        <tbody>
                         </tbody>
                     </table>
                 </form>
@@ -189,12 +193,14 @@ function BuildHTMLStructure() {
                 <h3>Variable Omkostninger</h3>             
                 <form>
                     <table border="1" class="results-variable-expense-table"> 
-                        <tbody>
+                        <thead>
                             <tr>
                                 <th>Omkostning</th>
                                 <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
                                 <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
                             </tr> 
+                        </thead>
+                        <tbody>
                         </tbody>
                     </table>
                 </form>
@@ -209,12 +215,14 @@ function BuildHTMLStructure() {
                 <h3>Omsætning</h3>      
                 <form>
                     <table border="1" class="budget-revenue-table"> 
-                        <tbody>
+                        <thead>
                             <tr>
                                 <th>Indtægt</th>
                                 <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
                                 <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
                             </tr> 
+                        </thead>
+                        <tbody>
                         </tbody>
                     </table>
                 </form>
@@ -225,12 +233,14 @@ function BuildHTMLStructure() {
                 <h3>Faste Omkostninger</h3>             
                 <form>
                     <table border="1" class="budget-fixed-expense-table"> 
-                        <tbody>
+                        <thead>
                             <tr>
                                 <th>Omkostning</th>
                                 <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
                                 <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
                             </tr> 
+                        </thead>
+                        <tbody>
                         </tbody>
                     </table>
                 </form>
@@ -241,12 +251,14 @@ function BuildHTMLStructure() {
                 <h3>Variable Omkostninger</h3>             
                 <form>
                     <table border="1" class="budget-variable-expense-table"> 
-                        <tbody>
+                        <thead>
                             <tr>
                                 <th>Omkostning</th>
                                 <th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Maj</th><th>Jun</th>
                                 <th>Jul</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th>
                             </tr> 
+                        </thead>
+                        <tbody>
                         </tbody>
                     </table>
                 </form>
@@ -410,13 +422,13 @@ function updateCompanyDataFromTables(company, Year, revenuetable, variabelexpens
     
     //Take each new under-category object and compare it to the existing company data object
     revenueUndercategories.forEach(category => {
-        CheckIfCategoryDataExists(category, variableOmkostninger, fasteOmkostninger, company)
+        CheckIfCategoryDataExistsResult(category, variabelExpenseUndercategories, fastExpenseUndercategories, company)
     })
     variabelExpenseUndercategories.forEach(category => {
-        CheckIfCategoryDataExists(category, variabelExpenseUndercategories, fastExpenseUndercategories, company)
+        CheckIfCategoryDataExistsResult(category, variabelExpenseUndercategories, fastExpenseUndercategories, company)
     })
     fastExpenseUndercategories.forEach(category => {
-        CheckIfCategoryDataExists(category, variabelExpenseUndercategories, fastExpenseUndercategories, company)
+        CheckIfCategoryDataExistsResult(category, variabelExpenseUndercategories, fastExpenseUndercategories, company)
     })
 
 };
@@ -431,7 +443,12 @@ function CheckIfCategoryDataExistsResult (UnderCategory, variableOmkostninger, f
             //Runs through the undercategory in the company object and inputs dat if data year exists
             for (let l = 0; l < company.result.expense[UnderCategory.name].data.length; l++) {
                 if (Number(company.result.expense[UnderCategory.name].data[l].year) === Number(UnderCategory.data[0].year)) {
-                 company.result.expense[UnderCategory.name].data[l].months = UnderCategory.data[0].months
+                    const numericMonths = {};
+                    Object.entries(UnderCategory.data[0].months).forEach(([month, value]) => {
+                        // Convert to number using parseFloat or Number
+                        numericMonths[month] = parseFloat(value) || 0; // fallback to 0 if conversion fails
+                    });
+                     company.result.expense[UnderCategory.name].data[l].months = numericMonths
                  return;
                 }
             }
@@ -465,7 +482,12 @@ function CheckIfCategoryDataExistsResult (UnderCategory, variableOmkostninger, f
             company.result.revenue[UnderCategory.name].characteristics = "Variabel"
             for (let l = 0; l < company.result.revenue[UnderCategory.name].data.length; l++) {
                 if (Number(company.result.revenue[UnderCategory.name].data[l].year) === Number(UnderCategory.data[0].year)) {
-                 company.result.revenue[UnderCategory.name].data[l].months = UnderCategory.data[0].months
+                const numericMonths = {};
+                Object.entries(UnderCategory.data[0].months).forEach(([month, value]) => {
+                    // Convert to number using parseFloat or Number
+                    numericMonths[month] = parseFloat(value) || 0; // fallback to 0 if conversion fails
+                });
+                 company.result.revenue[UnderCategory.name].data[l].months = numericMonths
                  return;
                 }
             }
@@ -489,22 +511,42 @@ function CheckIfCategoryDataExistsResult (UnderCategory, variableOmkostninger, f
 
 function getTableData(tableId, Year) {
 
+    const yearSelect = document.getElementById("yearSelect")
+    const selectedYear = yearSelect.value
+
+    const dataForCurrentYear = PrepareDataForTable(companyData, selectedYear) // Prepare the data for the selected year
+    if (!dataForCurrentYear) { // Check if data is prepared successfully
+        console.error("Failed to prepare data for display for year:", selectedYear)
+        return
+    }
+
+    // remove active class from all year data divs
+    document.querySelectorAll(".year-data-content").forEach(div => {
+        div.classList.remove('active')
+    });
+    // add active class to the selected year
+    const activeYearDiv = document.getElementById(`data-${selectedYear}`)
+    if (activeYearDiv) {
+        activeYearDiv.classList.add('active');
+    }
+
     var underCategories = []
 
-    const table = document.querySelector(tableId);
-    console.log(table)
-    const rows = table.querySelectorAll('tbody tr'); 
-    console.log(rows)
+    const table = activeYearDiv.querySelector(tableId);
+
+    const tbody = table.querySelector('tbody');
+    const rows = tbody ? tbody.querySelectorAll('tr') : [];
+ 
     const data = [];
     
     // Skip header row (index 0)
-    for (let k = 1; k < rows.length; k++) {
-        const cells = rows[i].querySelectorAll('td');
+    for (let k = 0; k < rows.length; k++) {
+        const cells = rows[k].querySelectorAll('td');
         if (cells.length > 0) {
-            let newCompany = new FinancialMetric(cells[0])
+            let newCompany = new FinancialMetric(cells[0].textContent.trim())
             let newCompanyUndercategoryData = new FinancialYear(Year)
             Object.keys(newCompanyUndercategoryData.months).forEach((month, i) => {
-                newCompanyUndercategoryData.months[month] = cells[i+1]
+                newCompanyUndercategoryData.months[month] = cells[i+1].textContent.trim();
             });
             newCompany.data.push(newCompanyUndercategoryData)
             underCategories.push(newCompany)
@@ -676,13 +718,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (saveBtn) {
         saveBtn.addEventListener("click", () => {
             console.log("Save button clicked")
+            console.log("Table content at time of button click:", document.querySelector(".results-revenue-table").innerHTML);
 
             if (!userId) {
                 console.error("User ID is not set. Cannot save data.")
                 alert("Bruger ID er ikke sat. Venligst log ind igen.")
                 return
             }
-            
+            setTimeout(() => {
             updateCompanyDataFromTables(companyData, yearSelect.value, revenuetable, variabelexpensetable, fastexpensetable) // Extract data from the tables
             dataToSave = companyData
             
@@ -699,6 +742,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             console.log(payload)
+            console.log(JSON.stringify(payload))
 
             fetch('/api/saveData', {
                 method: 'POST',
@@ -720,6 +764,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert(`Fejl ved gemning af data.${error.message}`);
             });
         })
+    }, 100);
     }
 
     // Toggle the popup visibility when the export button is clicked
@@ -758,15 +803,5 @@ document.addEventListener("DOMContentLoaded", () => {
         ExportToCSV(companyData, "filename", yearSelect.value, "budget")
         popupMenu.style.display = 'none'; // Hide the menu after selection
     });
-
-/*
-    if (exportBtn) {
-        exportBtn.addEventListener("click", () => {
-            const dataToSave = ExtractDataFromAllTables(yearSelect.value)
-            console.log(dataToSave)
-            ExportToCSV(companyData, "filename", yearSelect.value, "budget")
-        })
-    }
-        */
 })   
 

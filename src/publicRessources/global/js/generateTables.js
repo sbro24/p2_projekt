@@ -278,7 +278,8 @@ function addHeaders(table, headers) {
  * @param {Array} data - The monthly data values
  */
 function addRow(table, undercategory, data) {
-    var newRow = table.insertRow(); // Create new row
+    const tbody = table.querySelector('tbody');
+    var newRow = tbody.insertRow(); // Create new row
 
     // Add year column
     var undercategoryCell = newRow.insertCell();
