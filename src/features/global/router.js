@@ -18,6 +18,9 @@ export async function router(req, res, data) {
         case '/api/global/gentabel/':
             FileResponse(res, 'global/generateTables.js');
             break;
+        case '/api/global/saveTables/':
+            FileResponse(res, 'global/saveTables.js');
+            break;
         case '/api/user/profile/':
             if (await CheckAuth(req, res)) {
                 const token = GetSessionToken(req);
