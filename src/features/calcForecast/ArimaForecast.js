@@ -22,15 +22,6 @@ class Model { // Class to construct an ARIMA model
         this.AIC = AIC // The AIC of the ARIMA model
         this.prediction = prediction // The predicted values from the model
     }
-    setDeltaAIC(deltaAIC) {
-        this.deltaAIC = deltaAIC // Set the delta AIC of the model
-    }
-    getAIC() {
-        return this.AIC // Return the AIC of the model, so it is accessible for later use
-    }
-    getDeltaAIC() {
-        return this.deltaAIC // Return the delta AIC of the model, so it is accessible for later use
-    }
 }
 
 class Forecast { // Class to store the ARIMA models
@@ -65,48 +56,6 @@ class Forecast { // Class to store the ARIMA models
         return this.bestAIC // Return the best AIC of the ARIMA model, so it is accessible for later use
     }
 }
-
-// Test data
-const data = { 
-dataCompany: [555866	,174701	,458500	,323800	,30750	,456900	,194000	,
-    416297	,303865	,448050	,178515	,168222	,333520	,330090	,325457	,367068	,
-    327179	,247301	,340363	,553907	,361974	,242516	,124659	,223538	,108450	,
-    306087	,340362	,388343	,448847	,107248	,428296	,324494	,922040], 
-
-/*const dataCompanyActualResult = [394335	,330600	,630237	,86555	,290790, 788550 ,
-    77700	,109050	,318261	,160350	,72089	,376368	]*/
-
-dataCompanySeasonal: [96000	,123000	,236000	,81600	,28800	,21000	,47600	,
-    17600	,11800	,69600	,107000	,163500	,117600	,126000	,166000	,84800	,33900	,
-    19800	,42400	,22600	,8800	,73600	,98000	,127500	,97200	,126000	,200000	,
-    74400	,24900	,23200	,36800	,16800	,11700	,95200	,102000	,172500	,104400	,
-    172500	,218000	,82400	,26700	,21400	,33200	,20400	,8500	,92000	,99000	,
-    168000	,108000	,135000	,208000	,78400	,30600	,17400	,44800	,17200	,10700	,
-    95200	,119000	,166500
-],
-
-/*const dataCompanySeasonalResult = [123600	,157500	,182000	,92000	,34500	,22400	,35600	,
-    22600	,9400	,69600	,90000	,132000
-]*/
-
-dataCompanyLinearGrowth: [180000,227500,396667,416667,400000,501667,586667,735000,
-    783333,971667,1200000,1007500,956667,1125000,1320000,1374167,1530000,1409167,1833333,
-    2082500,1576667,1993333,1620000,2395833,1755000,2002500,2753333,2271667,2775000,2299167,
-    2826667,2447500,2720000,3325000,3210000,2528333,3230000,3412500,3600000,3553333,3290000,
-    3619167,3153333,3112500,3871667,3133333,4720000,3511667,4083333,4505000,3813333,4681667,
-    4860000,3895833,4900000,4702500,5075000,5064167,4600000,5896667
-]
-
-/*const dataCompanyLinearGrowthResult = [6300000,4373333,5741667,5060000,6197500,6346667,
-    5750000,6416667,6745000,6060000,5414167,7338333
-]*/
-}
-
-//function ReadFromDatabase()
-
-//function FormatData()
-
-//function WriteToDatabase()
 
 /** Calculates the residual sum of squares (RSS), to be used by the AIC
     @param {data = the financial data given}
@@ -197,7 +146,7 @@ function SelectOrder(data) {
                     }
                     const config = {p: p, d: d, q: q, auto: false, verbose: false, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
                        
-                    let AICc;
+                    let AICc
                     const arima = new ARIMA(config).train(data) // Create a new ARIMA model using the config
                     const [testForecast, errors] = arima.predict(12) // Predict the next 12 months using the ARIMA model
                     AICc = CalcAICc(data, config, testForecast) // calculate the AICc of the current ARIMA model
@@ -235,7 +184,6 @@ function RunForecast(data) {
     //await database.saveForecast(bestModel.prediction) // Save the forecast to the database
 
     return predictionArray // Return the array of metric predictions
-
 }
 
 export async function InitializeForecast(id) {
