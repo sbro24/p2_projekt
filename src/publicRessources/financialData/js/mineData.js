@@ -433,82 +433,6 @@ function updateCompanyDataFromTables(company, Year, revenuetable, variabelexpens
 
 };
 
-function CheckIfCategoryDataExistsResult (UnderCategory, variableOmkostninger, fasteOmkostninger, company) {
-    //Checks if the undercategory belongs to "variableomkostninger" or "fasteomkostninger" over-category
-    if (variableOmkostninger.includes(UnderCategory) || fasteOmkostninger.includes(UnderCategory)) {
-
-        //Checks if an undercategory by given undercategory name already exists in company object
-        if (company.result.expense[UnderCategory.name]) {
-
-            //Runs through the undercategory in the company object and inputs dat if data year exists
-            for (let l = 0; l < company.result.expense[UnderCategory.name].data.length; l++) {
-                if (Number(company.result.expense[UnderCategory.name].data[l].year) === Number(UnderCategory.data[0].year)) {
-                    const numericMonths = {};
-                    Object.entries(UnderCategory.data[0].months).forEach(([month, value]) => {
-                        // Convert to number using parseFloat or Number
-                        numericMonths[month] = parseFloat(value) || 0; // fallback to 0 if conversion fails
-                    });
-                     company.result.expense[UnderCategory.name].data[l].months = numericMonths
-                 return;
-                }
-            }
-
-            //If the undercategory year does not exist, insert year with its data at rigth place
-            for (let k = 0; k < company.result.expense[UnderCategory.name].data.length; k++) {
-                if (Number(company.result.expense[UnderCategory.name].data[k].year) > Number(UnderCategory.data[0].year)) {
-                    company.result.expense[UnderCategory.name].data.splice(k, 0, UnderCategory.data[0]);
-                    return;
-                }
-            }
-
-            company.result.expense[UnderCategory.name].data.push(UnderCategory.data[0])
-            return;
-
-            //Assign undercategory characteristic
-        } else {
-            if (variableOmkostninger.includes(UnderCategory)) {
-                UnderCategory.characteristics = "Variabel"
-            } else {
-                UnderCategory.characteristics = "Fast"
-            }
-
-            company.result.expense[UnderCategory.name] = UnderCategory
-
-        }
-
-        //If undercategory is not an "omkostning", goes through same process but with "omsætning"
-    } else {
-        if (company.result.revenue[UnderCategory.name]) {
-            company.result.revenue[UnderCategory.name].characteristics = "Variabel"
-            for (let l = 0; l < company.result.revenue[UnderCategory.name].data.length; l++) {
-                if (Number(company.result.revenue[UnderCategory.name].data[l].year) === Number(UnderCategory.data[0].year)) {
-                const numericMonths = {};
-                Object.entries(UnderCategory.data[0].months).forEach(([month, value]) => {
-                    // Convert to number using parseFloat or Number
-                    numericMonths[month] = parseFloat(value) || 0; // fallback to 0 if conversion fails
-                });
-                 company.result.revenue[UnderCategory.name].data[l].months = numericMonths
-                 return;
-                }
-            }
-            
-            for (let k = 0; k < company.result.revenue[UnderCategory.name].data.length; k++) {
-                if (Number(company.result.revenue[UnderCategory.name].data[k].year) > Number(UnderCategory.data[0].year)) {
-                    company.result.revenue[UnderCategory.name].data.splice(k, 0, UnderCategory.data[0]);
-                    return;
-                }
-            }
-            
-            company.result.revenue[UnderCategory.name].data.push(UnderCategory.data[0])
-            return;
-
-        } else {
-            UnderCategory.characteristics = "Variabel"
-            company.result.revenue[UnderCategory.name] = UnderCategory
-        }
-    } 
-}
-
 function getTableData(tableId, Year) {
 
     const yearSelect = document.getElementById("yearSelect")
@@ -546,7 +470,7 @@ function getTableData(tableId, Year) {
             let newCompany = new FinancialMetric(cells[0].textContent.trim())
             let newCompanyUndercategoryData = new FinancialYear(Year)
             Object.keys(newCompanyUndercategoryData.months).forEach((month, i) => {
-                newCompanyUndercategoryData.months[month] = cells[i+1].textContent.trim();
+                newCompanyUndercategoryData.months[month] = Number(cells[i+1].textContent.trim());
             });
             newCompany.data.push(newCompanyUndercategoryData)
             underCategories.push(newCompany)

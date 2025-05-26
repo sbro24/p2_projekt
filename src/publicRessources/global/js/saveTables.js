@@ -203,7 +203,7 @@ function getTableData(tableId, Year) {
             let newCompany = new FinancialMetric(cells[0].textContent.trim())
             let newCompanyUndercategoryData = new FinancialYear(Year)
             Object.keys(newCompanyUndercategoryData.months).forEach((month, i) => {
-                newCompanyUndercategoryData.months[month] = cells[i+1].textContent.trim()
+                newCompanyUndercategoryData.months[month] = Number(cells[i+1].textContent.trim())
             });
             newCompany.data.push(newCompanyUndercategoryData)
             underCategories.push(newCompany)

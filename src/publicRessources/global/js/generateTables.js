@@ -83,7 +83,7 @@ function toTableRevenue(company, Year, revenueTable, variabelExpenseTable, fastE
 }
 
 
-function ToTableForecast(company, Year, revenueTable, variabelExpenseTable, fastExpenseTable) {
+function ToTableForecast(company, Year, revenueTable, fastExpenseTable, variabelExpenseTable) {
     const DELIMITER = ";"
 
     // Check that text and tables exist

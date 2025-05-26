@@ -495,7 +495,8 @@ function addRowToTable(table) {
  */
 function deleteLastRowFromTable(table) {
     console.log(`deleteLastRowFromTable: Attempting to delete last row from table: ${table?.className || table?.id}`);
-    const tbody = table.querySelector('tbody');
+    const tbody = table.querySelector('thead');
+    console.log(table)
     if (tbody && tbody.rows.length > 0) {
         const userConfirmed = window.confirm('Are you sure you want to delete the last category?');
         if (userConfirmed) {
@@ -536,13 +537,6 @@ function setupTableControls() {
             }
         });
     });
-/*
-    const saveButton = document.getElementById('saveBudgetBtn');
-    if (saveButton) {
-        saveButton.addEventListener('click', saveBudgetChanges);
-    } else {
-        console.error("setupTableControls: Save button not found.");
-    }*/
 }
 
 // ----------------------------
