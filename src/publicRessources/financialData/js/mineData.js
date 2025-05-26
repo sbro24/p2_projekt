@@ -410,6 +410,9 @@ function EditResultData(company, Year) {
 let revenuetable = ".results-revenue-table";
 let variabelexpensetable = ".results-variable-expense-table";
 let fastexpensetable = ".results-fixed-expense-table";
+let revenuetablebudget = ".budget-revenue-table";
+let variabelexpensetablebudget = ".budget-variable-expense-table";
+let fastexpensetablebudget = ".budget-fixed-expense-table";
 
 /**
      * Updates the company object with current table data
@@ -653,6 +656,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             setTimeout(() => {
             updateCompanyDataFromTables(companyData, yearSelect.value, revenuetable, variabelexpensetable, fastexpensetable, "result") // Extract data from the tables
+            updateCompanyDataFromTables(companyData, yearSelect.value, revenuetablebudget, variabelexpensetablebudget, fastexpensetablebudget, "minedata budget") // Extract data from the tables
+
             dataToSave = companyData
             
             if (!dataToSave) {

@@ -107,9 +107,16 @@ function getTop5Differences(budgetData, forecastData) {
         return [];
     }
 
-    const allCategories = new Set([...Object.keys(budgetData), ...Object.keys(forecastData)]);
+    const budgetCategories = new Set(Object.keys(budgetData));
+    const forecastCategories = new Set(Object.keys(forecastData));
 
-    const differences = Array.from(allCategories).map(category => {
+    const commonCategories = Array.from(budgetCategories).filter(category => 
+        forecastCategories.has(category)
+    );
+
+    //const allCategories = new Set([...Object.keys(budgetData), ...Object.keys(forecastData)]);
+// Array.from(allCategories).map(category
+    const differences = commonCategories.map(category => {
         const budgetTotal = calculateCategoryTotal(budgetData[category] || { data: [] });
         const forecastTotal = calculateCategoryTotal(forecastData[category] || { data: [] });
         const absoluteDifference = Math.abs(budgetTotal - forecastTotal);

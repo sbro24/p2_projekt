@@ -24,6 +24,20 @@ function updateCompanyDataFromTables(company, Year, revenuetable, variabelexpens
         fastExpenseUndercategories.forEach(category => {
             CheckIfCategoryDataExistsResult(category, variabelExpenseUndercategories, fastExpenseUndercategories, company)
         })
+    } else if (Type === "minedata budget") {
+        var revenueUndercategories = getTableData1(revenuetable, Year);
+        var variabelExpenseUndercategories = getTableData1(variabelexpensetable, Year);
+        var fastExpenseUndercategories = getTableData1(fastexpensetable, Year);
+
+        revenueUndercategories.forEach(category => {
+            CheckIfCategoryDataExistsBudget(category, variabelExpenseUndercategories, fastExpenseUndercategories, company)
+        })
+        variabelExpenseUndercategories.forEach(category => {
+            CheckIfCategoryDataExistsBudget(category, variabelExpenseUndercategories, fastExpenseUndercategories, company)
+        })
+        fastExpenseUndercategories.forEach(category => {
+            CheckIfCategoryDataExistsBudget(category, variabelExpenseUndercategories, fastExpenseUndercategories, company)
+        })
     } else {
         var revenueUndercategories = getTableData(revenuetable, Year);
         var variabelExpenseUndercategories = getTableData(variabelexpensetable, Year);

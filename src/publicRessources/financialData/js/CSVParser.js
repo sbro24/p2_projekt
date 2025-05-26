@@ -9,10 +9,63 @@ async function CSVImporter (text, company, type) {
     CSVObjectCreator(text, company, type) //Make objects with file contents and compare them to company data object
 }
 
+class Company {
+    constructor(id, name, password, sessionToken) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.sessionToken = sessionToken;
+    };
+}
+
+class CompanyData {
+    constructor(companyId) {
+        this.result = {
+            revenue: {},
+            expense: {}
+        };
+        this.budget = {
+            revenue: {},
+            expense: {}
+        };
+        this.forecast = {
+            revenue: {},
+            expense: {}
+        };
+    };
+}
+
+class FinancialMetric {
+    constructor(name) {
+        this.name = name;
+        this.data = Array(0);
+    };
+}
+
+class FinancialYear {
+    constructor (year) {
+        this.year = year
+        this.months = {
+            january: 0,
+            february: 0,
+            march: 0,
+            april: 0,
+            may: 0,
+            june: 0,
+            july: 0,
+            august: 0,
+            september: 0,
+            october: 0,
+            november: 0,
+            december: 0
+        }
+    };
+}
+
 
 //Transforms parsed CSV text into arrays, either being "Omsætning", "variable omkostninger"
 //or "Faste omkostninger"
-function CSVObjectCreator (text, company, type) {
+export function CSVObjectCreator (text, company, type) {
     // Check that text and tables exist
     if (!text) {
         console.error("No text or tables found!");
@@ -70,8 +123,12 @@ function CSVObjectCreator (text, company, type) {
 
 }
 
+if (typeof window !== 'undefined') {
+    window.CSVObjectCreator = CSVObjectCreator;
+  }
+
 //Inputs created Objects from CSVObjectCreator into the companys' object
-function CheckIfCategoryDataExistsResult (UnderCategory, variableOmkostninger, fasteOmkostninger, company) {
+export function CheckIfCategoryDataExistsResult (UnderCategory, variableOmkostninger, fasteOmkostninger, company) {
     //Checks if the undercategory belongs to "variableomkostninger" or "fasteomkostninger" over-category
     if (variableOmkostninger.includes(UnderCategory) || fasteOmkostninger.includes(UnderCategory)) {
 
@@ -137,8 +194,12 @@ function CheckIfCategoryDataExistsResult (UnderCategory, variableOmkostninger, f
     } 
 }
 
+if (typeof window !== 'undefined') {
+    window.CheckIfCategoryDataExistsResult = CheckIfCategoryDataExistsResult();
+  }
+
 //Inputs created Objects from CSVObjectCreator into the companys' object
-function CheckIfCategoryDataExistsBudget (UnderCategory, variableOmkostninger, fasteOmkostninger, company) {
+export function CheckIfCategoryDataExistsBudget (UnderCategory, variableOmkostninger, fasteOmkostninger, company) {
     //Checks if the undercategory belongs to "variableomkostninger" or "fasteomkostninger" over-category
     if (variableOmkostninger.includes(UnderCategory) || fasteOmkostninger.includes(UnderCategory)) {
 
@@ -204,7 +265,11 @@ function CheckIfCategoryDataExistsBudget (UnderCategory, variableOmkostninger, f
     } 
 }
 
-function SplitRowsIntoCategories (r, year) {
+if (typeof window !== 'undefined') {
+    window.CheckIfCategoryDataExistsBudget = CheckIfCategoryDataExistsBudget;
+  }
+
+export function SplitRowsIntoCategories (r, year) {
     r = r.trim(); // Remove whitespace
     year = year.trim();
 
@@ -235,3 +300,7 @@ function SplitRowsIntoCategories (r, year) {
 
     return salesObject
 }
+
+if (typeof window !== 'undefined') {
+    window.SplitRowsIntoCategories = SplitRowsIntoCategories;
+  }
