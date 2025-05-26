@@ -9,6 +9,10 @@ export {
     Model,
     Forecast
 };
+import { exec as execCallback } from 'child_process'; // Import the exec function from the child_process module
+import fs from 'fs'; // Import the fs module to handle file operations
+import util from 'util';   // For promisify
+const exec = util.promisify(execCallback); // Create a Promise-based version of exec
 import ARIMA from 'arima' // Import the ARIMA library
 import { GetFinancialDataById, UpdateCompanyObject } from '../../lib/useDatabase/handle-data.js';
 import { FinancialMetric, FinancialYear } from '../../lib/useDatabase/constructors.js';
@@ -127,38 +131,54 @@ function CalcAICc(data, config, forecast) { // Calculate the AICc for the given 
     const AICc = AIC + (2 * k * (k + 1)) / (n - k - 1) // Calculates the AICc
     return AICc;
 }
+// calls a python script (adf_script.py) to do an adf test and determin the ARIMA parameter d
+async function adf_test(data){
+    let i = 0
+    let fileName = './src/data/temp.json'
+    while (fs.existsSync(fileName)) {
+        fileName = `./src/data/temp${i}.json`
+        i++
+    }
+    fs.writeFileSync('./src/data/temp.json', JSON.stringify(data)); // Write the data array to a file named temp.json
+    await exec('python ./adf_script.py --tempfile ./src/data/temp.json') // calls the py script
+    const result = JSON.parse(fs.readFileSync('./src/data/temp.json', 'utf-8')); // Read the contents of temp.json
+    const d = result.d;
+    //fs.unlinkSync('./src/data/temp.json'); // Delete the temp.json file
+    console.log(`d: ${d}`)
+    return d;
+}
 
 /** Selects the best ARIMA model based on the AIC, and stores all the tested models in 
     @param {data = the time series data given}
     @returns {bestModel.order = The best ARIMA model order}
  */
-function SelectOrder(data) {
+async function SelectOrder(data) {
     const forecastHandler = new Forecast() // Create a forecast handler
     let bestAICc = Infinity // Initialize the best AIC to infinity
     const minComplexity = 1;
+    let d = await adf_test(data) // get the differencing order
+    if (d > 2){ console.log("WHAT THE FUCK")}
     for (let c = 0; c <= 1; c++) { // Loop through, to check if the constant should be included
-        for (let d = 0; d <= 2; d++) { // Loop through the differencing orders
             for (let p = 1; p <= 5; p++) { //Æ Loop through the AR orders
                 for (let q = 0; q <= 5; q++) { // Loop through the MA orders
 
-                    if (p + q <= minComplexity) { // Check if the model is too simple
-                        continue; // Skip this iteration if the model is too simple
-                    }
-                    const config = {p: p, d: d, q: q, auto: false, verbose: false, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
-                       
-                    let AICc
-                    const arima = new ARIMA(config).train(data) // Create a new ARIMA model using the config
-                    const [testForecast, errors] = arima.predict(12) // Predict the next 12 months using the ARIMA model
-                    AICc = CalcAICc(data, config, testForecast) // calculate the AICc of the current ARIMA model
-                    const model = new Model(data, config, AICc, testForecast) // Create a new model object
-                    forecastHandler.addModel(model) // Add the model to the forecast class          
+                if (p + q <= minComplexity) { // Check if the model is too simple
+                    continue; // Skip this iteration if the model is too simple
+                }
+                const config = {p: p, d: d, q: q, auto: false, verbose: false, constant: c === 1} // Sets the order of the ARIMA model to the current parameters and a constant if c === 1
+                    
+                let AICc
+                const arima = new ARIMA(config).train(data) // Create a new ARIMA model using the config
+                const [testForecast, errors] = arima.predict(12) // Predict the next 12 months using the ARIMA model
+                AICc = CalcAICc(data, config, testForecast) // calculate the AICc of the current ARIMA model
+                const model = new Model(data, config, AICc, testForecast) // Create a new model object
+                forecastHandler.addModel(model) // Add the model to the forecast class          
 
-                    if (AICc < bestAICc) { // If the AIC is lower than the best AIC found so far
-                        bestAICc = AICc // Update the best AIC
-                        forecastHandler.setBestOrder(config)// Update the best model parameters
-                        forecastHandler.setBestModel(model) // Update the best model
-                        forecastHandler.setBestAIC(AICc) // Update the best AIC
-                    }
+                if (AICc < bestAICc) { // If the AIC is lower than the best AIC found so far
+                    bestAICc = AICc // Update the best AIC
+                    forecastHandler.setBestOrder(config)// Update the best model parameters
+                    forecastHandler.setBestModel(model) // Update the best model
+                    forecastHandler.setBestAIC(AICc) // Update the best AIC
                 }  
             }
         }
@@ -175,15 +195,17 @@ function SelectOrder(data) {
     @param {data = the financial data given}
     @returns {predictionArray = The array of metric predictions}
  */
-function RunForecast(data) {
-    const predictionArray = [] // Initialize the prediction array
-    
-    const forecast = SelectOrder(data/* get data from router */)
-    let bestModel = forecast.getBestModel() // Get the best model
-    predictionArray.push(bestModel.prediction) // Push the metric's best model's predictions to the prediction array
-    //await database.saveForecast(bestModel.prediction) // Save the forecast to the database
+async function RunForecast(data) {
+    return new Promise(async (resolve) => {
+        const predictionArray = [] // Initialize the prediction array
+        const forecast = await SelectOrder(data/* get data from router */)
+        let bestModel = forecast.getBestModel() // Get the best model
+        predictionArray.push(bestModel.prediction) // Push the metric's best model's predictions to the prediction array
+        //await database.saveForecast(bestModel.prediction) // Save the forecast to the database
+        resolve(predictionArray)  // Return the array of metric predictions
+    });
 
-    return predictionArray // Return the array of metric predictions
+
 }
 
 export async function InitializeForecast(id) {
@@ -215,13 +237,14 @@ export async function InitializeForecast(id) {
     companyData.forecast = { revenue: {}, expense: {} }
     
     for (const category in financialDataObject.revenue) {
+        if (companyRevenue[category].characteristics === 'Fast') continue;
         let year = '2025'
         let forecastRevenue = companyData.forecast.revenue;
         let item = financialDataObject.revenue[category];
         forecastRevenue[category] = new FinancialMetric(category);
         forecastRevenue[category].data = [new FinancialYear(year)];
 
-        let forecast = RunForecast(item);
+        let forecast = await RunForecast(item);
         let i = 0;
         for (const month in forecastRevenue[category].data[0].months) {
             forecastRevenue[category].data[0].months[month] = forecast[0][i];
@@ -232,20 +255,21 @@ export async function InitializeForecast(id) {
     }
 
     for (const category in financialDataObject.expense) {
+        if (companyExpense[category].characteristics === 'Fast') continue;
         let year = '2025'
         let forecastExpense = companyData.forecast.expense;
         let item = financialDataObject.expense[category];
         forecastExpense[category] = new FinancialMetric(category);
         forecastExpense[category].data = [new FinancialYear(year)];
 
-        let forecast = RunForecast(item);
+        let forecast = await RunForecast(item);
         let i = 0;
         for (const month in forecastExpense[category].data[0].months) {
             forecastExpense[category].data[0].months[month] = forecast[0][i];
             i++
         }
         forecastExpense[category].characteristics = companyExpense[category].characteristics
-        console.log(forecastExpense[category])
+       
     }   
 
     let result = {
@@ -253,6 +277,15 @@ export async function InitializeForecast(id) {
         data: companyData
     } 
     UpdateCompanyObject(result);
+    console.log(result)
 }
-
-//console.log(RunForecast(data.dataCompany)) // Log the result to the console
+/*
+console.log(RunForecast([96000	,123000	,236000	,81600	,28800	,21000	,47600	,
+    17600	,11800	,69600	,107000	,163500	,117600	,126000	,166000	,84800	,33900	,
+    19800	,42400	,22600	,8800	,73600	,98000	,127500	,97200	,126000	,200000	,
+    74400	,24900	,23200	,36800	,16800	,11700	,95200	,102000	,172500	,104400	,
+    172500	,218000	,82400	,26700	,21400	,33200	,20400	,8500	,92000	,99000	,
+    168000	,108000	,135000	,208000	,78400	,30600	,17400	,44800	,17200	,10700	,
+    95200	,119000	,166500
+])) // Log the result to the console
+ */
