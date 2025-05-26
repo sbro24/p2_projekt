@@ -279,6 +279,7 @@ function addHeaders(table, headers) {
  */
 function addRow(table, undercategory, data) {
     const tbody = table.querySelector('tbody');
+    console.log(tbody)
     var newRow = tbody.insertRow(); // Create new row
 
     // Add year column

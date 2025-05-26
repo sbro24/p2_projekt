@@ -400,13 +400,13 @@ class FinancialYear {
         }
     };
 }
-
+/*
 function EditResultData(company, Year) {
 
     updateCompanyDataFromTables(company, Year);
 
 };
-
+*/
 let revenuetable = ".results-revenue-table";
 let variabelexpensetable = ".results-variable-expense-table";
 let fastexpensetable = ".results-fixed-expense-table";
@@ -414,6 +414,7 @@ let fastexpensetable = ".results-fixed-expense-table";
 /**
      * Updates the company object with current table data
      */
+    /*
 function updateCompanyDataFromTables(company, Year, revenuetable, variabelexpensetable, fastexpensetable,) {
 
     var revenueUndercategories = getTableData(revenuetable, Year);
@@ -478,7 +479,7 @@ function getTableData(tableId, Year) {
     }
     return underCategories;
 };
-
+*/
 function ProcessFile(selectedFile, uploadType) {
     if (!selectedFile) {
         console.error("No CSV file selected")
@@ -607,6 +608,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     formElement = formElement.previousElementSibling
                 }
                 const targetTable = formElement && formElement.tagName === "FORM" ? formElement.querySelector("table") : null // If a formElement is found, get the first <table> found
+                console.log("ABE", targetTable)
             
                 let tableName = "Ukendt tabel"
 
@@ -625,7 +627,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             
                             if (newCategoryName && newCategoryName.trim() !== "") { // Check if the user entered a name
                                 const newRowData = Array(12).fill("") // Create a new row
-                                addRow(tableBody, newCategoryName.trim(), newRowData) // Add the new row to the table
+                                addRow(targetTable, newCategoryName.trim(), newRowData) // Add the new row to the table
                             } else if (newCategoryName === null) {
                                 alert("Venligst indtast et navn for den nye kategori")
                             }
@@ -650,7 +652,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return
             }
             setTimeout(() => {
-            updateCompanyDataFromTables(companyData, yearSelect.value, revenuetable, variabelexpensetable, fastexpensetable) // Extract data from the tables
+            updateCompanyDataFromTables(companyData, yearSelect.value, revenuetable, variabelexpensetable, fastexpensetable, "result") // Extract data from the tables
             dataToSave = companyData
             
             if (!dataToSave) {

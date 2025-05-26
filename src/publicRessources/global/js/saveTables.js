@@ -9,12 +9,12 @@ function EditResultData(company, Year) {
      */
 function updateCompanyDataFromTables(company, Year, revenuetable, variabelexpensetable, fastexpensetable, Type) {
 
-    var revenueUndercategories = getTableData(revenuetable, Year);
-    var variabelExpenseUndercategories = getTableData(variabelexpensetable, Year);
-    var fastExpenseUndercategories = getTableData(fastexpensetable, Year);
+    if (Type === "result") {
+    var revenueUndercategories = getTableData1(revenuetable, Year);
+    var variabelExpenseUndercategories = getTableData1(variabelexpensetable, Year);
+    var fastExpenseUndercategories = getTableData1(fastexpensetable, Year);
     
     //Take each new under-category object and compare it to the existing company data object
-    if (Type === "result") {
         revenueUndercategories.forEach(category => {
             CheckIfCategoryDataExistsResult(category, variabelExpenseUndercategories, fastExpenseUndercategories, company)
         })
@@ -25,6 +25,10 @@ function updateCompanyDataFromTables(company, Year, revenuetable, variabelexpens
             CheckIfCategoryDataExistsResult(category, variabelExpenseUndercategories, fastExpenseUndercategories, company)
         })
     } else {
+        var revenueUndercategories = getTableData(revenuetable, Year);
+        var variabelExpenseUndercategories = getTableData(variabelexpensetable, Year);
+        var fastExpenseUndercategories = getTableData(fastexpensetable, Year);
+
         revenueUndercategories.forEach(category => {
             CheckIfCategoryDataExistsBudget(category, variabelExpenseUndercategories, fastExpenseUndercategories, company)
         })
@@ -204,6 +208,52 @@ function getTableData(tableId, Year) {
             let newCompanyUndercategoryData = new FinancialYear(Year)
             Object.keys(newCompanyUndercategoryData.months).forEach((month, i) => {
                 newCompanyUndercategoryData.months[month] = Number(cells[i+1].textContent.trim())
+            });
+            newCompany.data.push(newCompanyUndercategoryData)
+            underCategories.push(newCompany)
+        }
+    }
+    return underCategories;
+};
+
+function getTableData1(tableId, Year) {
+
+    const yearSelect = document.getElementById("yearSelect")
+    const selectedYear = yearSelect.value
+
+    const dataForCurrentYear = PrepareDataForTable(companyData, selectedYear) // Prepare the data for the selected year
+    if (!dataForCurrentYear) { // Check if data is prepared successfully
+        console.error("Failed to prepare data for display for year:", selectedYear)
+        return
+    }
+
+    // remove active class from all year data divs
+    document.querySelectorAll(".year-data-content").forEach(div => {
+        div.classList.remove('active')
+    });
+    // add active class to the selected year
+    const activeYearDiv = document.getElementById(`data-${selectedYear}`)
+    if (activeYearDiv) {
+        activeYearDiv.classList.add('active');
+    }
+
+    var underCategories = []
+
+    const table = activeYearDiv.querySelector(tableId);
+
+    const tbody = table.querySelector('tbody');
+    const rows = tbody ? tbody.querySelectorAll('tr') : [];
+ 
+    const data = [];
+    
+    // Skip header row (index 0)
+    for (let k = 0; k < rows.length; k++) {
+        const cells = rows[k].querySelectorAll('td');
+        if (cells.length > 0) {
+            let newCompany = new FinancialMetric(cells[0].textContent.trim())
+            let newCompanyUndercategoryData = new FinancialYear(Year)
+            Object.keys(newCompanyUndercategoryData.months).forEach((month, i) => {
+                newCompanyUndercategoryData.months[month] = Number(cells[i+1].textContent.trim());
             });
             newCompany.data.push(newCompanyUndercategoryData)
             underCategories.push(newCompany)
