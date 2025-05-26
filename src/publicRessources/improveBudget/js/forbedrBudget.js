@@ -99,7 +99,7 @@ function calculateCategoryTotal(categoryData) {
         const monthlySum = yearData.months ? sumMonthlyValues(yearData.months) : 0;
         return sum + monthlySum;
     }, 0);
-    return total;
+    return total.toFixed(2);
 }
 
 function getTop5Differences(budgetData, forecastData) {
@@ -676,7 +676,7 @@ function calculateCategoryDataTotal (data) {
         sum = sum + Number(index);
     })
 
-    return sum;
+    return sum.toFixed(2);
 }
 
 
