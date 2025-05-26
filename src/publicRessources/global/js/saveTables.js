@@ -275,31 +275,3 @@ function getTableData1(tableId, Year) {
     }
     return underCategories;
 };
-
-/*
-function PrepareDataForTable(rawData, selectedYear) {
-    if (!rawData) {
-        console.error("No data provided");
-        return null;
-    }
-    const dataForTable = {
-        result: { revenue: {}, expense: {} },
-        budget: { revenue: {}, expense: {} }
-    }
-    // Nested function to process a category
-    const processCategoryForTable = (category,targetCategory) => {
-        if (category) {
-            for (const key in category) {
-                targetCategory[key] = TransformAndFilterItemForYear(category[key], selectedYear) // Transform and filter the categories for the selected year
-            }
-        }
-    }
-    // Process revenue and expense categories for both result and budget
-    processCategoryForTable(rawData.result.revenue, dataForTable.result.revenue)
-    processCategoryForTable(rawData.result.expense, dataForTable.result.expense)
-    processCategoryForTable(rawData.budget.revenue, dataForTable.budget.revenue)
-    processCategoryForTable(rawData.budget.expense, dataForTable.budget.expense)
-
-    return dataForTable
-}
-*/

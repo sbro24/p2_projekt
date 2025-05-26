@@ -43,7 +43,7 @@ function toTableRevenue(company, Year, revenueTable, variabelExpenseTable, fastE
         revenueItem.data.forEach(index => {
             if (Number(index.year) === Number(Year)) {
                 Object.keys(index.months).forEach(month => {
-                    dataOmsætning += ";" + String(index.months[month])
+                    dataOmsætning += ";" + String(index.months[month].toFixed(2))
                 })
             var cols = dataOmsætning.split(DELIMITER)
             var data = cols.slice(1)
@@ -59,7 +59,7 @@ function toTableRevenue(company, Year, revenueTable, variabelExpenseTable, fastE
             variabelExpenseItem.data.forEach(index => {
                 if (Number(index.year) === Number(Year)) {
                     Object.keys(index.months).forEach(month => {
-                        dataVariabelExpense += ";" + String(index.months[month])
+                        dataVariabelExpense += ";" + String(index.months[month].toFixed(2))
                     })
                     var cols = dataVariabelExpense.split(DELIMITER)
                     var data = cols.slice(1)
@@ -71,7 +71,7 @@ function toTableRevenue(company, Year, revenueTable, variabelExpenseTable, fastE
             variabelExpenseItem.data.forEach(index => {
                 if (Number(index.year) === Number(Year)) {
                     Object.keys(index.months).forEach(month => {
-                        dataVariabelExpense += ";" + String(index.months[month])
+                        dataVariabelExpense += ";" + String(index.months[month].toFixed(2))
                     })
                     var cols = dataVariabelExpense.split(DELIMITER)
                     var data = cols.slice(1)
@@ -121,7 +121,7 @@ function ToTableForecast(company, Year, revenueTable, fastExpenseTable, variabel
         revenueItem.data.forEach(index => {
         if (Number(index.year) === Number(Year)) {
             Object.keys(index.months).forEach(month => {
-                dataOmsætning += ";" + String(index.months[month])
+                dataOmsætning += ";" + String(index.months[month].toFixed(2))
             })
             var cols = dataOmsætning.split(DELIMITER)
             var data = cols.slice(1)
@@ -137,7 +137,7 @@ function ToTableForecast(company, Year, revenueTable, fastExpenseTable, variabel
             variabelExpenseItem.data.forEach(index => {
                 if (Number(index.year) === Number(Year)) {
                     Object.keys(index.months).forEach(month => {
-                        dataVariabelExpense += ";" + String(index.months[month])
+                        dataVariabelExpense += ";" + String(index.months[month].toFixed(2))
                     })
                     var cols = dataVariabelExpense.split(DELIMITER)
                     var data = cols.slice(1)
@@ -149,7 +149,7 @@ function ToTableForecast(company, Year, revenueTable, fastExpenseTable, variabel
             variabelExpenseItem.data.forEach(index => {
                 if (Number(index.year) === Number(Year)) {
                     Object.keys(index.months).forEach(month => {
-                        dataVariabelExpense += ";" + String(index.months[month])
+                        dataVariabelExpense += ";" + String(index.months[month].toFixed(2))
                     })
                     var cols = dataVariabelExpense.split(DELIMITER)
                     var data = cols.slice(1)
@@ -191,57 +191,6 @@ function toTableBudget(company, Year, revenueTable, variabelExpenseTable, fastEx
     
     writeDataForRow (company, Year, Type, revenueTable, variabelExpenseTable, fastExpenseTable)
 
-    /*
-    Object.keys(company.budget.revenue).forEach(key => {
-        const revenueItem = company.budget.revenue[key];
-        var dataOmsætning = "1";
-        revenueItem.data.forEach(index => {
-            if (Number(index.year) === Number(Year)) {
-                Object.keys(index.months).forEach(month => {
-                    dataOmsætning += ";" + String(index.months[month])
-                })
-            }
-            console.log(dataOmsætning)
-            var cols = dataOmsætning.split(DELIMITER)
-            var data = cols.slice(1)
-            console.log(data)
-            addRow1(revenueTable, revenueItem.name, data);
-        })
-    })
-
-    Object.keys(company.budget.expense).forEach(key => {
-        const variabelExpenseItem = company.budget.expense[key];
-        if (variabelExpenseItem.characteristics === "Variabel") {
-            var dataVariabelExpense = "1";
-            variabelExpenseItem.data.forEach(index => {
-                if (Number(index.year) === Number(Year)) {
-                    Object.keys(index.months).forEach(month => {
-                        dataVariabelExpense += ";" + String(index.months[month])
-                    })
-                }
-                console.log(dataVariabelExpense)
-                var cols = dataVariabelExpense.split(DELIMITER)
-                var data = cols.slice(1)
-                console.log(data)
-                addRow1(variabelExpenseTable, variabelExpenseItem.name, data);
-            })
-        } else {
-            var dataVariabelExpense = "1";
-            variabelExpenseItem.data.forEach(index => {
-                if (Number(index.year) === Number(Year)) {
-                    Object.keys(index.months).forEach(month => {
-                        dataVariabelExpense += ";" + String(index.months[month])
-                    })
-                }
-                console.log(dataVariabelExpense)
-                var cols = dataVariabelExpense.split(DELIMITER)
-                var data = cols.slice(1)
-                console.log(data)
-                addRow1(fastExpenseTable, variabelExpenseItem.name, data);
-            })
-        }
-    })
-        */
 }
 
 /**
@@ -279,7 +228,6 @@ function addHeaders(table, headers) {
  */
 function addRow(table, undercategory, data) {
     const tbody = table.querySelector('tbody');
-    console.log(tbody)
     var newRow = tbody.insertRow(); // Create new row
 
     // Add year column
@@ -320,7 +268,7 @@ function writeDataForRow (company, Year, Type, revenueTable, variabelExpenseTabl
         revenueItem.data.forEach(index => {
             if (Number(index.year) === Number(Year)) {
                 Object.keys(index.months).forEach(month => {
-                    dataOmsætning += ";" + String(index.months[month])
+                    dataOmsætning += ";" + String(index.months[month].toFixed(2))
                 })
             }
             console.log(dataOmsætning)
@@ -342,7 +290,7 @@ function writeDataForRow (company, Year, Type, revenueTable, variabelExpenseTabl
             variabelExpenseItem.data.forEach(index => {
                 if (Number(index.year) === Number(Year)) {
                     Object.keys(index.months).forEach(month => {
-                        dataVariabelExpense += ";" + String(index.months[month])
+                        dataVariabelExpense += ";" + String(index.months[month].toFixed(2))
                     })
                 }
                 console.log(dataVariabelExpense)
@@ -360,7 +308,7 @@ function writeDataForRow (company, Year, Type, revenueTable, variabelExpenseTabl
             variabelExpenseItem.data.forEach(index => {
                 if (Number(index.year) === Number(Year)) {
                     Object.keys(index.months).forEach(month => {
-                        dataVariabelExpense += ";" + String(index.months[month])
+                        dataVariabelExpense += ";" + String(index.months[month].toFixed(2))
                     })
                 }
                 console.log(dataVariabelExpense)

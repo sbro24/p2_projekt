@@ -72,9 +72,8 @@
     border-radius: 4px;
     margin: 10px 0;
 }
-
 /* Add this to your CSS */
-.results-section, .budget-section {
+.results-section, .budget-section, .forecast-section{
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
@@ -82,61 +81,7 @@
 }
 
 /* Table container styling */
-.results-section > div, .budget-section > div {
+.results-section > div, .budget-section > div, .forecast-section > div {
     margin-bottom: 30px;
     min-width: 1200px; /* Minimum width to contain all columns */
-}
-
-/* Table styling */
-.results-revenue-table,
-.results-fixed-expense-table,
-.results-variable-expense-table,
-.budget-revenue-table,
-.budget-fixed-expense-table,
-.budget-variable-expense-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed; /* This helps with column width control */
-}
-
-/* Table header and cell styling */
-.results-revenue-table th,
-.results-fixed-expense-table th,
-.results-variable-expense-table th,
-.budget-revenue-table th,
-.budget-fixed-expense-table th,
-.budget-variable-expense-table th,
-.results-revenue-table td,
-.results-fixed-expense-table td,
-.results-variable-expense-table td,
-.budget-revenue-table td,
-.budget-fixed-expense-table td,
-.budget-variable-expense-table td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    text-align: center;
-    min-width: 60px; /* Minimum column width */
-    max-width: 100px; /* Maximum column width */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-/* Make the first column (category name) wider */
-.results-revenue-table th:first-child,
-.results-fixed-expense-table th:first-child,
-.results-variable-expense-table th:first-child,
-.budget-revenue-table th:first-child,
-.budget-fixed-expense-table th:first-child,
-.budget-variable-expense-table th:first-child,
-.results-revenue-table td:first-child,
-.results-fixed-expense-table td:first-child,
-.results-variable-expense-table td:first-child,
-.budget-revenue-table td:first-child,
-.budget-fixed-expense-table td:first-child,
-.budget-variable-expense-table td:first-child {
-    min-width: 150px;
-    max-width: 200px;
-    text-align: left;
-    white-space: normal;
 }

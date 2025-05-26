@@ -360,108 +360,6 @@ function updateCompanySectionData(targetSection, newCategoryDataArray, selectedY
     console.log("updateCompanySectionData: Section update complete. Current targetSection state:", targetSection);
 }
 
-
-/**
- * Handles the saving of budget changes from the editable tables.
- * Now also handles saving forecast data.
- */
-/*
-async function saveBudgetChanges() {
-    console.log("saveBudgetChanges: Attempting to save budget and forecast changes...");
-    const saveButton = document.getElementById('saveBudgetBtn');
-    const informationText = document.getElementById('informationText');
-
-    if (saveButton) saveButton.disabled = true;
-    if (informationText) informationText.innerHTML = '<div class="info-message">Saving changes...</div>';
-
-    try {
-        const budgetRevenueTable = document.querySelector('.budget-revenue-table');
-        const budgetFixedExpenseTable = document.querySelector('.budget-fixed-expense-table');
-        const budgetVariableExpenseTable = document.querySelector('.budget-variable-expense-table');
-
-        console.log("saveBudgetChanges: Reading data from budget tables for saving...");
-        const newBudgetRevenueData = getTableData(budgetRevenueTable, staticYear);
-        const newBudgetFixedExpenseData = getTableData(budgetFixedExpenseTable, staticYear);
-        const newBudgetVariableExpenseData = getTableData(budgetVariableExpenseTable, staticYear);
-
-        console.log("ABE ABE ABE ABE", newBudgetRevenueData)
-
-        const forecastRevenueTable = document.querySelector('.forecast-revenue-table');
-        const forecastFixedExpenseTable = document.querySelector('.forecast-fixed-expense-table');
-        const forecastVariableExpenseTable = document.querySelector('.forecast-variable-expense-table');
-
-        console.log("saveBudgetChanges: Reading data from forecast tables for saving...");
-        const newForecastRevenueData = getTableData(forecastRevenueTable, staticYear);
-        const newForecastFixedExpenseData = getTableData(forecastFixedExpenseTable, staticYear);
-        const newForecastVariableExpenseData = getTableData(forecastVariableExpenseTable, staticYear);
-
-
-        if (!companyData.budget) companyData.budget = {};
-        if (!companyData.budget.revenue) companyData.budget.revenue = {};
-        if (!companyData.budget.expense) companyData.budget.expense = {};
-
-        console.log("saveBudgetChanges: Updating companyData.budget object locally with new data...");
-        updateCompanySectionData(companyData.budget.revenue, newBudgetRevenueData, staticYear, "Revenue");
-        updateCompanySectionData(companyData.budget.expense, newBudgetFixedExpenseData, staticYear, "Fast");
-        updateCompanySectionData(companyData.budget.expense, newBudgetVariableExpenseData, staticYear, "Variabel");
-        console.log("saveBudgetChanges: companyData.budget updated locally. Current state:", companyData.budget);
-
-        if (!companyData.forecast) companyData.forecast = {};
-        if (!companyData.forecast.revenue) companyData.forecast.revenue = {};
-        if (!companyData.forecast.expense) companyData.forecast.expense = {};
-
-        console.log("saveBudgetChanges: Updating companyData.forecast object locally with new data...");
-        updateCompanySectionData(companyData.forecast.revenue, newForecastRevenueData, staticYear, "Revenue");
-        updateCompanySectionData(companyData.forecast.expense, newForecastFixedExpenseData, staticYear, "Fast");
-        updateCompanySectionData(companyData.forecast.expense, newForecastVariableExpenseData, staticYear, "Variabel");
-        console.log("saveBudgetChanges: companyData.forecast updated locally. Current state:", companyData.forecast);
-
-
-        const apiUrl = '/api/saveData/'; // Endpoint as specified by user
-        const payload = { userId: userId, data: companyData };
-        console.log(`saveBudgetChanges: Sending payload to API: ${apiUrl}. Payload content:`, payload);
-        console.log("saveBudgetChanges: Stringified payload size (bytes):", new TextEncoder().encode(JSON.stringify(payload)).length);
-        console.log("Final companyData structure to be sent:", JSON.stringify(companyData, null, 2));
-        console.log("Type of companyData.budget:", typeof companyData.budget);
-        console.log("Type of companyData.forecast:", typeof companyData.forecast);
-        console.log("Keys in companyData.budget:", Object.keys(companyData.budget));
-        console.log("Keys in companyData.forecast:", Object.keys(companyData.forecast));
-        const saveResponse = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-
-        console.log(`saveBudgetChanges: API response status: ${saveResponse.status}, statusText: ${saveResponse.statusText}`);
-        if (!saveResponse.ok) {
-            const errorText = await saveResponse.text();
-            console.error("saveBudgetChanges: API response not OK. Raw response text:", errorText);
-            throw new Error(`Failed to save data: ${errorText || saveResponse.statusText}`);
-        }
-
-        console.log("saveBudgetChanges: API call successful. Re-initializing dashboard to reflect saved changes...");
-        await initializeDashboard();
-
-        if (informationText) informationText.innerHTML = '<div class="success-message">Changes saved successfully!</div>';
-        console.log("Budget and forecast changes saved and dashboard re-initialized.");
-
-    } catch (error) {
-        console.error("Error saving budget/forecast changes:", error);
-        if (informationText) {
-            informationText.innerHTML = `<div class="error-message">Error saving changes: ${error.message}</p></div>`;
-        }
-    } finally {
-        if (saveButton) saveButton.disabled = false;
-        setTimeout(() => {
-            if (informationText) informationText.innerHTML = '';
-        }, 5000);
-    }
-}
-*/
-
 /**
  * Adds a new row to a specific table.
  */
@@ -589,26 +487,26 @@ async function initializeDashboard(budgetRevenueTable, budgetFixedExpenseTable, 
             labels: months,
             datasets: [
                 {
-                    label: 'Budget Revenue',
+                    label: 'Budget Indtægt',
                     data: extractAllMonthlyData(companyData.budget?.revenue),
                     borderColor: '#4CAF50',
                     borderWidth: 2
                 },
                 {
-                    label: 'Forecast Revenue',
+                    label: 'Prognose Indtægt',
                     data: extractAllMonthlyData(companyData.forecast?.revenue),
                     borderColor: '#2196F3',
                     borderWidth: 2
                 },
                 {
-                    label: 'Budget Expense',
+                    label: 'Budget Indtægt',
                     data: extractAllMonthlyData(companyData.budget?.expense),
                     borderColor: '#4CAF50',
                     borderWidth: 2,
                     borderDash: [5, 5]
                 },
                 {
-                    label: 'Forecast Expense',
+                    label: 'Prognose Indtægt',
                     data: extractAllMonthlyData(companyData.forecast?.expense),
                     borderColor: '#2196F3',
                     borderWidth: 2,
@@ -616,7 +514,7 @@ async function initializeDashboard(budgetRevenueTable, budgetFixedExpenseTable, 
                 }
             ]
         }, {
-            plugins: { title: { display: true, text: '2025 Revenue Comparison' } },
+            plugins: { title: { display: true, text: '2025 Indtægt Comparison' } },
             scales: {
                 y: {
                     beginAtZero: false,
@@ -642,7 +540,7 @@ async function initializeDashboard(budgetRevenueTable, budgetFixedExpenseTable, 
                     borderWidth: 1
                 },
                 {
-                    label: 'Forecast',
+                    label: 'Prognose',
                     data: allDifferences.map(item => item.forecast),
                     backgroundColor: '#2196F3',
                     borderColor: '#1976D2',
@@ -651,7 +549,7 @@ async function initializeDashboard(budgetRevenueTable, budgetFixedExpenseTable, 
             ]
         }, {
             plugins: {
-                title: { display: true, text: 'Top 5 Budget vs Forecast Differences' },
+                title: { display: true, text: 'Top 5 Budget vs Prognose Forskelle' },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
