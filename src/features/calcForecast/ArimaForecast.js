@@ -275,6 +275,16 @@ export async function InitializeForecast(id) {
         userId: id,
         data: companyData
     } 
+
+    Object.keys(companyData.budget.expense).forEach(undercategory => {
+        const forecastEntry = companyData.forecast.expense[undercategory];
+
+        if (!forecastEntry || !forecastEntry.name) {
+            companyData.forecast.expense[undercategory] = companyData.budget.expense[undercategory]
+        }
+    })
+
+    
     UpdateCompanyObject(result);
     console.log(result)
 }
