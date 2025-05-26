@@ -157,8 +157,7 @@ async function SelectOrder(data) {
     let bestAICc = Infinity // Initialize the best AIC to infinity
     const minComplexity = 1;
     let d = await adf_test(data) // get the differencing order
-    if (d > 2){ console.log("WHAT THE FUCK")}
-    for (let c = 0; c <= 1; c++) { // Loop through, to check if the constant should be included
+        for (let c = 0; c <= 1; c++) { // Loop through, to check if the constant should be included
             for (let p = 1; p <= 5; p++) { //Æ Loop through the AR orders
                 for (let q = 0; q <= 5; q++) { // Loop through the MA orders
 
