@@ -44,7 +44,7 @@ function UpdatePassword() {
     })
 }
 
-async function UpdatePassword() {
+async function DeleteUser() {
     const username = await GetUsername();
     const usernamePromt = window.prompt(`Skriv dit brugernavn "${username}" for at slætte din konto`);
     if (usernamePromt === username) {
