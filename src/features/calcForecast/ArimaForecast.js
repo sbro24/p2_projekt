@@ -143,7 +143,7 @@ async function adf_test(data){
     await exec('python ./adf_script.py --tempfile ./src/data/temp.json') // calls the py script
     const result = JSON.parse(fs.readFileSync('./src/data/temp.json', 'utf-8')); // Read the contents of temp.json
     const d = result.d;
-    //fs.unlinkSync('./src/data/temp.json'); // Delete the temp.json file
+    fs.unlinkSync('./src/data/temp.json'); // Delete the temp.json file
     console.log(`d: ${d}`)
     return d;
 }

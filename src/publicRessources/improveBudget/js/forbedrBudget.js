@@ -499,14 +499,14 @@ async function initializeDashboard(budgetRevenueTable, budgetFixedExpenseTable, 
                     borderWidth: 2
                 },
                 {
-                    label: 'Budget Indtægt',
+                    label: 'Budget Udgift',
                     data: extractAllMonthlyData(companyData.budget?.expense),
                     borderColor: '#4CAF50',
                     borderWidth: 2,
                     borderDash: [5, 5]
                 },
                 {
-                    label: 'Prognose Indtægt',
+                    label: 'Prognose Udgift',
                     data: extractAllMonthlyData(companyData.forecast?.expense),
                     borderColor: '#2196F3',
                     borderWidth: 2,
@@ -514,7 +514,7 @@ async function initializeDashboard(budgetRevenueTable, budgetFixedExpenseTable, 
                 }
             ]
         }, {
-            plugins: { title: { display: true, text: '2025 Indtægt Comparison' } },
+            plugins: { title: { display: true, text: '2025 Budget vs Prognose Sammenligning' } },
             scales: {
                 y: {
                     beginAtZero: false,
