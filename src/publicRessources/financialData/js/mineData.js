@@ -210,7 +210,7 @@ function BuildHTMLStructure() {
         </section>
             
         <section class="budget-section">
-            <h2 class="section-header">Min budget YEAR</h2>    
+            <h2 class="section-header">Mit budget YEAR</h2>    
             <div>
                 <h3>Omsætning</h3>      
                 <form>
